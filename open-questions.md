@@ -47,7 +47,7 @@ The notes ask for "אנימציה קטנה (כמו תמונת לייב באיי�
 ## Question 1 (slides 10–11)
 
 **12 · Audio or video? And which one is right?**
-The storyboard shows four cards with a sound symbol and a wave; the note speaks of "כתוביות גדולות" and "הסרטון המוצג על המסך"; the design calls them "סרטון 1–4" and says "בחרו את הסרטון". Are the four readings audio clips (with captions) or video clips? The design settles it only in part: each card shows a picture of Matan holding a paper, with a play button (so, video), while the storyboard draws a sound wave.
+The storyboard shows four cards with a sound symbol and a wave; the note speaks of "כתוביות גדולות" and "הסרטון המוצג על המסך"; the design calls them "סרטון 1–4" and says "בחרו את הסרטון". Are the four readings audio clips (with captions) or video clips? The picture the script uses (and that we built with) has a speaker button and a sound wave on each card, so we assume audio. The PSD design shows Matan reading with a play button instead (video).
 The correct card is not marked in the text. From the readings in the note, **טוקיו** is the only one read correctly (the tick on slide 11 is on it too). Please confirm. The reading of the numbers in the note for דובאי, פרנקפורט and פריז are wrong on purpose (e.g. פריז "מאה וארבעים אלף" instead of "ארבעה עשר אלף").
 
 **13 · Help button on question 1**

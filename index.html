@@ -44,7 +44,11 @@
 
 <!-- ================= SCREEN 2 — למחרת במשרד של אמא (שקף 9) ================= -->
 <section class="screen" data-screen="2" data-sid="story-office" data-type="explain" tabindex="-1">
-  <img class="screen-bg" src="assets/images/story-office-bg.jpg" alt="">
+  <div class="scene" aria-hidden="true">
+    <img class="screen-bg" src="assets/images/story-office-bg.jpg" alt="">
+    <div class="fx fx-day"></div>
+    <div class="fx fx-glow fx-wall"></div>
+  </div>
   <div class="narration-banner"><p>למחרת הגיע מתן למשרד של אימו. על השולחן חיכו לה נתוני הנוסעים לקראת הישיבה הקרובה. מתן הסתקרן והציץ במספרים.</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
@@ -59,11 +63,11 @@
     <p class="q-body">מתן החל להקריא בקול את מספר הנוסעים שעברו בכל אחד משדות התעופה בשנה האחרונה.</p>
     <p class="q-instruction">הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון את מספר הנוסעים.</p>
     <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
-      <!-- Each card: Matan's picture (the play symbol is painted in it), the city and number, the radio. The reading itself (audio or video, open question 12) goes on .reader-media. -->
-      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-1.png" alt=""><span class="reader-media" data-pending-asset="reading, Paris (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span></div>
-      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-2.png" alt=""><span class="reader-media" data-pending-asset="reading, Tokyo (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span></div>
-      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-3.png" alt=""><span class="reader-media" data-pending-asset="reading, Frankfurt (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span></div>
-      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-4.png" alt=""><span class="reader-media" data-pending-asset="reading, Dubai (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span></div>
+      <!-- Each card is one of the four skyline cards of the script (the sound bar is painted in the picture; the reading itself, audio, goes on .reader-media — open question 12). The city and number are live text in the white band. -->
+      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-paris.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span><span class="reader-media" data-pending-asset="reading, paris (slide 10): audio"></span></div>
+      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-tokyo.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span><span class="reader-media" data-pending-asset="reading, tokyo (slide 10): audio"></span></div>
+      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-frankfurt.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span><span class="reader-media" data-pending-asset="reading, frankfurt (slide 10): audio"></span></div>
+      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-dubai.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span><span class="reader-media" data-pending-asset="reading, dubai (slide 10): audio"></span></div>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -142,7 +146,13 @@
 
 <!-- ================= SCREEN 6 — הנתונים המבולגנים (שקף 17) ================= -->
 <section class="screen" data-screen="6" data-sid="story-data" data-type="explain" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background: still scene, variant A of image7 (slide 17), see SCENE_IMAGES_BRIEF.md"></div>
+  <div class="scene" aria-hidden="true">
+    <img class="screen-bg" src="assets/images/story-data-bg.jpg" alt="">
+    <div class="fx fx-day"></div>
+    <div class="fx fx-glow fx-monitors"></div>
+    <div class="fx fx-glow fx-tablet"></div>
+    <div class="fx fx-glow fx-monitor-r"></div>
+  </div>
   <div class="narration-banner"><p>אמו של מתן סיפרה לו שיש בעיה קטנה עם הנתונים שהגיעו... הם מבולגנים לגמרי! אולי מתן יוכל לעזור לה לעשות בהם סדר?</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
@@ -286,7 +296,13 @@
 
 <!-- ================= SCREEN 10 — מתן נזכר בחופשה (שקף 24) ================= -->
 <section class="screen" data-screen="10" data-sid="story-holiday" data-type="explain" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background: still scene, picture image17 (slide 24), as it is"></div>
+  <div class="scene" aria-hidden="true">
+    <img class="screen-bg" src="assets/images/story-holiday-bg.jpg" alt="">
+    <div class="fx fx-day"></div>
+    <div class="fx fx-glow fx-monitors"></div>
+    <div class="fx fx-glow fx-tablet"></div>
+    <div class="fx fx-glow fx-monitor-r"></div>
+  </div>
   <div class="narration-banner"><p>בזמן שעברו על הנתונים, מתן נזכר שגם המשפחה שלהם טסה לחופשה בקיץ שעבר! הוא רצה לדעת כמה מהנוסעים היו ילדים וכמה מבוגרים. אמו הציעה לו לבדוק את הנתונים ולגלות בעצמו...</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
@@ -333,7 +349,11 @@
 
 <!-- ================= SCREEN 12 — אמא מציגה את הדו"ח לצוות (שקף 27) ================= -->
 <section class="screen" data-screen="12" data-sid="story-team" data-type="explain" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background: still scene, image19 (slide 27) or optional variant B, see SCENE_IMAGES_BRIEF.md"></div>
+  <div class="scene" aria-hidden="true">
+    <img class="screen-bg" src="assets/images/story-team-bg.jpg" alt="">
+    <div class="fx fx-day"></div>
+    <div class="fx fx-glow fx-tablet-team"></div>
+  </div>
   <div class="narration-banner"><p>אמא של מתן הציגה את הדו"ח לצוות שלה.</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
@@ -406,7 +426,11 @@
 
 <!-- ================= SCREEN 16 — הצוות עובר לבדוק יום רגיל (שקף 35) ================= -->
 <section class="screen" data-screen="16" data-sid="story-daily" data-type="explain" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background: still scene, variant C of image19 (slide 35), see SCENE_IMAGES_BRIEF.md"></div>
+  <div class="scene" aria-hidden="true">
+    <img class="screen-bg" src="assets/images/story-daily-bg.jpg" alt="">
+    <div class="fx fx-day"></div>
+    <div class="fx fx-glow fx-tablet-team"></div>
+  </div>
   <div class="narration-banner"><p>אחרי שבדקו את הנתונים החודשיים, הצוות עבר לבדוק מה קורה בשדה התעופה ביום רגיל. המטרה הייתה להבין איך כדאי לחלק את צוותי העבודה בין האזורים השונים בכל יום.</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>

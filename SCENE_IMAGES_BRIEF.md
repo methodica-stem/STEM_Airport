@@ -1,3 +1,5 @@
+> **Update 2026-11-11:** the developer uploaded the generated pictures to `STEM/שדה תעופה/תמונות מגונרטות/` and they are the ones in the lomda. Variant A (screen 6) is not needed: the picture already shows the mother smiling at Matan. The scenes are animated in code (slow drift and pulsing light, like park-drones). Variants B and C are still optional.
+
 # Scene pictures for the screens that lost their video
 
 The script first had 7 videos; budget cut it to 4. Five screens that were once

@@ -733,10 +733,11 @@ button, input, select, textarea { font-family: inherit; }
 /* typed answers */
 .q-in { width: 230px; height: 84px; border: 3px solid #A9C2E6; border-radius: 14px; background: var(--slot-bg); font-size: 44px; }
 
-/* narration bubble: top right, the question-text size, 3 rows at most (the width is set per screen) */
+/* narration bubble: the park-drones style, a translucent card flush to the top-right corner, text at the
+   question-text size, 3 rows at most (the width is set per screen and measured by layout_check.py) */
 .narration-banner {
-  top: 22px; right: 24px; left: auto; width: 1004px; padding: 14px 36px;
-  background: #fff; border: 3px solid #000; border-radius: 36px; color: #000;
+  top: 0; right: 0; left: auto; width: 1110px; padding: 44px 60px 44px 68px; border: none;
+  background: rgba(238,243,230,.9); border-radius: 0 0 0 64px; text-align: right; color: #1A1A1A;
 }
 /* the video control bar stays clear of the two arrows */
 .vctrls { left: 200px; right: 200px; }
@@ -746,6 +747,32 @@ button, input, select, textarea { font-family: inherit; }
   background: rgba(0,0,0,.6); color: #fff; border-radius: 8px; font-size: 28px; font-weight: 600;
 }
 
+/* ---- Animated stills (the picture-and-narration screens): the whole scene breathes ----
+   Like park-drones, only opacity and transform change (light on a school laptop), nothing flashes, each loop runs
+   forward and back so there is no jump, and prefers-reduced-motion leaves the picture as drawn. The picture and the
+   light layers sit in one .scene so they zoom together. */
+.scene { position: absolute; inset: 0; overflow: hidden; }
+.fx { position: absolute; pointer-events: none; user-select: none; }
+.screen.active .scene { animation: sceneDrift 38s ease-in-out infinite alternate; transform-origin: 62% 45%; }
+@keyframes sceneDrift { from { transform: scale(1) translate(0, 0); } to { transform: scale(1.07) translate(-16px, -8px); } }
+.fx-day { left: 0; top: 0; width: 1920px; height: 430px; opacity: .15;
+  background: linear-gradient(to bottom, rgba(255,236,190,.6), rgba(255,236,190,0)); }
+.screen.active .fx-day { animation: fxDay 7s ease-in-out infinite alternate; }
+.fx-glow { opacity: .1; background: radial-gradient(ellipse at center, rgba(150,200,255,.65) 0%, rgba(150,200,255,0) 68%); }
+.screen.active .fx-glow { animation: fxGlow 3.6s ease-in-out infinite alternate; }
+.screen.active .fx-glow:nth-of-type(3) { animation-duration: 4.7s; animation-delay: -1.3s; }
+.screen.active .fx-glow:nth-of-type(4) { animation-duration: 5.9s; animation-delay: -2.6s; }
+@keyframes fxDay { from { opacity: .12; } to { opacity: .85; } }
+@keyframes fxGlow { from { opacity: .08; } to { opacity: .9; } }
+.fx-wall { left: -60px; top: -20px; width: 330px; height: 340px; }
+.fx-monitors { left: 640px; top: 300px; width: 640px; height: 270px; }
+.fx-tablet { left: 900px; top: 650px; width: 500px; height: 330px; }
+.fx-monitor-r { left: 1540px; top: 320px; width: 420px; height: 300px; }
+.fx-tablet-team { left: 780px; top: 580px; width: 480px; height: 260px; }
+[data-sid="story-holiday"] .scene { transform-origin: 40% 45%; }
+[data-sid="story-team"] .scene, [data-sid="story-daily"] .scene { transform-origin: 50% 45%; }
+@media (prefers-reduced-motion: reduce) { .screen.active .scene, .screen.active .fx { animation: none !important; } .fx { opacity: 0; } }
+
 /* ---------- 5. Per-screen positions ----------
    One block per screen, by data-sid, in screen order. Example:
    [data-sid="q1"] .q-card { top: 140px; right: 80px; width: 1100px; }
@@ -753,24 +780,22 @@ button, input, select, textarea { font-family: inherit; }
 
 /* ---- 1 · video-intro ---- */
 /* ---- 2 · story-office ---- */
-[data-sid="story-office"] .narration-banner { width: 1004px; }
-/* ---- 3 · q1: four reading cards ---- */
-/* The cards sit on the right, under the text; the free left side takes the "try again" box. The final
-   feedback is long (four readings): like the storyboard's own slide 11 it covers the cards, and has a close X. */
+[data-sid="story-office"] .narration-banner { width: 1110px; }
+[data-sid="story-team"] .narration-banner { width: 760px; }
+/* ---- 3 · q1: four reading cards (the script's skyline cards) ---- */
+/* Four cards across the panel; the "try again" box sits under them. The long final feedback (four readings) covers
+   the lower part of the cards, as the storyboard's own slide 11 does, and has a close X. */
 [data-sid="q1"] .q-card { padding-top: 36px; }
-[data-sid="q1"] .q-answers { flex-direction: row; justify-content: flex-start; gap: 28px; max-width: none; margin-top: 8px; }
-[data-sid="q1"] .reader-card { position: relative; flex-direction: column; align-items: center; gap: 10px; width: 228px; }
-[data-sid="q1"] .reader-pic { display: block; width: 228px; height: 257px; }
-[data-sid="q1"] .reader-card .q-mark { position: absolute; top: 14px; right: 14px; margin: 0; width: 34px; height: 34px; z-index: 2; }
-[data-sid="q1"] .reader-media { position: absolute; left: 10px; bottom: 100px; width: 0; height: 0; }
-[data-sid="q1"] .reader-label {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; width: 228px; min-height: 90px;
-  border: 20px solid transparent; border-image: url('assets/images/ui-chip.png') 28 fill / 20px stretch; box-sizing: border-box;
-  font-size: 32px; font-weight: 800; line-height: 1.15; color: #000;
-}
-[data-sid="q1"] .card-city, [data-sid="q1"] .card-num { display: block; }
-[data-sid="q1"] .reader-card.selected .reader-pic { outline: 6px solid var(--accent); outline-offset: -6px; border-radius: 24px; }
-#feedback-popup.fb-q1.retry { left: 116px; bottom: 200px; width: 600px; }
+[data-sid="q1"] .q-answers { flex-direction: row; justify-content: flex-start; gap: 24px; max-width: none; margin-top: 10px; }
+[data-sid="q1"] .reader-card { position: relative; display: block; width: 370px; height: 320px; flex: none; }
+[data-sid="q1"] .reader-pic { display: block; width: 370px; height: 320px; }
+/* the painted radio circle of the picture is covered by the real one, same place and size */
+[data-sid="q1"] .reader-card .q-mark { position: absolute; top: 21px; right: 33px; margin: 0; width: 46px; height: 46px; border: 5px solid #0E1B4D; z-index: 2; }
+[data-sid="q1"] .reader-card.selected .reader-pic { outline: 6px solid var(--accent); outline-offset: -6px; border-radius: 40px; }
+[data-sid="q1"] .reader-label { position: absolute; left: 16px; right: 16px; top: 162px; text-align: center; font-size: 32px; font-weight: 800; line-height: 1.2; color: #000; }
+[data-sid="q1"] .card-city, [data-sid="q1"] .card-num { display: inline; }
+[data-sid="q1"] .reader-media { position: absolute; left: 14px; right: 14px; bottom: 22px; height: 62px; }
+#feedback-popup.fb-q1.retry { left: 116px; bottom: 190px; width: 900px; max-width: none; }
 #feedback-popup.fb-q1.correct, #feedback-popup.fb-q1.wrong2 { left: 100px; bottom: 190px; width: 1560px; max-width: none; }
 /* ---- 4 · video-estimate ---- */
 /* ---- 5 · q2: round to tens of thousands ---- */

@@ -15,13 +15,14 @@ All text is live HTML, so no picture is exported with words in it.
 | ✔ | `assets/images/ui-chip.png` | `#3 15/תוכן שאלה/כרטיס` | 311 | 445 | 290 | 76 | the blue-grey glass button every drag chip uses; stretched with border-image so the text can grow |
 | ✔ | `assets/images/ui-bulb.png` | `#4 20/תוכן שאלה/נורה` | 1137 | 299 | 95 | 95 | the light-bulb "information" button, used in questions 3 and 4א [shadow] |
 
-## Screen 3 — q1 (PSD frame 2)
-| ✔ | file | PSD layer | x | y | w | h | how |
+## Screen 3 — q1 (the script's picture, not the PSD)
+Question 1 uses the generated picture that matches the script: `תמונות מגונרטות/Skyline Soundscapes Playlist Cards.png`, cut into four cards by hand (not from the PSD). The PSD's four pictures of Matan reading are not used.
+| ✔ | file | source | x | y | w | h | how |
 |---|---|---|---|---|---|---|---|
-| ✔ | `assets/images/q1-reader-1.png` | `#2 10/סרטונים/סרטון 1` | 1314 | 339 | 304 | 342 | the picture of Matan reading, card 1 (right) [shadow] |
-| ✔ | `assets/images/q1-reader-2.png` | `#2 10/סרטונים/סרטון 2` | 993 | 339 | 304 | 342 | card 2 [shadow] |
-| ✔ | `assets/images/q1-reader-3.png` | `#2 10/סרטונים/סרטון 3` | 674 | 339 | 304 | 342 | card 3 [shadow] |
-| ✔ | `assets/images/q1-reader-4.png` | `#2 10/סרטונים/סרטון 4` | 353 | 339 | 304 | 342 | card 4 (left) [shadow] |
+| ✔ | `assets/images/q1-card-dubai.png` | Skyline picture, card 1 | 19 | 150 | 535 | 462 | cut from the picture, with its soft shadow |
+| ✔ | `assets/images/q1-card-frankfurt.png` | Skyline picture, card 2 | 554 | 150 | 535 | 462 | same |
+| ✔ | `assets/images/q1-card-tokyo.png` | Skyline picture, card 3 | 1088 | 150 | 537 | 462 | same |
+| ✔ | `assets/images/q1-card-paris.png` | Skyline picture, card 4 | 1626 | 150 | 535 | 462 | same |
 
 ## Screen 7 — q3 (PSD frame 4)
 | ✔ | file | PSD layer | x | y | w | h | how |
