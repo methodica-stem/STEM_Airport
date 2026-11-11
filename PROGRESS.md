@@ -86,5 +86,7 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - Caption times in the 4 videos are even placeholders until the videos and their SRTs arrive. No videos, audio, narration or animations exist yet (question 10 decides the narration button; the small animations are replaced by stills).
 - The 5 picture-and-narration screens wait for the generated variants (SCENE_IMAGES_BRIEF.md); the developer said "not now" on 2026-11-11, so screens 6 and 16 keep a placeholder until then.
 
+- qa_check warns that a few labels never wrap (q1 card labels, the q5 chips and right cards, the "nowrap" date words in the q5 captions): the longer Arabic will not fit as is. To handle in Phase 7 with the pseudo-Arabic copy (smaller text or two lines).
+
 ## Delivery log
 <!-- date · git commit · repo link · SharePoint link · what changed since the last one -->
