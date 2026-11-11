@@ -1,0 +1,690 @@
+/* ===================================================================
+   styles.css — lomda stylesheet (starter from the stem-lomda-builder skill)
+
+   Fixed 1920x1080 stage, scaled to the window by script.js. Every left /
+   top / width / height below is a real PSD pixel: read it from the PSD
+   inventory, do not eyeball it.
+
+   Sections:
+     1. Design tokens — the only part to change for a new design
+     2. Fonts, base, stage
+     3. Shared parts — navigation, buttons, panels, feedback, stepper
+     4. Screen types — video, tiles, questions, drag and drop, applets
+     5. Per-screen positions — one block per screen, at the end
+   =================================================================== */
+
+/* ---------- 1. Design tokens ---------- */
+:root {
+  /* Science palette from the approved lomdot; replace with the PSD's colours. */
+  --subject-500: #17165B;        /* titles */
+  --subject-600: #0690D0;
+  --accent: #299FD4;             /* stepper pills, focus, highlights */
+  --text: #222222;
+  --panel-bg: #FFFDF7;           /* question card */
+  --panel-border: #082836;
+  --btn-bg: #404040;             /* "האם צדקתי?" and other primary buttons */
+  --btn-text: #FFF8E6;
+  --fb-bg: #1a1a1a;              /* feedback popup */
+  --fb-text: #fcfafa;
+  --fb-correct: #44A84B;         /* "צדקת!" */
+  --fb-wrong: #B67BE0;           /* retry / partial / wrong — never red */
+  --mark-size: 22px;             /* ✓ / ✕ drawn inside a 28 px radio or checkbox (shapes, see .q-opt.correct) */
+  --mark-check: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M4 12.5l5 5L20 6.5' fill='none' stroke='%23000' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  --mark-x: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 5l14 14M19 5L5 19' fill='none' stroke='%23000' stroke-width='3.4' stroke-linecap='round'/%3E%3C/svg%3E");
+  --popup-bg: #FBF2C9;           /* help popup paper */
+  --paper: #F3EBD8;              /* a table's paper card */
+  --paper-line: #4E5A3E;         /* table lines */
+  --table-head: #D9DCC7;
+  --opt-correct: #4d6f11;
+  --opt-wrong: #ca433d;          /* only on the final reveal */
+  --chip-bg: #156082;
+  --chip-text: #ffffff;
+  --term-color: #4D90D8;
+  --font-main: 'Assistant';      /* one family name for the whole lomda (the Arabic build swaps it in one place) */
+  /* HOUSE TEXT SIZES — one set for every question screen (the SMEs found the PSD's
+     33 px too small; Yael wants ONE reproducible size, not per-screen sizes).
+     Change these three tokens, never a screen. Text that is part of the artwork
+     (tables, labels on a map, a banner the designer sized) keeps the PSD size. */
+  --text-size: 40px;             /* question text and instructions */
+  --fb-size: 34px;               /* feedback text (retry boxes too) */
+  --fb-title-size: 46px;         /* feedback headers: צדקת! / זו טעות */
+  --focus: 3px solid #299FD4;
+}
+
+/* ---------- 2. Fonts, base, stage ---------- */
+/* Fonts ship with the lomda (assets/fonts); nothing loads from the internet. */
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-ExtraLight.ttf') format('truetype'); font-weight: 200; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-Light.ttf') format('truetype'); font-weight: 300; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-Regular.ttf') format('truetype'); font-weight: 400; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-Medium.ttf') format('truetype'); font-weight: 500; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-SemiBold.ttf') format('truetype'); font-weight: 600; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-Bold.ttf') format('truetype'); font-weight: 700; font-display: swap; }
+@font-face { font-family: 'Assistant'; src: url('assets/fonts/Assistant-ExtraBold.ttf') format('truetype'); font-weight: 800; font-display: swap; }
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  overflow: hidden;
+  direction: rtl;
+  font-family: var(--font-main), sans-serif;
+  background: #000;
+  color: var(--text);
+}
+button, input, select, textarea { font-family: inherit; }
+
+#app {
+  position: absolute; top: 0; left: 0;
+  width: 1920px; height: 1080px;
+  transform-origin: top left;
+  background: #0a0a0a;
+  overflow: hidden;
+}
+.screen {
+  display: none;
+  position: absolute; inset: 0;
+  width: 1920px; height: 1080px;
+  overflow: hidden;
+}
+.screen.active { display: block; }
+.screen:focus { outline: none; }
+
+.screen-bg {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  pointer-events: none; user-select: none;
+}
+/* Stand-in until the real background is exported from the PSD. */
+.bg-placeholder { background: linear-gradient(160deg, #3d5a73, #1b2a38); }
+
+.hidden { display: none !important; }
+[onclick], [role="button"], [data-action] { cursor: pointer; }
+:focus-visible { outline: var(--focus); outline-offset: 3px; }
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+/* Numbers, units and symbols keep their own order inside Hebrew text:
+   <span class="ltr">120°C</span> */
+.ltr { direction: ltr; unicode-bidi: isolate; display: inline-block; }
+
+/* ---------- 3. Shared parts ---------- */
+/* Navigation. RTL: forward is on the LEFT, back on the RIGHT.
+   Replace the CSS arrows with the PSD's exported buttons:
+   .nav-next { background: url('assets/images/ui-btn-next.png') center / contain no-repeat; } */
+.nav-btn {
+  position: absolute; bottom: 24px;
+  width: 96px; height: 96px;
+  border: none; border-radius: 50%;
+  background: rgba(255,255,255,.92);
+  box-shadow: 0 2px 8px rgba(0,0,0,.35);
+  cursor: pointer; padding: 0;
+  z-index: 15;
+}
+.nav-btn::before {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 26px; height: 26px;
+  border-top: 7px solid var(--subject-500); border-left: 7px solid var(--subject-500);
+}
+.nav-next { left: 32px; }
+.nav-next::before { transform: translate(-30%, -50%) rotate(-45deg); }
+.nav-prev { right: 32px; }
+.nav-prev::before { transform: translate(-70%, -50%) rotate(135deg); }
+.nav-btn:hover { filter: brightness(1.08); }
+.nav-btn.blink { animation: blinkArrow 1.1s infinite; }
+@keyframes blinkArrow { 0%, 100% { opacity: 1; } 50% { opacity: .35; } }
+
+.btn-primary {
+  position: absolute;
+  min-width: 260px; height: 88px; padding: 0 40px;
+  border: none; border-radius: 22px;
+  background: var(--btn-bg); color: var(--btn-text);
+  font-size: 40px; font-weight: 800;
+  cursor: pointer; z-index: 12;
+}
+.btn-primary:hover { filter: brightness(1.15); }
+
+/* The check button stays hidden until there is something to check — never
+   shown faded. The disabled attribute alone hides it, so the page is right
+   even before script.js runs. */
+.btn-check {
+  position: absolute; bottom: 60px; right: 160px;
+  min-width: 230px; height: 84px; padding: 0 28px;
+  border: 3px solid var(--btn-text); border-radius: 18px;
+  background: var(--btn-bg); color: var(--btn-text);
+  font-size: 34px; font-weight: 800;
+  cursor: pointer; z-index: 12;
+}
+.btn-check:disabled { display: none; }
+.btn-check:hover { filter: brightness(1.15); }
+
+/* Narration banner at the top of a screen (the storyboard's banner shape). */
+.narration-banner {
+  position: absolute; top: 0; right: 360px; left: 360px;
+  padding: 18px 40px;
+  background: #FFF8E6; border: 3px solid var(--panel-border); border-top: none;
+  border-radius: 0 0 36px 36px;
+  font-size: var(--text-size); font-weight: 600; line-height: 1.45;   /* the same size as the question text; at most 3 rows (layout_check.py) */
+  z-index: 6;
+}
+.narration-banner p { margin: 0; }
+
+.text-panel {
+  position: absolute; top: 160px; right: 160px; width: 900px;
+  padding: 36px 44px;
+  background: rgba(255,255,255,.95); border-radius: 30px;
+  font-size: var(--text-size); font-weight: 600; line-height: 1.6;
+}
+.text-panel p { margin: 0 0 12px; }
+
+/* Question screens: dimmed background + white card. */
+.q-overlay { position: absolute; inset: 0; background: rgba(35,35,35,.6); }
+.q-card {
+  /* HOUSE PANEL: 1800 x 798 at x 60, y 120 — the largest the stage allows, so the
+     house text sizes fit. Drawn in CSS (it grows with Arabic), NOT painted into the
+     background picture: export the background without the designer's panel. */
+  position: absolute; top: 120px; right: 60px; left: 60px; bottom: 162px;
+  padding: 44px 60px;
+  background: var(--panel-bg);
+  border: 4px solid var(--panel-border); border-radius: 48px;
+  overflow: visible;
+}
+.q-title { margin: 0 0 10px; font-size: var(--text-size); font-weight: 800; color: var(--subject-500); }
+.q-body, .q-instruction { margin: 0 0 14px; font-size: var(--text-size); font-weight: 600; line-height: 1.5; }
+.q-body strong { font-weight: 800; }
+
+/* Feedback popup — one for the whole lomda, outside every screen. Long
+   text grows UPWARD (anchored at the bottom), so keep it clear of the top
+   of the stage. Move it per screen with #feedback-popup.fb-<sid>. */
+#feedback-popup {
+  position: absolute; left: 110px; bottom: 170px;
+  width: 760px; max-width: 44%;
+  padding: 28px 40px;
+  background: var(--fb-bg); color: var(--fb-text);
+  border-radius: 40px;
+  box-shadow: 0 4px 18px rgba(0,0,0,.35);
+  z-index: 200;
+  display: none;
+}
+#feedback-popup.show { display: block; }
+#feedback-popup:focus { outline: none; }
+.fb-title-row { display: flex; align-items: center; gap: 12px; margin: 0 0 8px; }
+.fb-title { font-size: var(--fb-title-size); font-weight: 800; line-height: 1.3; }
+#feedback-popup.correct .fb-title { color: var(--fb-correct); }
+#feedback-popup.retry .fb-title, #feedback-popup.retryPartial .fb-title,
+#feedback-popup.partial .fb-title, #feedback-popup.wrong2 .fb-title { color: var(--fb-wrong); }
+/* The icon is never the only signal — the title says the outcome in words. */
+.fb-icon { display: none; width: 36px; height: 36px; flex: 0 0 auto; background: center / contain no-repeat; }
+#feedback-popup.correct .fb-icon { display: inline-block; background-image: url('assets/images/ui-fb-correct.svg'); }
+#feedback-popup.wrong2 .fb-icon, #feedback-popup.partial .fb-icon { display: inline-block; background-image: url('assets/images/ui-fb-try.svg'); }
+.fb-body p, .fb-body li { margin: 0 0 6px; font-size: var(--fb-size); font-weight: 600; line-height: 1.35; }
+
+/* ---- The end of the lomda: score pop-up, then the dark "back to the Moodle" screen ----
+   Both cover the whole stage, above everything (feedback 200, popups 60). */
+#final-score, #final-return { position: absolute; inset: 0; z-index: 400; }
+#final-score[hidden], #final-return[hidden] { display: none; }
+#final-score { display: flex; align-items: center; justify-content: center; background: rgba(20, 20, 20, .6); }
+#final-score:focus, #final-return:focus { outline: none; }
+.final-score-card {
+  position: relative; width: 1060px; padding: 70px 65px; text-align: center;
+  background: var(--popup-bg); border: 7px solid #1F1F1F; border-radius: 46px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.55); color: #171717;
+}
+.final-score-card h1 { margin: 20px 0; font-size: 48px; line-height: 1.3; font-weight: 800; }
+.final-score-value { margin: 20px 0; font-size: 60px; line-height: 1.3; font-weight: 700; }
+.final-score-hint { margin: 22px 0 0; font-size: var(--fb-size); font-weight: 600; }
+.final-score-close {
+  position: absolute; left: -20px; top: -16px; width: 62px; height: 62px; padding: 0;
+  border: 3px solid #fff; border-radius: 50%; background: #292929; box-shadow: 0 0 0 3px #292929; cursor: pointer;
+}
+.final-score-close::before, .final-score-close::after {       /* the X is two bars: centred by geometry, whatever the font */
+  content: ''; position: absolute; top: 50%; left: 50%; width: 30px; height: 5px; border-radius: 3px; background: #fff;
+}
+.final-score-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.final-score-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.final-score-close:focus-visible { outline: 5px solid #ffcc00; outline-offset: 6px; }
+#final-return { display: flex; align-items: center; justify-content: center; background: #000; color: #fff; text-align: center; }
+#final-return p { margin: 0; width: 1700px; font-size: 82px; line-height: 1.5; font-weight: 700; }
+
+/* Close X on a feedback box: only on a screen marked data-feedback-close, final feedback only. */
+.fb-close { display: none; position: absolute; top: 14px; left: 16px; width: 48px; height: 48px; padding: 0; border: none; border-radius: 50%;
+  background: rgba(255,255,255,.16); cursor: pointer; }
+.fb-close::before, .fb-close::after { content: ''; position: absolute; top: 50%; left: 50%; width: 26px; height: 4px; border-radius: 2px; background: #fff; }
+.fb-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.fb-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.fb-close:hover { background: rgba(255,255,255,.3); }
+#feedback-popup.has-close .fb-close { display: block; }
+#feedback-popup.has-close .fb-title-row { padding-left: 64px; }
+
+/* Question stepper (progress pills) — built by script.js from data-step. */
+.q-stepper {
+  position: absolute; top: 34px; left: 50%; transform: translateX(-50%);
+  display: none; gap: 14px; z-index: 20;
+  direction: rtl;
+}
+.q-stepper.visible { display: flex; }
+.q-step {
+  width: 46px; height: 46px; border-radius: 50%;
+  border: 5px solid var(--accent); background: #fff; color: var(--accent);
+  font-size: 28px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+}
+.q-step.active { background: var(--accent); color: #fff; }
+
+/* Glossary term with a tooltip (hover/focus; tap on touch). The tip sits
+   after the paragraph and is shown by script.js; place it per screen. */
+.term {
+  border: none; background: none; padding: 0; margin: 0;
+  font: inherit; color: var(--term-color); text-decoration: underline dotted;
+  cursor: help;
+}
+.term-tip {
+  display: none; position: absolute; z-index: 30;
+  max-width: 520px; padding: 16px 22px;
+  background: #fff; border: 2px solid var(--term-color); border-radius: 16px;
+  box-shadow: 0 4px 14px rgba(0,0,0,.25);
+  font-size: 26px; font-weight: 500; line-height: 1.4; color: var(--text);
+}
+.term-tip.show { display: block; }
+
+/* A fraction inside the text: <span class="frac"><span>2</span><span>5</span></span>
+   (numerator first). Stays text, so it is translated and read aloud; the
+   storyboard reader and qa_check write it as "2/5". Never a picture. */
+.frac {
+  display: inline-flex; flex-direction: column; vertical-align: middle;
+  text-align: center; line-height: 1; margin: 0 .15em; direction: ltr;
+  unicode-bidi: isolate;
+}
+.frac > span:first-child { border-bottom: .07em solid currentColor; padding: 0 .15em .08em; }
+.frac > span:last-child { padding-top: .08em; }
+/* An equation (one Office equation in the storyboard) reads left to right,
+   as in math, inside the Hebrew sentence: <span class="eq">… = …</span>.
+   Plain-text sums like "12 = 5 : 60" stay plain text, exactly as written. */
+.eq { direction: ltr; unicode-bidi: isolate; white-space: nowrap; }
+
+/* Placeholders while an asset is still missing:
+   <div class="applet-frame" data-pending-asset="applet: soil simulation (slide 26)"></div>
+   qa_check.py lists every one, and make_upload_zip.py refuses to package them. */
+.applet-frame[data-pending-asset], .figure-frame[data-pending-asset], div.screen-bg[data-pending-asset] {
+  background: repeating-linear-gradient(45deg, #dfe4e8 0 22px, #d3d9de 22px 44px);
+  display: flex; align-items: center; justify-content: center;
+}
+.applet-frame[data-pending-asset]::after, .figure-frame[data-pending-asset]::after, div.screen-bg[data-pending-asset]::after {
+  content: 'TO DO — ' attr(data-pending-asset);
+  font: 600 28px/1.3 var(--font-main), sans-serif; color: #44505a; direction: ltr;
+  padding: 16px 24px; background: rgba(255,255,255,.85); border-radius: 12px;
+}
+
+/* Image zoom */
+.figure-frame { position: absolute; margin: 0; background: #fff; border-radius: 20px; padding: 16px; }
+.figure-frame img { display: block; width: 100%; height: auto; }
+.zoom-btn {
+  position: absolute; top: 12px; left: 12px; width: 54px; height: 54px;
+  border: none; border-radius: 50%; background: var(--subject-500) url('assets/images/ui-zoom.svg') center / 60% no-repeat;
+  cursor: pointer;
+}
+#img-zoom-modal {
+  position: absolute; inset: 0; z-index: 300;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(0,0,0,.7);
+}
+#img-zoom-modal.show { display: flex; }
+.img-zoom-panel { position: relative; max-width: 1600px; max-height: 960px; padding: 24px; background: #fff; border-radius: 24px; }
+#img-zoom-body img { display: block; max-width: 1550px; max-height: 900px; }
+.img-zoom-close {
+  position: absolute; top: -22px; right: -22px; width: 56px; height: 56px;
+  border: none; border-radius: 50%; background: var(--btn-bg); color: #fff; font-size: 28px; cursor: pointer;
+}
+
+/* Reopen popup: an earlier screen's applet / diagram shown again. */
+.reopen-btn {
+  position: absolute; top: 24px; right: 40px; z-index: 25;
+  height: 64px; padding: 0 28px;
+  border: none; border-radius: 32px;
+  background: #3A3A3A; color: #fff;
+  font-size: 26px; font-weight: 700; cursor: pointer;
+}
+.reopen-btn.is-open { background: var(--accent); }
+#reopen-popup {
+  position: absolute; top: 110px; right: 40px; z-index: 250;
+  width: 1100px; height: 700px; padding: 16px;
+  display: none;
+  background: #fff; border-radius: 24px; box-shadow: 0 6px 24px rgba(0,0,0,.45);
+}
+#reopen-popup.show { display: block; }
+#reopen-popup-body, #reopen-popup-body > * { position: static; width: 100%; height: 100%; }
+#reopen-popup-body img { object-fit: contain; }
+
+/* ---------- 4. Screen types ---------- */
+/* Video */
+.video-wrap { position: absolute; inset: 0; z-index: 1; }
+.video-wrap video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; background: #000; }
+.video-caption {
+  position: absolute; inset: 0; z-index: 3;
+  display: flex; align-items: flex-end; justify-content: center;
+  padding-bottom: 90px; pointer-events: none;
+}
+.video-caption p {
+  margin: 0; max-width: 1400px; text-align: center;
+  unicode-bidi: plaintext; white-space: pre-line;
+  background: rgba(0,0,0,.75); color: #fff;
+  font-size: 34px; font-weight: 600; line-height: 1.4;
+  padding: 10px 24px; border-radius: 8px;
+}
+.play-btn-big {
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  width: 220px; height: 220px; border: none; border-radius: 50%;
+  background: rgba(60,60,60,.75); cursor: pointer; z-index: 5;
+}
+.play-btn-big::before {
+  content: ''; position: absolute; top: 50%; left: 54%; transform: translate(-50%, -50%);
+  border-style: solid; border-width: 52px 0 52px 86px; border-color: transparent transparent transparent #fff;
+}
+.vctrls {
+  position: absolute; left: 150px; right: 150px; bottom: 0; z-index: 14;
+  height: 58px; padding: 0 22px;
+  display: flex; align-items: center; gap: 12px;
+  border-radius: 12px 12px 0 0;
+  background: linear-gradient(to top, rgba(0,0,0,.78), rgba(0,0,0,.32));
+}
+.vc-btn {
+  flex: 0 0 auto; width: 36px; height: 36px;
+  border: none; border-radius: 50%;
+  background: rgba(255,255,255,.12); color: #fff; font-size: 18px; line-height: 1;
+  display: flex; align-items: center; justify-content: center; cursor: pointer;
+}
+.vc-btn:hover { background: rgba(255,255,255,.22); }
+.vc-btn:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.vc-cc { width: auto; padding: 0 8px; border-radius: 8px; font-size: 13px; font-weight: 700; }
+.vc-cc.is-off { color: rgba(255,255,255,.5); }
+.vc-time { flex: 0 0 auto; min-width: 40px; color: #fff; font-size: 15px; text-align: center; font-variant-numeric: tabular-nums; }
+.vc-seek { flex: 1 1 auto; accent-color: var(--accent); }
+.vc-vol { flex: 0 0 90px; accent-color: var(--accent); }
+
+/* Reveal tiles */
+.tiles { position: absolute; top: 220px; right: 120px; display: flex; flex-direction: column; gap: 24px; z-index: 4; }
+.tile {
+  position: relative; width: 150px; height: 150px; border-radius: 50%;
+  background: #fff; border: 6px solid transparent;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 48px; font-weight: 800; color: var(--subject-500);
+  transition: filter .2s;
+}
+.tile.current { border-color: var(--fb-correct); }
+.tile.viewed:not(.current) { filter: grayscale(1) brightness(.85); }
+.tile-check {
+  display: none; position: absolute; bottom: -4px; left: -4px;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--fb-correct); color: #fff; font-size: 28px;
+  align-items: center; justify-content: center;
+}
+.tile.viewed .tile-check { display: flex; }
+.tiles-board {
+  position: absolute; top: 260px; right: 420px; width: 1000px; min-height: 200px;
+  padding: 36px 44px; background: rgba(255,255,255,.95); border-radius: 30px;
+  font-size: 36px; font-weight: 600; line-height: 1.5;
+}
+.tiles-board.empty { visibility: hidden; }
+/* card-flip mode */
+.tiles[data-mode="card-flip"] .tile { width: 380px; height: 480px; border-radius: 24px; }
+.tile .tile-content { font-size: 28px; line-height: 1.4; padding: 24px; }
+.tiles[data-mode="card-flip"] .tile.flipped .tile-face { display: none; }
+.tiles[data-mode="card-flip"] .tile.flipped .tile-content { display: block !important; }
+
+/* Answer options — single (round mark) and multi (square mark) */
+.q-answers { display: flex; flex-direction: column; gap: 14px; max-width: 1300px; }
+.q-opt {
+  display: flex; align-items: flex-start; gap: 16px;
+  font-size: var(--text-size); font-weight: 600; line-height: 1.4;
+  cursor: pointer;
+}
+.q-mark {
+  flex: 0 0 auto; position: relative;
+  width: 28px; height: 28px; margin-top: 10px;
+  border: 3px solid var(--subject-500); border-radius: 50%; background: #fff;
+}
+.q-opt[data-multi] .q-mark { border-radius: 6px; }
+.q-opt.selected .q-mark::after { content: ''; position: absolute; inset: 5px; border-radius: inherit; background: var(--subject-500); }
+.q-opt.correct { color: var(--opt-correct); }
+.q-opt.correct .q-mark { border-color: var(--opt-correct); }
+.q-opt.wrong { color: var(--opt-wrong); }
+.q-opt.wrong .q-mark { border-color: var(--opt-wrong); }
+/* ✓ and ✕ ON THE FINAL REVEAL — always centred on the control, by geometry:
+   - drawn as shapes (a mask), never as text glyphs: a glyph's position depends on the font
+     that happens to supply it, a shape is exactly where the CSS puts it;
+   - centred with left/top 50% + translate, never nudged with top:-10px / right:-6px: a nudge
+     is right for one control size and one font, and wrong after any change;
+   - inside the control, so the mark never moves when the layout does (RTL included).
+   The check and the cross share one box (--mark-size), so they line up with each other too.
+   engine_test.py measures this in a browser; do not "fix" a mark by offsetting it. */
+.q-opt.correct .q-mark::after, .q-opt.wrong .q-mark::after {
+  content: ''; position: absolute; inset: auto; left: 50%; top: 50%;
+  width: var(--mark-size); height: var(--mark-size); transform: translate(-50%, -50%);
+  border-radius: 0; background: var(--opt-correct);
+  -webkit-mask: var(--mark-check) center / contain no-repeat; mask: var(--mark-check) center / contain no-repeat;
+}
+.q-opt.wrong .q-mark::after {
+  background: var(--opt-wrong);
+  -webkit-mask-image: var(--mark-x); mask-image: var(--mark-x);
+}
+
+/* Drag and drop */
+.dnd-bank { display: flex; flex-wrap: wrap; gap: 14px; min-height: 64px; margin: 10px 0 26px; }
+.dnd-chip {
+  min-height: 56px; padding: 6px 22px;
+  border: none; border-radius: 12px;
+  background: var(--chip-bg); color: var(--chip-text);
+  font-size: 28px; font-weight: 700;
+  cursor: grab; touch-action: none; user-select: none;
+}
+.dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3px; }
+.dnd-chip.dragging { opacity: .35; }
+.dnd-chip.locked { cursor: default; }
+.dnd-ghost { position: absolute; z-index: 400; pointer-events: none; opacity: .92; box-shadow: 0 6px 18px rgba(0,0,0,.35); }
+.dnd-slot {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-width: 190px; min-height: 60px; margin: 4px 6px; vertical-align: middle;
+  border: 3px dashed #8a8a8a; border-radius: 12px; background: #fff;
+}
+.dnd-slot.filled { border-style: solid; border-color: transparent; }
+.dnd-slot.drop-target { border-color: var(--accent); background: #eaf6fc; }
+.dnd-slot.correct { border: 3px solid var(--opt-correct); }
+.dnd-slot.wrong { border: 3px solid var(--opt-wrong); }
+/* Final state of a drag question that sets data-dnd-final="compare" (screen-patterns.md, "Drag to rows: the final state"):
+   the learner's own cards stay, outlined thick in green (right) or red (wrong) with an INSET outline, so the outline is exactly
+   the card's shape and never bigger; a round check or cross (.dnd-mark) and, on a wrong row only, the right card (.dnd-fix). */
+[data-dnd-final="compare"] .dnd-slot.correct, [data-dnd-final="compare"] .dnd-slot.wrong { border-color: transparent; }
+[data-dnd-final="compare"] .dnd-slot.correct .dnd-chip { outline: 8px solid var(--opt-correct); outline-offset: -8px; }
+[data-dnd-final="compare"] .dnd-slot.wrong .dnd-chip { outline: 8px solid var(--opt-wrong); outline-offset: -8px; }
+.dnd-mark { position: relative; flex: none; width: 56px; height: 56px; border-radius: 50%; }
+.dnd-mark.ok { background: var(--opt-correct); }
+.dnd-mark.no { background: var(--opt-wrong); }
+.dnd-mark::after { content: ''; position: absolute; inset: 14px; background: #fff;
+  -webkit-mask: var(--mark-check) center / contain no-repeat; mask: var(--mark-check) center / contain no-repeat; }
+.dnd-mark.no::after { -webkit-mask-image: var(--mark-x); mask-image: var(--mark-x); }
+.dnd-fix { box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 190px; min-height: 60px; padding: 6px 22px; border: 8px solid var(--opt-correct); border-radius: 12px;
+  background: var(--chip-bg); color: var(--chip-text); font-size: 28px; font-weight: 700; }
+.cloze { font-size: var(--text-size); font-weight: 600; line-height: 2.1; }
+
+/* Applets */
+.applet-frame {
+  position: absolute; top: 160px; left: 220px; width: 1480px; height: 820px;
+  border-radius: 24px; overflow: hidden; background: #fff;
+  box-shadow: 0 6px 24px rgba(0,0,0,.35);
+}
+.applet-frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+
+@media (prefers-reduced-motion: reduce) {
+  .nav-btn.blink { animation: none; }
+  * { transition: none !important; }
+}
+
+/* Patterns used by later screens (see references/screen-patterns.md) */
+/* Guided hub: branch buttons; the next branch moves on (data-action="next"). */
+.hub-btn {
+  position: absolute; min-width: 320px; height: 76px; padding: 0 30px;
+  border: none; border-radius: 18px; background: #3A7D22; color: #fff;
+  font-size: 30px; font-weight: 700; cursor: pointer;
+}
+.hub-btn:disabled { background: #9aa39a; cursor: default; }
+.hub-btn.done { background: #3a3a3a; }
+.hub-btn.done::after { content: ' ✓'; }
+/* Ordering table for drag-to-order questions. */
+.order-table { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.order-table li { display: flex; align-items: center; gap: 16px; font-size: 30px; font-weight: 600; }
+.order-table .row-num { flex: 0 0 52px; height: 52px; border-radius: 50%; background: var(--accent); color: #fff;
+  display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.order-table .dnd-slot { flex: 1 1 auto; min-height: 64px; justify-content: flex-start; padding: 0 8px; }
+/* Gradual reveal ("יעלו בהדרגתיות"): add class="reveal" and stagger delays per screen. */
+.screen.active .reveal { animation: revealIn .5s both; }
+@keyframes revealIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .screen.active .reveal { animation: none; } }
+
+/* ---- Popups opened by a button (.help-btn[data-popup] + .popup-src) ----
+   script.js wraps the content in .popup-panel and adds the X (.popup-close). X, Escape or the
+   dark backdrop closes it. A wide one: class="popup-src popup-wide". One that opens beside its
+   button instead of centred: class="popup-src popup-by-btn" and place .popup-panel per screen. */
+.help-btn, .applet-btn {
+  position: absolute; left: 55px; top: 32px; z-index: 12;
+  width: 120px; height: 120px; padding: 0;
+  border: 4px solid #fff; border-radius: 50%;
+  background: var(--btn-bg); color: #fff;
+  box-shadow: 0 0 0 6px var(--btn-bg), 0 5px 12px rgba(0,0,0,.5);
+  font-size: 36px; font-weight: 700; line-height: 1;
+  cursor: pointer;
+}
+.help-btn:hover, .applet-btn:hover { filter: brightness(1.25); }
+.help-btn.is-open, .applet-btn.is-open { z-index: 70; }          /* the opener stays lit above the backdrop */
+.popup-src {
+  position: absolute; inset: 0; z-index: 60;
+  display: none; align-items: center; justify-content: center;
+  background: rgba(20, 20, 20, .6);
+}
+.popup-src.show { display: flex; }
+.popup-src:focus { outline: none; }
+.popup-panel {
+  position: relative;
+  min-width: 520px; max-width: 1500px; max-height: 960px; overflow: auto;
+  padding: 50px 70px 44px;
+  background: var(--popup-bg);
+  border: 7px solid #1F1F1F; border-radius: 46px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.55);
+  font-size: var(--text-size); font-weight: 600; line-height: 1.3; text-align: center;
+}
+.popup-panel p { margin: 0 0 6px; }
+.popup-close {
+  position: absolute; top: 24px; left: 28px;
+  width: 44px; height: 44px; padding: 0;
+  border: none; background: none; cursor: pointer; font-size: 0;
+}
+.popup-close::before, .popup-close::after {
+  content: ''; position: absolute; top: 50%; left: 50%;
+  width: 40px; height: 6px; border-radius: 3px; background: #1F1F1F;
+}
+.popup-close::before { transform: translate(-50%, -50%) rotate(45deg); }
+.popup-close::after { transform: translate(-50%, -50%) rotate(-45deg); }
+.popup-wide .popup-panel { width: 1500px; }
+.popup-by-btn > .popup-panel { position: absolute; max-width: 880px; }   /* left / top per screen */
+
+/* ---- Tables as answers ----
+   .q-table holds .q-tr rows (a grid; set grid-template-columns per table). A row that is an
+   answer option is .q-tr.q-opt (role="radio", data-id, data-correct on the right one): it is
+   picked, marked and graded like any option. A row that is its own question part is
+   .q-tr.q-part (below). */
+.q-table { font-size: var(--text-size); font-weight: 600; color: #000; border: 2.5px solid var(--paper-line); background: var(--paper); }
+.q-tr {
+  position: relative;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  min-height: 96px;
+  border-top: 2px solid var(--paper-line);
+}
+.q-tr > span { display: flex; align-items: center; justify-content: center; text-align: center; padding: 4px 10px; }
+.q-tr > span + span { border-right: 2px solid var(--paper-line); }
+.q-tr.q-th { min-height: 74px; border-top: none; background: var(--table-head); font-weight: 700; }
+.q-tr.q-opt { cursor: pointer; }
+.q-tr.q-opt:hover { background: rgba(0,0,0,.06); }
+.q-tr.q-opt.selected { background: rgba(41,159,212,.2); }
+.q-tr.q-opt.correct { background: rgba(68,168,75,.22); }
+.q-tr.q-opt.wrong { background: rgba(202,67,61,.2); }
+/* The mark sits at the row's start edge (right, in RTL), centred on the row's height; the first
+   cell keeps clear of it. Same shapes and the same centring rule as the radio marks. */
+.q-tr.q-opt > span:first-child { padding-inline-start: 64px; }
+.q-tr.q-opt.correct::after, .q-tr.q-opt.wrong::after {
+  content: ''; position: absolute; right: 12px; top: 50%;
+  width: 40px; height: 40px; transform: translateY(-50%);
+  background: var(--opt-correct);
+  -webkit-mask: var(--mark-check) center / contain no-repeat; mask: var(--mark-check) center / contain no-repeat;
+}
+.q-tr.q-opt.wrong::after { background: var(--opt-wrong); -webkit-mask-image: var(--mark-x); mask-image: var(--mark-x); }
+.q-tr.q-opt:focus-visible { outline: var(--focus); outline-offset: -3px; }
+
+/* ---- Question parts (.q-part rows inside one question section) ----
+   Each .q-part has its own .btn-check, optional .help-btn and .fb-src. The engine checks it on its
+   own, splits the weight, and opens the arrow when every part is done. A part's buttons are
+   absolute, so they can sit beside the row (the row is the positioning parent). The feedback
+   popup gets fb-<sid>-p<n> for part n (#feedback-popup.fb-q2-p3), and a part's final feedback
+   carries the close X, so a box that covers the other rows' buttons can be closed. */
+.q-part { position: relative; }
+.q-tr.q-part { min-height: 136px; }                                  /* room for a stacked fraction (two boxes and a bar) */
+.q-part .help-btn, .q-part .btn-check { top: 50%; }
+.q-part .help-btn { left: -150px; width: 100px; height: 100px; margin-top: -50px; font-size: 28px; }
+.q-part .btn-check { left: -340px; min-width: 150px; height: 80px; margin-top: -40px; padding: 0 12px; font-size: 30px; }
+
+/* ---- Typed answers (data-kind="input") ----
+   <span class="q-input" data-answer="30" data-match="value"><input class="q-in" inputmode="numeric" aria-label="…"></span>
+   <span class="q-input frac-input" data-answer="3/5" data-match="value">
+     <input class="q-in" data-frac="num" …><input class="q-in" data-frac="den" …></span>
+   data-match="value": any equal value is right (6/10 = 3/5). Several fields: put data-name on each
+   .q-input and data-grade="hook" on the section; HOOKS[sid].grade({name: [num, den]}) decides. */
+.q-input { display: inline-flex; align-items: center; justify-content: center; }
+.frac-input { flex-direction: column; gap: 14px; position: relative; }
+.frac-input::after {
+  content: ''; position: absolute; left: -6px; right: -6px; top: 50%;
+  height: 3px; margin-top: -1.5px; background: var(--panel-border);
+}
+.q-in {
+  width: 90px; height: 52px; padding: 0;
+  border: 3px solid var(--panel-border); border-radius: 8px; background: #fff;
+  font: 700 32px/1 var(--font-main), sans-serif; color: #000; text-align: center;
+  direction: ltr;
+}
+.q-in:focus { outline: var(--focus); outline-offset: 1px; }
+.q-in:disabled { opacity: 1; }
+.q-input.correct .q-in, .q-input.revealed .q-in { border-color: var(--fb-correct); color: #2d7a34; background: #EEF8EF; }
+.q-input.wrong .q-in { border-color: var(--opt-wrong); color: #8E1F1A; background: #FBEDEC; }
+.q-fields { display: flex; flex-direction: column; gap: 28px; }
+.q-field { display: flex; align-items: center; gap: 20px; }
+.q-field-label { font-size: var(--text-size); font-weight: 700; min-width: 120px; }
+
+/* ---- Free text next to a choice (textarea[data-min-chars]) ----
+   Needs that many characters before the check button appears; 3 s after an option was picked a glow
+   (and the optional .q-free-hint) tells the learner what is missing. */
+.q-free-label { display: block; margin: 22px 0 8px; font-size: var(--text-size); font-weight: 600; }
+.q-free {
+  display: block; width: 100%; max-width: 800px; height: 220px; padding: 14px 18px;
+  border: 3px solid var(--panel-border); border-radius: 22px; background: #fff;
+  font: 600 32px/1.35 var(--font-main), sans-serif; resize: none;
+}
+.q-free:disabled { opacity: 1; color: #000; }
+.q-free.needs-text { border-color: var(--accent); animation: freeGlow 1.4s ease-in-out infinite; }
+@keyframes freeGlow { 0%, 100% { box-shadow: 0 0 0 0 rgba(41,159,212,0); } 50% { box-shadow: 0 0 0 8px rgba(41,159,212,.28), 0 0 22px 6px rgba(255,196,60,.55); } }
+.q-free-hint { margin-top: 10px; font-size: 34px; font-weight: 800; color: var(--subject-600); }
+.q-free-hint[hidden] { display: none; }
+@media (prefers-reduced-motion: reduce) { .q-free.needs-text { animation: none; } }
+
+/* ---------- 5. Per-screen positions ----------
+   One block per screen, by data-sid, in screen order. Example:
+   [data-sid="q1"] .q-card { top: 140px; right: 80px; width: 1100px; }
+   #feedback-popup.fb-q1 { left: 340px; bottom: 185px; }          */
+[data-sid="intro"] .intro-card {
+  position: absolute; top: 210px; left: 50%; transform: translateX(-50%);
+  width: 1000px; padding: 50px 60px; text-align: center;
+  background: rgba(255,255,255,.85); border-radius: 36px;
+}
+[data-sid="intro"] .intro-title { margin: 0; font-size: 88px; font-weight: 800; color: var(--subject-500); }
+[data-sid="intro"] .intro-subtitle { margin: 10px 0 0; font-size: 44px; font-weight: 600; }
+[data-sid="intro"] .intro-start { bottom: 140px; left: 50%; transform: translateX(-50%); }
+[data-sid="explain-model"] .figure-frame { top: 220px; left: 140px; width: 640px; }
+[data-sid="explain-model"] .term-tip { top: 330px; right: 220px; }
+[data-sid="finish"] .finish-btn { bottom: 140px; left: 50%; transform: translateX(-50%); }

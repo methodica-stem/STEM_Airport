@@ -1,0 +1,15 @@
+# Big source files stay out of the project history
+*.psd
+*.psb
+*.pptx
+*.zip
+_design-reference/psd-cache/
+# pictures the readers make again in seconds
+_design-reference/slides/
+_design-reference/psd-frames/
+_design-reference/comps/
+# Python / editor leftovers
+__pycache__/
+*.pyc
+.DS_Store
+Thumbs.db

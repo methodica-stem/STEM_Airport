@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DEV — free navigation</title>
+<link rel="icon" href="data:,">
+<!-- Development page only. Never part of the upload package.
+     Talks to the lomda through postMessage only, so it works when opened
+     straight from the folder (file://) as well as from a local server. -->
+<style>
+  html, body { margin: 0; height: 100%; background: #111; overflow: hidden; font-family: 'Assistant', Arial, sans-serif; }
+  #bar {
+    position: fixed; top: 0; right: 0; left: 0; height: 44px; z-index: 10;
+    display: flex; align-items: center; gap: 10px; padding: 0 14px;
+    background: #222; color: #fff; font-size: 14px;
+  }
+  #bar button, #bar select, #bar input[type=text] {
+    background: #3a3a3a; color: #fff; border: 1px solid #666; border-radius: 4px; padding: 4px 9px; font: inherit;
+  }
+  #bar button:hover { background: #4a4a4a; }
+  #bar .sp { flex: 1; }
+  #bar > * { flex: 0 0 auto; white-space: nowrap; }
+  #bar select { max-width: 220px; }
+  #info { overflow: hidden; text-overflow: ellipsis; flex: 0 1 auto !important; }
+  #bridge { font-weight: 700; padding: 3px 10px; border-radius: 4px; background: #555; }
+  #bridge.ok { background: #1f7a35; }
+  #bridge.bad { background: #a12a2a; }
+  #wrap { position: absolute; top: 44px; right: 0; left: 0; bottom: 0; }
+  #frame { width: 100%; height: 100%; border: 0; background: #000; display: block; }
+  #mock { position: absolute; pointer-events: none; display: none; transform-origin: top left; width: 1920px; height: 1080px; }
+  label { display: inline-flex; align-items: center; gap: 5px; }
+</style>
+</head>
+<body>
+<div id="bar">
+  <strong>DEV</strong>
+  <button id="prev" title="back (Ctrl+→)">back</button>
+  <select id="pick"></select>
+  <button id="next" title="next (Ctrl+←)">next</button>
+  <span id="bridge">waiting for the bridge…</span>
+  <span class="sp"></span>
+  <label><input type="checkbox" id="mockOn"> compare with design</label>
+  <input type="range" id="mockOp" min="0" max="100" value="50" title="overlay opacity">
+  <input type="text" id="mockSfx" size="4" placeholder="-b" title="state suffix of the mockup file, e.g. -b">
+  <span id="info"></span>
+</div>
+<div id="wrap">
+  <iframe id="frame" src="index.html"></iframe>
+  <img id="mock" alt="">
+</div>
+<script>
+  'use strict';
+  const frame = document.getElementById('frame');
+  const pick = document.getElementById('pick');
+  const bridge = document.getElementById('bridge');
+  const info = document.getElementById('info');
+  const mock = document.getElementById('mock');
+  const mockOn = document.getElementById('mockOn');
+  const mockOp = document.getElementById('mockOp');
+  const mockSfx = document.getElementById('mockSfx');
+  let total = 0, current = 1, gotReady = false;
+
+  function send(n) {
+    if (!total) return;
+    n = Math.max(1, Math.min(total, n));
+    frame.contentWindow.postMessage({ type: 'DEV_GOTO', screen: n }, '*');
+  }
+
+  window.addEventListener('message', function (e) {
+    const d = e.data || {};
+    if (d.type === 'DEV_READY') {
+      const first = !gotReady;
+      gotReady = true;
+      total = d.total;
+      const screens = d.screens || [];
+      // The QA system counts screens the same way: N sections, numbered 1..N.
+      const nums = screens.map(function (s) { return s.n; });
+      const contiguous = nums.length === total && nums.every(function (n, i) { return n === i + 1; });
+      bridge.textContent = total + ' (1…' + total + ') ' + (contiguous ? '✔ הגשר עובד' : '✘ screen numbering is broken');
+      bridge.className = contiguous ? 'ok' : 'bad';
+      if (first) {
+        pick.innerHTML = '';
+        screens.forEach(function (s) {
+          const o = document.createElement('option');
+          o.value = s.n;
+          o.textContent = s.n + ' — ' + (s.sid || '?') + ' (' + (s.type || '?') + ')';
+          pick.appendChild(o);
+        });
+        send(current);   // answering also tells the lomda the handshake worked
+      }
+    }
+    if (d.type === 'LOMDA_SCREEN_CHANGED') {
+      current = d.screen;
+      pick.value = current;
+      info.textContent = 'screen ' + current + (total ? ' / ' + total : '');
+      placeMock();
+    }
+    if (d.type === 'LOMDA_COMPLETE') info.textContent = 'finished — grade sent: ' + d.score;
+  });
+  setTimeout(function () {
+    if (!gotReady) { bridge.textContent = '✘ no bridge (DEV_READY never arrived)'; bridge.className = 'bad'; }
+  }, 9000);
+
+  pick.addEventListener('change', function () { send(parseInt(pick.value, 10)); });
+  document.getElementById('prev').addEventListener('click', function () { send(current - 1); });
+  document.getElementById('next').addEventListener('click', function () { send(current + 1); });
+  document.addEventListener('keydown', function (e) {
+    if (e.ctrlKey && e.key === 'ArrowLeft') send(current + 1);
+    if (e.ctrlKey && e.key === 'ArrowRight') send(current - 1);
+  });
+
+  /* Design overlay: _design-reference/mockups/screen-NN.png (or .jpg) drawn
+     over the stage at the same scale and offset the lomda uses, so every
+     element can be lined up with the designer's comp. A state of the same
+     screen is screen-NN-b.png etc. (type "-b" in the small box). */
+  function placeMock() {
+    if (!mockOn.checked) { mock.style.display = 'none'; return; }
+    const w = frame.clientWidth, h = frame.clientHeight;
+    const k = Math.min(w / 1920, h / 1080);
+    mock.style.left = ((w - 1920 * k) / 2) + 'px';
+    mock.style.top = ((h - 1080 * k) / 2) + 'px';
+    mock.style.transform = 'scale(' + k + ')';
+    mock.style.opacity = mockOp.value / 100;
+    const base = '_design-reference/mockups/screen-' + String(current).padStart(2, '0') + (mockSfx.value || '');
+    if (mock.dataset.base !== base) { mock.dataset.base = base; mock.src = base + '.png'; }
+    mock.style.display = 'block';
+  }
+  mock.addEventListener('error', function () {
+    const src = mock.getAttribute('src') || '';
+    if (src.endsWith('.png')) { mock.src = src.slice(0, -4) + '.jpg'; return; }   // PSD frames are saved as JPG
+    info.textContent = 'no mockup file: ' + mock.dataset.base + '.png / .jpg';
+    mock.style.display = 'none';
+  });
+  [mockOn, mockOp, mockSfx].forEach(function (el) { el.addEventListener('input', placeMock); });
+  window.addEventListener('resize', placeMock);
+</script>
+</body>
+</html>

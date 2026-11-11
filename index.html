@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>שם הלומדה</title>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="styles.css">
+<!-- Images used only as CSS backgrounds (buttons, panels) are not fetched
+     until first painted. Preload the ones the first screens need here:
+<link rel="preload" as="image" href="assets/images/ui-btn-next.png"> -->
+</head>
+<body>
+<div id="app" role="main">
+
+<!-- ===================================================================
+     One <section> per screen, numbered 1..N with no gaps, written out in
+     full here (the QA system counts the sections in this file).
+     Attribute order matters to the translation tools: class first, then
+     data-screen.
+       data-sid    short ASCII name, stable when screens are renumbered
+       data-type   opening | explain | video | tiles | hub | question | applet | finish
+     Banner comment per screen: number, title, storyboard slides.
+     =================================================================== -->
+
+<!-- ================= SCREEN 1 — פתיחה (שקף 2) ================= -->
+<section class="screen active" data-screen="1" data-sid="intro" data-type="opening" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <!-- <img class="screen-bg" src="assets/images/intro-bg.jpg" alt=""> -->
+  <div class="intro-card">
+    <h1 class="intro-title">שם הלומדה</h1>
+    <p class="intro-subtitle">שאלת החקר של הלומדה</p>
+  </div>
+  <button class="btn-primary intro-start" type="button" data-action="next">מתחילים</button>
+</section>
+
+<!-- ================= SCREEN 2 — סרטון פתיחה (שקפים 3-5) ================= -->
+<section class="screen" data-screen="2" data-sid="video-intro" data-type="video" tabindex="-1">
+  <div class="narration-banner"><p>שורת קריינות שמופיעה מעל הסרטון.</p></div>
+  <div class="video-wrap">
+    <!-- data-pending-asset = no video file yet; remove it and add
+         <source src="assets/videos/video-intro.mp4#t=0.001" type="video/mp4"> -->
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <div class="vcap-src" data-clear-after="9.5" hidden>
+      <span data-t="0.4">שורת כתובית ראשונה.</span>
+      <span data-t="3.2">שורת כתובית שנייה.</span>
+      <span data-t="6.1">שורת כתובית שלישית.</span>
+    </div>
+    <div class="video-caption hidden"><p></p></div>
+    <button class="play-btn-big" type="button" aria-label="הפעלת הסרטון"></button>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 3 — השערות: לחיצה על דמויות (שקפים 6-10) ================= -->
+<section class="screen" data-screen="3" data-sid="hypotheses" data-type="tiles" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="narration-banner"><p>לחצו על כל אחת מהדמויות וגלו מה ההשערה שלה.</p></div>
+  <div class="tiles-board empty" aria-live="polite"></div>
+  <div class="tiles" data-mode="grayscale-once">
+    <div class="tile" data-tile-id="char1" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 1">
+      <span class="tile-face">1</span><span class="tile-check" aria-hidden="true">✓</span>
+      <div class="tile-content" hidden><strong>דמות 1:</strong> "ההשערה של הדמות הראשונה."</div>
+    </div>
+    <div class="tile" data-tile-id="char2" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 2">
+      <span class="tile-face">2</span><span class="tile-check" aria-hidden="true">✓</span>
+      <div class="tile-content" hidden><strong>דמות 2:</strong> "ההשערה של הדמות השנייה."</div>
+    </div>
+    <div class="tile" data-tile-id="char3" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 3">
+      <span class="tile-face">3</span><span class="tile-check" aria-hidden="true">✓</span>
+      <div class="tile-content" hidden><strong>דמות 3:</strong> "ההשערה של הדמות השלישית."</div>
+    </div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 4 — הסבר עם מונח ותרשים (שקף 11) ================= -->
+<section class="screen" data-screen="4" data-sid="explain-model" data-type="explain" data-arrow-delay="2" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="text-panel">
+    <p>משפט הסבר שבו מופיע <button class="term" type="button" aria-describedby="tip-model">מונח חדש</button> שהלומדים עוד לא מכירים.</p>
+    <p>וכך נראה שבר בתוך הטקסט: <span class="frac"><span>3</span><span>4</span></span> מהשטח.</p>
+  </div>
+  <span class="term-tip" role="tooltip" id="tip-model">ההגדרה של המונח מופיעה כאן.</span>
+  <figure class="figure-frame" data-reopen-content>
+    <img src="assets/images/demo-chart.svg" alt="תרשים עמודות לדוגמה: חמש עמודות שגובהן עולה משמאל לימין.">
+    <button class="zoom-btn" type="button" data-zoom-src="assets/images/demo-chart.svg" data-zoom-alt="תרשים עמודות לדוגמה: חמש עמודות שגובהן עולה משמאל לימין." aria-label="הגדלת התרשים"></button>
+  </figure>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 5 — שאלה 1: בחירה יחידה (שקפים 12-13) ================= -->
+<section class="screen" data-screen="5" data-sid="q1" data-type="question" data-kind="single" data-weight="10" data-step="1" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="q-overlay"></div>
+  <button class="reopen-btn" type="button" data-reopen="explain-model">לצפייה בתרשים</button>
+  <div class="q-card">
+    <h2 class="q-title">שאלה 1</h2>
+    <p class="q-body"><strong>נוסח השאלה מופיע כאן?</strong></p>
+    <p class="q-instruction">סמנו את התשובה הנכונה.</p>
+    <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
+      <div class="q-opt" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה ראשונה.</div>
+      <div class="q-opt" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה שנייה (הנכונה).</div>
+      <div class="q-opt" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה שלישית.</div>
+      <div class="q-opt" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה רביעית.</div>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה.</p><p>רמז שמכוון את הלומדים בחזרה לתרשים.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>הסבר שמופיע אחרי תשובה נכונה.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>הסבר שמופיע אחרי שתי טעויות.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 6 — שאלה 2: בחירה מרובה (שקפים 14-15) ================= -->
+<section class="screen" data-screen="6" data-sid="q2" data-type="question" data-kind="multi" data-weight="10" data-step="2" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="q-overlay"></div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה 2</h2>
+    <p class="q-body"><strong>נוסח שאלה עם כמה תשובות נכונות?</strong></p>
+    <p class="q-instruction">סמנו את כל התשובות הנכונות.</p>
+    <div class="q-answers" role="group" aria-label="אפשרויות תשובה">
+      <div class="q-opt" data-multi data-id="1" data-correct role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה נכונה ראשונה.</div>
+      <div class="q-opt" data-multi data-id="2" role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>מסיח.</div>
+      <div class="q-opt" data-multi data-id="3" data-correct role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה נכונה שנייה.</div>
+      <div class="q-opt" data-multi data-id="4" role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>מסיח נוסף.</div>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p></div>
+    <div data-fb="retryPartial"><p class="fb-t">אתם בכיוון הנכון! יש תשובות נכונות נוספות.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>הסבר משותף לכל התוצאות.</p></div>
+    <div data-fb="partial"><p class="fb-t">זו תשובה חלקית.</p><p>הסבר משותף לכל התוצאות.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>הסבר משותף לכל התוצאות.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 7 — ישומון (שקף 16) ================= -->
+<section class="screen" data-screen="7" data-sid="demo-sim" data-type="applet" data-arrow-after="5" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="narration-banner"><p>הפעילו את ההדמיה וצפו במה שקורה.</p></div>
+  <div class="applet-frame" data-reopen-content>
+    <iframe src="assets/app/demo-applet.html" title="הדמיה לדוגמה"></iframe>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 8 — שאלה 3: גרירת מילים (שקפים 17-18) ================= -->
+<section class="screen" data-screen="8" data-sid="q3" data-type="question" data-kind="dnd" data-weight="10" data-step="3" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="q-overlay"></div>
+  <button class="reopen-btn" type="button" data-reopen="demo-sim">לצפייה בהדמיה</button>
+  <div class="q-card">
+    <h2 class="q-title">שאלה 3</h2>
+    <p class="q-instruction">השלימו את המילים החסרות בקטע באמצעות גרירת מילים מהמחסן.</p>
+    <div class="dnd-bank" aria-label="מחסן מילים">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">מילה א</button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">מילה ב</button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">מילה ג</button>
+    </div>
+    <p class="cloze">משפט ראשון עם <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span> באמצע,
+      ומשפט שני עם <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span>
+      ועוד <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 3"></span>.</p>
+  </div>
+  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">נסו שוב! חלק מהמילים לא במקום.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית.</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 9 — סיום (שקף 19) ================= -->
+<section class="screen" data-screen="9" data-sid="finish" data-type="finish" tabindex="-1">
+  <div class="screen-bg bg-placeholder"></div>
+  <div class="narration-banner"><p>משפט סיכום שסוגר את הסיפור.</p></div>
+  <button class="btn-primary finish-btn" type="button" data-action="finish">סיימתי</button>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+</section>
+
+<!-- ================= Global elements (outside every screen) ================= -->
+<div id="q-stepper" class="q-stepper" aria-hidden="true"></div>
+
+<div id="feedback-popup" role="alertdialog" aria-labelledby="fb-title" tabindex="-1">
+  <button class="fb-close" type="button" aria-label="סגירה"></button>
+  <div class="fb-title-row"><span class="fb-icon" aria-hidden="true"></span><div class="fb-title" id="fb-title"></div></div>
+  <div class="fb-body" id="fb-body"></div>
+</div>
+
+<!-- The end of the lomda (script.js: finishLomda). Score pop-up first; its X shows the dark screen that
+     sends the learner back to the Moodle. The wording is the approved house text (Flickering Lights);
+     "העמוד הבא" must be the label of the Moodle quiz's next-page button — ask the content team if it is not. -->
+<div id="final-score" role="dialog" aria-modal="true" aria-labelledby="final-score-title" tabindex="-1" hidden>
+  <div class="final-score-card">
+    <button class="final-score-close" type="button" aria-label="סגירה"></button>
+    <h1 id="final-score-title">כל הכבוד, המשימה הושלמה!</h1>
+    <p class="final-score-value">הציון שלך הוא <bdi data-final-grade>0</bdi></p>
+    <p class="final-score-hint">יש לסגור את המשימה בלחיצה על X</p>
+  </div>
+</div>
+<div id="final-return" role="dialog" aria-modal="true" aria-labelledby="final-return-text" tabindex="-1" hidden>
+  <p id="final-return-text">כעת חזרו אל המודל,<br>לחצו על הכפתור "העמוד הבא"<br>וענו על השאלות.</p>
+</div>
+
+<div id="img-zoom-modal" role="dialog" aria-modal="true" aria-label="תצוגה מוגדלת" tabindex="-1">
+  <div class="img-zoom-panel">
+    <button class="img-zoom-close" type="button" data-zoom-close aria-label="סגירה">✕</button>
+    <div id="img-zoom-body"></div>
+  </div>
+</div>
+
+<div id="reopen-popup" role="dialog" aria-modal="true" aria-label="תצוגה חוזרת" tabindex="-1">
+  <div id="reopen-popup-body"></div>
+</div>
+
+<div id="a11y-status" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Engine strings for screen readers — kept here so they are translated with everything else. -->
+<div id="ui-text" hidden>
+  <span data-key="close">סגירה</span>
+  <span data-key="dnd-picked">נבחר. בחרו מקום ריק והקישו Enter.</span>
+  <span data-key="dnd-placed">הוצב במקום.</span>
+  <span data-key="dnd-right">נכון</span>
+  <span data-key="dnd-wrong">לא נכון</span>
+  <span data-key="dnd-correct-is">התשובה הנכונה:</span>
+</div>
+
+<!-- Video control bar, copied into every .video-wrap by script.js -->
+<template id="vctrls-tpl">
+  <div class="vctrls" dir="ltr">
+    <button class="vc-btn" type="button" data-play aria-label="הפעלה או השהיה">▶</button>
+    <span class="vc-time" data-cur>0:00</span>
+    <input class="vc-seek" type="range" min="0" max="1000" value="0" step="1" data-seek aria-label="סרגל התקדמות">
+    <span class="vc-time" data-dur>0:00</span>
+    <button class="vc-btn vc-cc" type="button" data-cc aria-pressed="true" aria-label="כתוביות">CC</button>
+    <button class="vc-btn" type="button" data-mute aria-pressed="false" aria-label="השתקה">🔊</button>
+    <input class="vc-vol" type="range" min="0" max="100" value="100" step="1" data-vol aria-label="עוצמת שמע">
+    <button class="vc-btn" type="button" data-full aria-pressed="false" aria-label="מסך מלא">⛶</button>
+  </div>
+</template>
+
+</div><!-- /#app -->
+<script src="script.js"></script>
+</body>
+</html>

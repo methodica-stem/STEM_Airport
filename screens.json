@@ -1,0 +1,26 @@
+{
+  "lomda": {
+    "slug": "airport",
+    "title": "שדה תעופה",
+    "prefix": "AIRPORT",
+    "grade": "",
+    "storyboard": "שדה תעופה_אחרי עריכה לשונית וצמצום סרטונים.pptx",
+    "storyboard_date": "2026-11-11",
+    "psd": "airport_stem.psd",
+    "comps": "airport_03.11.26.pptx",
+    "not_screens": [],
+    "psd_frames_unused": [],
+    "text_check_skip_slides": []
+  },
+  "screens": [
+    { "n": 1, "sid": "intro",         "type": "opening",  "title": "פתיחה",                       "slides": [2] },
+    { "n": 2, "sid": "video-intro",   "type": "video",    "title": "סרטון פתיחה",                 "slides": [3, 4, 5] },
+    { "n": 3, "sid": "hypotheses",    "type": "tiles",    "title": "השערות — לחיצה על דמויות",     "slides": [6, 7, 8, 9, 10] },
+    { "n": 4, "sid": "explain-model", "type": "explain",  "title": "הסבר עם מונח ותרשים",          "slides": [11] },
+    { "n": 5, "sid": "q1",            "type": "question", "title": "שאלה 1 — בחירה יחידה",         "slides": [12, 13], "kind": "single", "weight": 10, "step": 1 },
+    { "n": 6, "sid": "q2",            "type": "question", "title": "שאלה 2 — בחירה מרובה",         "slides": [14, 15], "kind": "multi",  "weight": 10, "step": 2 },
+    { "n": 7, "sid": "demo-sim",      "type": "applet",   "title": "ישומון",                       "slides": [16] },
+    { "n": 8, "sid": "q3",            "type": "question", "title": "שאלה 3 — גרירת מילים",         "slides": [17, 18], "kind": "dnd",    "weight": 10, "step": 3 },
+    { "n": 9, "sid": "finish",        "type": "finish",   "title": "סיום",                         "slides": [19] }
+  ]
+}
