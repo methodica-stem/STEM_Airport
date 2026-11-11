@@ -56,15 +56,16 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - 2026-11-11 · Screen map: 19 screens (4 videos, 5 narration screens, 10 question screens, finish). Slide 1 is the cover and not a screen. No opening screen: the first screen is the video. Slides 40–42 are one finish screen (video, then "סיימתי", then the house score pop-up). · Claude, awaiting the developer
 - 2026-11-11 · Scoring built from slide 42: equal weight per question → 12.5 each; parts of Q4 and Q6 6.25 each (sums to 100). Slide 42 is the only scoring source. · Claude
 - 2026-11-11 · Button label is the storyboard's "צדקתי?" (not the house "האם צדקתי?"); final-wrong title is the storyboard's "זו טעות"; partial title "נכון חלקית" is new wording (open question 3). · Claude
+- 2026-11-11 · The 9 screens without a PSD frame: the script had 7 videos, cut to 4 for budget, so 5 former video scenes (screens 2, 6, 10, 12, 16) are now a still picture with narration. Developer's decision: reuse the repeating base pictures and generate slightly altered versions where needed (screens 6 and 16, optionally 12; 2 and 10 stay as they are). Brief with prompts: `SCENE_IMAGES_BRIEF.md`. The "small animation" notes are treated as dropped (open question 11). · developer
 - 2026-11-11 · Engine change: typed answers accept `data-maxlen` (default 4 digits). Q8's answer 100000 has 6 digits, so its box has `data-maxlen="6"`. · Claude
 - 2026-11-11 · q3, q4a, q4b are left without `data-dnd-final="compare"` (qa_check warns): the storyboard says to show the correct answer on those screens (slide 19 note, slides 21 and 23 show the solved line), and they are one line of slots, not labelled rows. q2 and q5 have `compare`. To re-decide in Phase 4 if the walk-through looks wrong.
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).
 - Storyboard slide 40 says "שקף 50-51" and slide 28 "שקפים 35-37" (stale; built as slides 40–41 and 28–30).
-- The PSD has frames for the 10 question screens only. The video, narration and finish screens (9 screens) have no frame: their looks come from the storyboard's pictures (image2, 3, 7, 9, 17, 19, 30).
+- The PSD has frames for the 10 question screens only (the video scenes were cut from 7 to 4). The 4 video screens, the finish and the 5 picture screens use the storyboard's pictures; screens 6 and 16 (and maybe 12) need a generated variant (`SCENE_IMAGES_BRIEF.md`) — waiting on the developer.
 - Q6א/Q6ב are **scored applet questions**: the engine has no `kind="applet"` yet. They need a custom piece: the applet posts the drawn height, a `HOOKS` entry grades it, the screen's check button and feedback do the rest. Plan in Phase 5, after looking inside the two applet files.
-- Caption times in the 4 videos are even placeholders until the videos and their SRTs arrive. No videos, audio, narration or animations exist yet (the content team's questions 10–11 decide the narration button and who makes the small animations).
+- Caption times in the 4 videos are even placeholders until the videos and their SRTs arrive. No videos, audio, narration or animations exist yet (question 10 decides the narration button; the small animations are replaced by stills).
 - Slide-to-PSD-frame mapping in screens.json (`psd`) is by question number, to be checked in Phase 2.
 
 ## Delivery log

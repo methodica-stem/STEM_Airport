@@ -41,8 +41,8 @@ The note quotes what the presenter says: "עונת הטיסות בשיאה!…".
 **10 · Narration of the story screens (slides 9, 17, 24, 27, 35)**
 The notes say "קריינות לטקסט" / "הקראה של הטקסט". House rule: no sound plays on its own. *Suggestion:* a small "listen" button beside the text. Does the lomda need an auto-play instead? Who records the narration?
 
-**11 · Small animations (slides 17, 24, 35)**
-"אנימציה קטנה (כמו תמונת לייב באייפון)": a few seconds of life in a still (the mother smiles, Matan remembers the holiday, the team nods). This is a loop video, like the ones in the other lomdot. The developer decides how it is produced (not a content question).
+**11 · The small animations are replaced by still pictures (slides 17, 24, 35)**
+The notes ask for "אנימציה קטנה (כמו תמונת לייב באייפון)". The script had 7 videos and now has 4, so these scenes are pictures with narration. We will use the lomda's repeating pictures and make slightly altered versions where a scene needs one (see `SCENE_IMAGES_BRIEF.md`). Please confirm that the animation notes are dropped.
 
 ## Question 1 (slides 10–11)
 
@@ -90,4 +90,4 @@ Q7: 200. Q8: 100,000. I will accept "100000" and "100,000" and any other way of 
 ## For the designer
 
 **24 · The design has no frames for 9 screens**
-The PSD has the 10 question frames only. The video screens, the narration screens and the finish screen have no frame: they use the pictures in the storyboard (backgrounds image2, 3, 7, 9, 17, 19, 30). If a designed version exists, please send it.
+The PSD has the 10 question frames only. The video screens and the five picture-and-narration screens have no frame, because the scenes that were videos were cut back. They use the pictures in the storyboard (image2, 3, 7, 9, 17, 19, 30) and the new variants in `SCENE_IMAGES_BRIEF.md`. If a designed version exists, please send it.

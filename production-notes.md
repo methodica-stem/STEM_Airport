@@ -53,7 +53,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback: "המספרים המעוגלים הנכונים מוצגים כעת. / כדי לעגל לעשרות אלפים, נבדוק את ספרת האלפים: / אם היא 5 ומעלה, נעגל כלפי מעלה, ואם היא קטנה מ-5, נעגל כלפי מטה."
 
 ## Screen 6 — story-data (slide 17)
-- Narration of the text; a small animation (like an iPhone live photo): the mother smiles and looks at Matan.
+- Narration of the text. The note asked for a small animation (the mother smiles and looks at Matan); the video was cut, so this is now a still: a variant of the repeating picture (SCENE_IMAGES_BRIEF.md, prompt A).
 
 ## Screen 7 — q3 (slides 18–19)
 - "שאלת גרירה וסידור על הקו האופקי. תגית הגדול ביותר מימין, הקטן ביותר בשמאל. לשים דגל מדינה ליד כל שדה תעופה."
@@ -75,7 +75,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback: "יש להפחית את מספר הנוסעים שנכנסים ממספר הנוסעים שיוצאים. / החישוב: 200,000 = 1,600,000 – 1,800,000" (the line is typed in the RTL order of the storyboard; it reads 1,800,000 – 1,600,000 = 200,000 on the slide).
 
 ## Screen 10 — story-holiday (slide 24)
-- Narration of the text; small animation: Matan looks up, remembering the holiday happily.
+- Narration of the text. The note asked for a small animation (Matan remembers the holiday happily); now a still, and the storyboard picture already shows it.
 
 ## Screen 11 — q5 (slides 25–26)
 - Four descriptions (children / adults / all passengers in July–August; adults in one month) each with a box above it; six expression chips; **two chips have no description** ("שימו לב: יש שני תרגילים שאין להם תיאור מתאים").
@@ -104,7 +104,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback q6b: "נחסר 1,400,000 ממספר הנוסעים בחודשים יולי-אוגוסט: / 4,300,000 – 1,400,000 = 2,900,000 / בספטמבר-אוקטובר עברו כ-2,900,000 נוסעים."
 
 ## Screen 16 — story-daily (slide 35)
-- Narration of the text; small animation: the mother looks at the data, then at the team around her, who nod in agreement.
+- Narration of the text. The note asked for a small animation (the mother looks at the data, then at the team, who nod); now a still: a variant of the repeating picture (SCENE_IMAGES_BRIEF.md, prompt C).
 
 ## Screens 17, 18 — q7, q8 (slides 36–39)
 - Typed answer with a unit after the box ("טיסות." / "מזוודות."). q7: **200**. q8: **100,000**.
