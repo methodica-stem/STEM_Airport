@@ -3,8 +3,8 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 3 · batch 1 of the picture export is done and checked (shared pictures + question 1); waiting for the developer to look at the contact sheet. Next: export batch 2 (q3 flags, q7 airplane, q8 suitcase) and start Phase 4 (build the screens)
-**Waiting on you:** read `PROJECT_BRIEF.md` (the screen table) and say "the map is fine" or what to change; send `open-questions.md` to the content team (Claude can draft the message)
+**Now:** Phase 4 · batch A (screens 1–5) is built and waiting for the developer's approval by screenshot; next batch B (screens 6–10: story, q3, q4a, q4b, story)
+**Waiting on you:** look at the screenshots of screens 1–5 and say "fine" or what to change; confirm the screen map (still open from Phase 1)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
 ## Inputs
@@ -21,8 +21,8 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - [ ] 1 · ✋ Developer reviewed the screen map; open questions sent (date: )
 - [x] 2 · Design reference — PSD inventory, frames mapped to screens (checked against the text layers), mockups for the overlay (12 files in `_design-reference/mockups/`), colour tokens set (2026-11-11)
 - [x] 3 · ASSET_CHECKLIST.md written (2026-11-11; all 19 rows resolve in a dry run)
-- [ ] 3 · ✋ Assets exported and checked (check_assets.py clean) — batch 1 of 2 done: shared + q1 (11 files, 0 errors); batch 2: q3 flags, q7 airplane, q8 suitcase (8 files, exported later)
-- [ ] 4 · Screens built (tick per batch below)
+- [x] 3 · ✋ Assets exported and checked (check_assets.py: 23 files, 0 errors, 0 warnings); developer approved the contact sheet of batch 1 (2026-11-11); batch 2 (flags, airplane, suitcase) looked right on the sheet
+- [ ] 4 · Screens built (tick per batch below) — batch A, screens 1–5, built 2026-11-11
 - [ ] 5 · Applets built and signed off; videos and audio in
 - [ ] 6 · Self-QA passed (qa_check.py 0 errors, walk-through done)
 - [ ] 7 · Translation export done (both sweeps pass), ASSET_LOCALIZATION.md written
@@ -31,11 +31,11 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 ## Screens
 | # | sid | built | matches design | approved by developer |
 |---|---|---|---|---|
-| 1 | video-intro | skeleton | ☐ | ☐ |
-| 2 | story-office | skeleton | ☐ | ☐ |
-| 3 | q1 | skeleton | ☐ | ☐ |
-| 4 | video-estimate | skeleton | ☐ | ☐ |
-| 5 | q2 | skeleton | ☐ | ☐ |
+| 1 | video-intro | ✔ | ✔ | ☐ |
+| 2 | story-office | ✔ | ✔ | ☐ |
+| 3 | q1 | ✔ | ✔ | ☐ |
+| 4 | video-estimate | ✔ | ✔ | ☐ |
+| 5 | q2 | ✔ | ✔ | ☐ |
 | 6 | story-data | skeleton | ☐ | ☐ |
 | 7 | q3 | skeleton | ☐ | ☐ |
 | 8 | q4a | skeleton | ☐ | ☐ |
@@ -65,6 +65,9 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 
 - 2026-11-11 · The background of the 10 question screens is ONE picture, `bg-airport.jpg` (the same scene, already darkened by the designer, in every frame): exported once without the panel and buttons. So the starter's `.q-overlay` darkening must not be added on top of it. The 4 reading cards of Q1 are 4 near-identical pictures of Matan (small differences of expression). · Claude
 - 2026-11-11 · Export fix: `[hide: …]` markers in the checklist take one layer name each (a `|` inside a markdown table breaks the list). Boxes of buttons in the checklist are the visible size; the inventory's larger box includes the shadow, which CSS draws (`filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.38))`; bulb 0 5 4 .41). · Claude
+
+- 2026-11-11 · Phase 4 layout decisions, batch A: the background is the shared `bg-airport.jpg` (no overlay); the nav arrows, help button, "צדקתי?" and chips use the PSD pictures; stepper pills restyled from the design (digits in dark blue on the light pills for contrast, not white as in the design). Q1: the four reading cards are 228 px wide on the right so the "try again" box fits on the free left; the long final feedback (four readings) covers the lower half of the cards, as the storyboard's own slide 11 does, and has a close X (`data-feedback-close`). `layout_check.py` reports those q1 final-state overlaps (16 lines): expected, reviewed, not a bug. Q2: rows and chips are one grid; the final feedback sits over the locked chip bank. · Claude
+- 2026-11-11 · Stand-in pictures from the storyboard (posters of videos 1, 2, 3 and the finish; backgrounds of the story screens) are in `assets/images/*-poster.jpg` and `*-bg.jpg`. `story-data-bg` and `story-daily-bg` are the BASE pictures until the altered versions (SCENE_IMAGES_BRIEF.md A and C) exist; replace the files under the same names. · Claude
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).

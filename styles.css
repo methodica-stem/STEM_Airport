@@ -675,7 +675,117 @@ button, input, select, textarea { font-family: inherit; }
 .q-free-hint[hidden] { display: none; }
 @media (prefers-reduced-motion: reduce) { .q-free.needs-text { animation: none; } }
 
+/* ---------- 3b. Airport skin of the shared parts ----------
+   Pictures and colours from the PSD (assets/images/ui-*.png, bg-airport.jpg). The soft shadow the PSD
+   draws under its buttons is not in the pictures: it is the drop-shadow filter here. */
+:root { --btn-shadow: drop-shadow(0 8px 12px rgba(0,0,0,.38)); }
+.q-overlay { background: none; }                       /* bg-airport.jpg is already darkened by the designer */
+.q-card { border-width: 4px; }
+
+.nav-btn {
+  bottom: 41px; width: 103px; height: 103px; border-radius: 0;
+  background: center / contain no-repeat; box-shadow: none; filter: var(--btn-shadow);
+}
+.nav-btn::before { display: none; }
+.nav-next { left: 71px; background-image: url('assets/images/ui-btn-next.png'); }
+.nav-prev { right: 97px; background-image: url('assets/images/ui-btn-prev.png'); }
+.nav-btn:hover { filter: var(--btn-shadow) brightness(1.15); }
+
+.help-btn {
+  left: 71px; top: 48px; width: 120px; height: 120px; border: none; border-radius: 0;
+  background: url('assets/images/ui-help.png') center / 100% 100% no-repeat; box-shadow: none; filter: var(--btn-shadow);
+  color: #fff; font-size: 36px; font-weight: 700;
+}
+.help-btn:hover { filter: var(--btn-shadow) brightness(1.2); }
+/* the light-bulb "information" button sits in the text, after the sentence it belongs to */
+.help-btn.info-btn {
+  position: relative; left: auto; top: auto; z-index: 2; display: inline-block; vertical-align: middle;
+  width: 74px; height: 75px; margin: 0 14px; font-size: 0;
+  background-image: url('assets/images/ui-bulb.png');
+}
+
+.btn-check {
+  left: 270px; right: auto; bottom: 40px; width: 187px; height: 115px; min-width: 0; padding: 0;
+  border: none; border-radius: 0; background: url('assets/images/ui-check.png') center / 100% 100% no-repeat;
+  filter: var(--btn-shadow); color: #fff; font-size: 42px; font-weight: 800;
+}
+.btn-check:hover { filter: var(--btn-shadow) brightness(1.2); }
+
+/* progress pills: top right, above the panel, 1 on the right */
+.q-stepper { top: 28px; left: auto; right: 60px; transform: none; gap: 6px; }
+.q-step {
+  width: 52px; height: 66px; border: none; border-radius: 14px;
+  background: linear-gradient(#e3efff, var(--pill-off)); color: #0B3A8C; font-size: 40px; font-weight: 800;
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.75), 0 3px 6px rgba(0,0,0,.3);
+}
+.q-step.active { background: linear-gradient(#2f78e8, var(--accent)); color: #fff; }
+
+/* drag chips and slots */
+.dnd-chip {
+  min-height: 76px; padding: 0 6px; border: 18px solid transparent; border-image: url('assets/images/ui-chip.png') 28 fill / 18px stretch;
+  border-radius: 0; background: none; color: var(--chip-text); font-size: 36px; font-weight: 800; line-height: 1.1; box-sizing: border-box;
+}
+.dnd-slot { min-width: 270px; min-height: 76px; border: 3px solid #BDD1EC; border-radius: 16px; background: var(--slot-bg); }
+.dnd-slot.filled { border-color: transparent; }
+.dnd-slot.drop-target { border-color: var(--accent); background: #d3e5fb; }
+.dnd-fix { background: var(--chip-bg); min-height: 76px; padding: 0 6px; font-size: 36px; font-weight: 800; line-height: 1.1; }
+
+/* typed answers */
+.q-in { width: 230px; height: 84px; border: 3px solid #A9C2E6; border-radius: 14px; background: var(--slot-bg); font-size: 44px; }
+
+/* narration bubble: top right, the question-text size, 3 rows at most (the width is set per screen) */
+.narration-banner {
+  top: 22px; right: 24px; left: auto; width: 1004px; padding: 14px 36px;
+  background: #fff; border: 3px solid #000; border-radius: 36px; color: #000;
+}
+/* the video control bar stays clear of the two arrows */
+.vctrls { left: 200px; right: 200px; }
+/* the line under a video: "numbers are from 2025" */
+.video-credit {
+  position: absolute; right: 24px; bottom: 80px; z-index: 4; margin: 0; padding: 6px 18px;
+  background: rgba(0,0,0,.6); color: #fff; border-radius: 8px; font-size: 28px; font-weight: 600;
+}
+
 /* ---------- 5. Per-screen positions ----------
    One block per screen, by data-sid, in screen order. Example:
    [data-sid="q1"] .q-card { top: 140px; right: 80px; width: 1100px; }
    #feedback-popup.fb-q1 { left: 340px; bottom: 185px; }          */
+
+/* ---- 1 · video-intro ---- */
+/* ---- 2 · story-office ---- */
+[data-sid="story-office"] .narration-banner { width: 1004px; }
+/* ---- 3 · q1: four reading cards ---- */
+/* The cards sit on the right, under the text; the free left side takes the "try again" box. The final
+   feedback is long (four readings): like the storyboard's own slide 11 it covers the cards, and has a close X. */
+[data-sid="q1"] .q-card { padding-top: 36px; }
+[data-sid="q1"] .q-answers { flex-direction: row; justify-content: flex-start; gap: 28px; max-width: none; margin-top: 8px; }
+[data-sid="q1"] .reader-card { position: relative; flex-direction: column; align-items: center; gap: 10px; width: 228px; }
+[data-sid="q1"] .reader-pic { display: block; width: 228px; height: 257px; }
+[data-sid="q1"] .reader-card .q-mark { position: absolute; top: 14px; right: 14px; margin: 0; width: 34px; height: 34px; z-index: 2; }
+[data-sid="q1"] .reader-media { position: absolute; left: 10px; bottom: 100px; width: 0; height: 0; }
+[data-sid="q1"] .reader-label {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; width: 228px; min-height: 90px;
+  border: 20px solid transparent; border-image: url('assets/images/ui-chip.png') 28 fill / 20px stretch; box-sizing: border-box;
+  font-size: 32px; font-weight: 800; line-height: 1.15; color: #000;
+}
+[data-sid="q1"] .card-city, [data-sid="q1"] .card-num { display: block; }
+[data-sid="q1"] .reader-card.selected .reader-pic { outline: 6px solid var(--accent); outline-offset: -6px; border-radius: 24px; }
+#feedback-popup.fb-q1.retry { left: 116px; bottom: 200px; width: 600px; }
+#feedback-popup.fb-q1.correct, #feedback-popup.fb-q1.wrong2 { left: 100px; bottom: 190px; width: 1560px; max-width: none; }
+/* ---- 4 · video-estimate ---- */
+/* ---- 5 · q2: round to tens of thousands ---- */
+[data-sid="q2"] .q-card { display: grid; grid-template-columns: 1090px 1fr; column-gap: 30px; align-content: start; padding-top: 36px; }
+[data-sid="q2"] .q-title, [data-sid="q2"] .q-body, [data-sid="q2"] .q-instruction { grid-column: 1 / -1; }
+[data-sid="q2"] .dnd-rows { grid-column: 1; margin-top: 20px; }
+[data-sid="q2"] .dnd-bank { grid-column: 2; grid-row: 4; display: grid; grid-template-columns: 270px 270px; gap: 14px 20px; margin: 12px 0 0; align-content: start; justify-content: start; }
+[data-sid="q2"] .dnd-bank .dnd-chip { width: 270px; }
+[data-sid="q2"] .dnd-row { display: grid; grid-template-columns: 170px 56px 270px 270px 1fr; align-items: center; column-gap: 12px; margin-bottom: 10px; }
+[data-sid="q2"] .dnd-label { grid-column: 1; font-size: var(--text-size); font-weight: 700; }
+[data-sid="q2"] .dnd-mark { grid-column: 2; }
+[data-sid="q2"] .dnd-slot { grid-column: 3; margin: 0; width: 270px; }
+[data-sid="q2"] .dnd-rows { margin-top: 12px; }
+#feedback-popup.fb-q2.retry { left: 116px; bottom: 188px; width: 1300px; max-width: none; }
+#feedback-popup.fb-q2.correct, #feedback-popup.fb-q2.partial, #feedback-popup.fb-q2.wrong2 { left: 116px; bottom: 188px; width: 560px; }
+[data-sid="q2"] .dnd-fix { grid-column: 4; }
+[data-sid="q2"] .dnd-val { grid-column: 5; font-size: var(--text-size); font-weight: 700; overflow-wrap: anywhere; }
+

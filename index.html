@@ -24,7 +24,7 @@
 <!-- ================= SCREEN 1 — סרטון פתיחה — השיחה במטבח (שקפים 2-8) ================= -->
 <section class="screen active" data-screen="1" data-sid="video-intro" data-type="video" tabindex="-1">
   <div class="video-wrap">
-    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" poster="assets/images/video-intro-poster.jpg" data-pending-asset></video>
     <!-- Caption times are placeholders until the video and its SRT arrive. -->
     <div class="vcap-src" data-clear-after="31" hidden>
       <span data-t="0.4">עונת הטיסות בשיאה! שדה התעופה מתמלא בנוסעים, והצוותים נערכים לאחת התקופות העמוסות בשנה.</span>
@@ -44,26 +44,26 @@
 
 <!-- ================= SCREEN 2 — למחרת במשרד של אמא (שקף 9) ================= -->
 <section class="screen" data-screen="2" data-sid="story-office" data-type="explain" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background: still scene, picture image3 (slide 9), as it is"></div>
+  <img class="screen-bg" src="assets/images/story-office-bg.jpg" alt="">
   <div class="narration-banner"><p>למחרת הגיע מתן למשרד של אימו. על השולחן חיכו לה נתוני הנוסעים לקראת הישיבה הקרובה. מתן הסתקרן והציץ במספרים.</p></div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
 <!-- ================= SCREEN 3 — שאלה 1 — קריאת מספרים גדולים (שקפים 10-11) ================= -->
-<section class="screen" data-screen="3" data-sid="q1" data-type="question" data-kind="single" data-weight="12.5" data-step="1" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 2 (q1)"></div>
+<section class="screen" data-screen="3" data-sid="q1" data-type="question" data-kind="single" data-feedback-close data-weight="12.5" data-step="1" tabindex="-1">
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 1</h2>
     <p class="q-body">מתן החל להקריא בקול את מספר הנוסעים שעברו בכל אחד משדות התעופה בשנה האחרונה.</p>
     <p class="q-instruction">הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון את מספר הנוסעים.</p>
     <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
-      <!-- Each card: the number, a sound symbol (audio, pending) and the radio. -->
-      <div class="q-opt" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span><span class="audio-btn" data-pending-asset="audio or video: reading, Paris (slide 10)"></span></div>
-      <div class="q-opt" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span><span class="audio-btn" data-pending-asset="audio or video: reading, Tokyo (slide 10)"></span></div>
-      <div class="q-opt" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span><span class="audio-btn" data-pending-asset="audio or video: reading, Frankfurt (slide 10)"></span></div>
-      <div class="q-opt" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span><span class="audio-btn" data-pending-asset="audio or video: reading, Dubai (slide 10)"></span></div>
+      <!-- Each card: Matan's picture (the play symbol is painted in it), the city and number, the radio. The reading itself (audio or video, open question 12) goes on .reader-media. -->
+      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-1.png" alt=""><span class="reader-media" data-pending-asset="reading, Paris (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span></div>
+      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-2.png" alt=""><span class="reader-media" data-pending-asset="reading, Tokyo (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span></div>
+      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-3.png" alt=""><span class="reader-media" data-pending-asset="reading, Frankfurt (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span></div>
+      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><img class="reader-pic" src="assets/images/q1-reader-4.png" alt=""><span class="reader-media" data-pending-asset="reading, Dubai (slide 10): audio or video"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span></div>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -89,7 +89,7 @@
 <!-- ================= SCREEN 4 — סרטון — מה זה אומדן? (שקפים 12-14) ================= -->
 <section class="screen" data-screen="4" data-sid="video-estimate" data-type="video" tabindex="-1">
   <div class="video-wrap">
-    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" poster="assets/images/video-estimate-poster.jpg" data-pending-asset></video>
     <!-- Caption times are placeholders until the video and its SRT arrive. -->
     <div class="vcap-src" data-clear-after="24" hidden>
       <span data-t="0.4">היום אני מכינה דו"ח שמשווה בין השדה שלנו לשדות תעופה אחרים בעולם. בשביל ההשוואה, אנחנו משתמשים באומדן של מספר הנוסעים בשדות תעופה שונים בעולם.</span>
@@ -105,7 +105,7 @@
 
 <!-- ================= SCREEN 5 — שאלה 2 — עיגול לעשרות אלפים (שקפים 15-16) ================= -->
 <section class="screen" data-screen="5" data-sid="q2" data-type="question" data-kind="dnd" data-dnd-final="compare" data-weight="12.5" data-step="2" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 3 (q2)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q2">עזרה</button>
   <div class="popup-src" id="help-q2" hidden>
@@ -124,9 +124,9 @@
       <button class="dnd-chip" type="button" data-chip="c6" data-order="6">32,630,000</button>
     </div>
     <div class="dnd-rows">
-      <div class="dnd-row"><span class="dnd-label">אמסטרדם:</span><span class="dnd-val">68,776,052 ≈</span><span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span></div>
-      <div class="dnd-row"><span class="dnd-label">ניו יורק:</span><span class="dnd-val">62,568,432 ≈</span><span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span></div>
-      <div class="dnd-row"><span class="dnd-label">וינה:</span><span class="dnd-val">32,634,803 ≈</span><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 3"></span></div>
+      <div class="dnd-row"><span class="dnd-label">אמסטרדם:</span><span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span><span class="dnd-val">68,776,052 ≈</span></div>
+      <div class="dnd-row"><span class="dnd-label">ניו יורק:</span><span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span><span class="dnd-val">62,568,432 ≈</span></div>
+      <div class="dnd-row"><span class="dnd-label">וינה:</span><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 3"></span><span class="dnd-val">32,634,803 ≈</span></div>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>

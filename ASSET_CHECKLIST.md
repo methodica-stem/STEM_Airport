@@ -26,22 +26,22 @@ All text is live HTML, so no picture is exported with words in it.
 ## Screen 7 — q3 (PSD frame 4)
 | ✔ | file | PSD layer | x | y | w | h | how |
 |---|---|---|---|---|---|---|---|
-| ☐ | `assets/images/q3-flag-uk.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/1 copy` | 1600 | 611 | 512 | 170 | the flag under הית'רו (United Kingdom); the box is wider than a flag, check the result [trim] |
-| ☐ | `assets/images/q3-flag-de.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/2` | 1323 | 610 | 165 | 93 | Germany, under פרנקפורט |
-| ☐ | `assets/images/q3-flag-es.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/3` | 1032 | 601 | 195 | 98 | Spain, under אל פראט |
-| ☐ | `assets/images/q3-flag-nl.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/4` | 768 | 608 | 172 | 89 | Netherlands, under סכיפהול |
-| ☐ | `assets/images/q3-flag-fr.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/5` | 493 | 601 | 184 | 95 | France, under שארל דה גול |
-| ☐ | `assets/images/q3-flag-it.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/6` | 216 | 609 | 172 | 83 | Italy, under פיומיצ'ינו |
+| ✔ | `assets/images/q3-flag-uk.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/1 copy` | 1600 | 611 | 163 | 80 | the flag under הית'רו (United Kingdom); the designer's mask cuts the wide layer to one flag |
+| ✔ | `assets/images/q3-flag-de.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/2` | 1323 | 610 | 165 | 93 | Germany, under פרנקפורט |
+| ✔ | `assets/images/q3-flag-es.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/3` | 1044 | 609 | 172 | 83 | Spain, under אל פראט |
+| ✔ | `assets/images/q3-flag-nl.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/4` | 768 | 608 | 172 | 89 | Netherlands, under סכיפהול |
+| ✔ | `assets/images/q3-flag-fr.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/5` | 493 | 608 | 170 | 84 | France, under שארל דה גול |
+| ✔ | `assets/images/q3-flag-it.png` | `#4 20/תוכן שאלה/שדות תעופה/דגלים/6` | 216 | 609 | 172 | 83 | Italy, under פיומיצ'ינו |
 
 ## Screen 17 — q7 (PSD frame 10)
 | ✔ | file | PSD layer | x | y | w | h | how |
 |---|---|---|---|---|---|---|---|
-| ☐ | `assets/images/q7-airplane.png` | `#10 43/תוכן שאלה/מטוס` | 616 | 651 | 760 | 473 | the airplane picture; it runs below the panel in the design, so the whole picture is exported [original] |
+| ✔ | `assets/images/q7-airplane.png` | `#10 43/תוכן שאלה/מטוס` | 616 | 651 | 1536 | 1024 | the airplane picture; it runs below the panel in the design, so the whole picture is exported at its own size, 1536×1024 (placed 760×473 in the design) [original] |
 
 ## Screen 18 — q8 (PSD frame 11)
 | ✔ | file | PSD layer | x | y | w | h | how |
 |---|---|---|---|---|---|---|---|
-| ☐ | `assets/images/q8-suitcase.png` | `#11 45/תוכן שאלה/תמונה - מזוודה` | 22 | 327 | 771 | 514 | the suitcase on the conveyor belt; the design crops it at the panel's left edge, so the whole picture is exported [original] |
+| ✔ | `assets/images/q8-suitcase.png` | `#11 45/תוכן שאלה/תמונה - מזוודה` | 22 | 327 | 1536 | 1024 | the suitcase on the conveyor belt; the design crops it at the panel's left edge, so the whole picture is exported at its own size, 1536×1024 (placed 771×514 in the design; it has a white background, which sits on the white panel) [original] |
 
 ## Rebuilt in code (not exported, on purpose)
 - **The white question panel** (layer `משטח שאלה`): drawn in CSS at the house size, not exported with the background.
