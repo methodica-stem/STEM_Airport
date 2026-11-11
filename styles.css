@@ -680,7 +680,9 @@ button, input, select, textarea { font-family: inherit; }
    draws under its buttons is not in the pictures: it is the drop-shadow filter here. */
 :root { --btn-shadow: drop-shadow(0 8px 12px rgba(0,0,0,.38)); }
 .q-overlay { background: none; }                       /* bg-airport.jpg is already darkened by the designer */
-.q-card { border-width: 4px; }
+/* The design's white panel (PSD: 1896 x 1056 at x 12, y 12), the same on every question. The buttons, the pills and the
+   arrows sit inside it, as in the design; the bottom band (under the content, between the arrows) takes the feedback boxes. */
+.q-card { top: 12px; right: 12px; left: 12px; bottom: 12px; padding: 150px 92px 215px; border: 5px solid var(--panel-border); border-radius: 60px; }
 
 .nav-btn {
   bottom: 41px; width: 103px; height: 103px; border-radius: 0;
@@ -705,7 +707,7 @@ button, input, select, textarea { font-family: inherit; }
 }
 
 .btn-check {
-  left: 270px; right: auto; bottom: 40px; width: 187px; height: 115px; min-width: 0; padding: 0;
+  left: 270px; right: auto; bottom: 88px; width: 187px; height: 115px; min-width: 0; padding: 0;
   border: none; border-radius: 0; background: url('assets/images/ui-check.png') center / 100% 100% no-repeat;
   filter: var(--btn-shadow); color: #fff; font-size: 42px; font-weight: 800;
 }
@@ -783,23 +785,21 @@ button, input, select, textarea { font-family: inherit; }
 [data-sid="story-office"] .narration-banner { width: 1110px; }
 [data-sid="story-team"] .narration-banner { width: 760px; }
 /* ---- 3 · q1: four reading cards (the script's skyline cards) ---- */
-/* Four cards across the panel; the "try again" box sits under them. The long final feedback (four readings) covers
-   the lower part of the cards, as the storyboard's own slide 11 does, and has a close X. */
-[data-sid="q1"] .q-card { padding-top: 36px; }
+/* Four cards across the panel; both feedback boxes sit in the bottom band under them, between the arrows. */
 [data-sid="q1"] .q-answers { flex-direction: row; justify-content: flex-start; gap: 24px; max-width: none; margin-top: 10px; }
-[data-sid="q1"] .reader-card { position: relative; display: block; width: 370px; height: 320px; flex: none; }
-[data-sid="q1"] .reader-pic { display: block; width: 370px; height: 320px; }
+[data-sid="q1"] .reader-card { position: relative; display: block; width: 350px; height: 303px; flex: none; }
+[data-sid="q1"] .reader-pic { display: block; width: 350px; height: 303px; }
 /* the painted radio circle of the picture is covered by the real one, same place and size */
-[data-sid="q1"] .reader-card .q-mark { position: absolute; top: 21px; right: 33px; margin: 0; width: 46px; height: 46px; border: 5px solid #0E1B4D; z-index: 2; }
-[data-sid="q1"] .reader-card.selected .reader-pic { outline: 6px solid var(--accent); outline-offset: -6px; border-radius: 40px; }
-[data-sid="q1"] .reader-label { position: absolute; left: 16px; right: 16px; top: 162px; text-align: center; font-size: 32px; font-weight: 800; line-height: 1.2; color: #000; }
+[data-sid="q1"] .reader-card .q-mark { position: absolute; top: 20px; right: 31px; margin: 0; width: 44px; height: 44px; border: 5px solid #0E1B4D; z-index: 2; }
+[data-sid="q1"] .reader-card.selected .reader-pic { outline: 6px solid var(--accent); outline-offset: -6px; border-radius: 42px; }
+[data-sid="q1"] .reader-label { position: absolute; left: 16px; right: 16px; top: 153px; text-align: center; font-size: 32px; font-weight: 800; line-height: 1.2; color: #000; }
 [data-sid="q1"] .card-city, [data-sid="q1"] .card-num { display: inline; }
-[data-sid="q1"] .reader-media { position: absolute; left: 14px; right: 14px; bottom: 22px; height: 62px; }
-#feedback-popup.fb-q1.retry { left: 116px; bottom: 190px; width: 900px; max-width: none; }
-#feedback-popup.fb-q1.correct, #feedback-popup.fb-q1.wrong2 { left: 100px; bottom: 190px; width: 1560px; max-width: none; }
+[data-sid="q1"] .reader-media { position: absolute; left: 14px; right: 14px; bottom: 21px; height: 58px; }
+#feedback-popup.fb-q1.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q1.correct, #feedback-popup.fb-q1.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; padding-top: 18px; padding-bottom: 18px; }
 /* ---- 4 · video-estimate ---- */
 /* ---- 5 · q2: round to tens of thousands ---- */
-[data-sid="q2"] .q-card { display: grid; grid-template-columns: 1090px 1fr; column-gap: 30px; align-content: start; padding-top: 36px; }
+[data-sid="q2"] .q-card { display: grid; grid-template-columns: 1090px 1fr; column-gap: 30px; align-content: start; }
 [data-sid="q2"] .q-title, [data-sid="q2"] .q-body, [data-sid="q2"] .q-instruction { grid-column: 1 / -1; }
 [data-sid="q2"] .dnd-rows { grid-column: 1; margin-top: 20px; }
 [data-sid="q2"] .dnd-bank { grid-column: 2; grid-row: 4; display: grid; grid-template-columns: 270px 270px; gap: 14px 20px; margin: 12px 0 0; align-content: start; justify-content: start; }
@@ -809,8 +809,8 @@ button, input, select, textarea { font-family: inherit; }
 [data-sid="q2"] .dnd-mark { grid-column: 2; }
 [data-sid="q2"] .dnd-slot { grid-column: 3; margin: 0; width: 270px; }
 [data-sid="q2"] .dnd-rows { margin-top: 12px; }
-#feedback-popup.fb-q2.retry { left: 116px; bottom: 188px; width: 1300px; max-width: none; }
-#feedback-popup.fb-q2.correct, #feedback-popup.fb-q2.partial, #feedback-popup.fb-q2.wrong2 { left: 116px; bottom: 188px; width: 560px; }
+#feedback-popup.fb-q2.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q2.correct, #feedback-popup.fb-q2.partial, #feedback-popup.fb-q2.wrong2 { left: 200px; bottom: 40px; width: 500px; }
 [data-sid="q2"] .dnd-fix { grid-column: 4; }
 [data-sid="q2"] .dnd-val { grid-column: 5; font-size: var(--text-size); font-weight: 700; overflow-wrap: anywhere; }
 
