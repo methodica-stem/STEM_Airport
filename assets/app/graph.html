@@ -21,7 +21,7 @@ button, input { font-family: inherit; }
 .month { font-size: 28px; font-weight: 600; fill: #1b2430; }
 .val { font-size: 30px; font-weight: 800; fill: #1b2430; direction: ltr; }
 .title { font-size: 30px; font-weight: 800; fill: #1b2430; }
-.chip { font-size: 34px; font-weight: 800; fill: #1e4c8a; direction: ltr; }
+.chip { font-size: 29px; font-weight: 800; fill: #1e4c8a; direction: ltr; paint-order: stroke; stroke: #fff; stroke-width: 6px; stroke-linejoin: round; }
 .slot { cursor: ns-resize; }
 #slot:focus-visible { outline: none; }
 #slot:focus-visible .slot-rect { stroke: #004CC4; stroke-width: 5; }
@@ -100,9 +100,9 @@ STRINGS.months.forEach((m, c) => {
 });
 
 /* ---------- the drawing area, the learner's column, the handle ---------- */
-const SLOT_X = cx(SLOT_COL) - 62, SLOT_W = 124;
+const SLOT_W = 144 - 4, SLOT_X = cx(SLOT_COL) - SLOT_W / 2;
 const slot = el('g', { id: 'slot', class: 'slot', tabindex: 0, role: 'slider', 'aria-label': STRINGS.slotLabel, 'aria-valuemin': 0, 'aria-valuemax': MAX, 'aria-valuenow': 0 });
-const slotRect = el('rect', { class: 'slot-rect', x: SLOT_X, y: TOP - 10, width: SLOT_W, height: BOTTOM - TOP + 10, rx: 10, fill: '#f2f6fb', stroke: '#9db6dd', 'stroke-width': 3, 'stroke-dasharray': '9 8' }, slot);
+const slotRect = el('rect', { class: 'slot-rect', x: SLOT_X, y: TOP - 46, width: SLOT_W, height: BOTTOM - TOP + 46, rx: 10, fill: '#f2f6fb', stroke: '#9db6dd', 'stroke-width': 3, 'stroke-dasharray': '9 8' }, slot);
 const live = el('g', {});                                   // dashed guide, value, learner's bar
 const guide = el('line', { x1: X0, x2: SLOT_X + SLOT_W, stroke: '#1e4c8a', 'stroke-width': 2.5, 'stroke-dasharray': '7 7', visibility: 'hidden' }, live);
 const bar = el('rect', { x: cx(SLOT_COL) - 48, width: 96, fill: 'url(#gBlue)', visibility: 'hidden', 'pointer-events': 'none' }, live);
@@ -115,7 +115,7 @@ el('rect', { x: -33, y: -59, width: 66, height: 118, rx: 33, fill: 'none', strok
 el('path', { d: 'M0 -38 V38 M-17 -21 L0 -38 L17 -21 M-17 21 L0 38 L17 21', fill: 'none', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, pill);
 
 const MAXV = MAX;
-let value = null, started = false, locked = false, dragging = false;
+let value = null, started = false, locked = false, dragging = false, chipHidden = false;
 
 function post(msg) { try { window.parent.postMessage(msg, '*'); } catch (e) {} }
 
@@ -124,11 +124,11 @@ function render() {
   const y = has ? yOf(value) : BOTTOM;
   bar.setAttribute('visibility', has ? 'visible' : 'hidden');
   guide.setAttribute('visibility', has ? 'visible' : 'hidden');
-  chip.setAttribute('visibility', has ? 'visible' : 'hidden');
+  chip.setAttribute('visibility', has && !chipHidden ? 'visible' : 'hidden');
   if (has) {
     bar.setAttribute('y', y); bar.setAttribute('height', BOTTOM - y);
     guide.setAttribute('y1', y); guide.setAttribute('y2', y);
-    chip.setAttribute('y', Math.max(TOP + 30, y - 72)); chip.textContent = fmt(value);
+    chip.setAttribute('y', (y - 72 >= TOP + 10) ? y - 72 : TOP - 16); chip.textContent = fmt(value);
   }
   if (!locked) bar.setAttribute('fill', dragging ? '#8fb8e6' : 'url(#gBlue)');
   slotRect.setAttribute('fill', has ? 'transparent' : '#f2f6fb');
@@ -187,20 +187,32 @@ slot.addEventListener('keydown', function (e) {
 });
 
 /* ---------- the lomda decides; the applet shows ---------- */
+function plate(x, y, text, color) {                         // a number on a white plate, readable over blue or green
+  const g = el('g', {}, reveal);
+  const r = el('rect', { rx: 10, fill: '#fff', stroke: color, 'stroke-width': 3.5 }, g);
+  const t = el('text', { x, y, class: 'chip', 'text-anchor': 'middle', style: 'fill:' + color + ';stroke:none' }, g, text);
+  const b = t.getBBox();
+  r.setAttribute('x', b.x - 9); r.setAttribute('y', b.y - 3); r.setAttribute('width', b.width + 18); r.setAttribute('height', b.height + 6);
+}
 function finalState(answer, ok) {
   locked = true; dragging = false;
   while (reveal.firstChild) reveal.removeChild(reveal.firstChild);
   const ya = yOf(answer);
   if (ok) { value = answer; bar.setAttribute('fill', 'url(#gGreen)'); chip.style.fill = '#1f7a30'; guide.setAttribute('stroke', '#1f7a30'); render(); return; }
-  // wrong: the learner's column stays as a red outline, the right column is drawn solid green beside the guide line
+  // wrong: the learner's column stays as a red outline; the right column is drawn solid green with its number on a white plate
+  const yv = yOf(value || 0);
   bar.setAttribute('fill', 'rgba(200,70,60,.18)'); bar.setAttribute('stroke', '#ca433d'); bar.setAttribute('stroke-width', 4); bar.setAttribute('stroke-dasharray', '8 6');
+  chipHidden = true;
   el('rect', { x: cx(SLOT_COL) - 48, y: ya, width: 96, height: BOTTOM - ya, fill: 'url(#gGreen)', opacity: 0.92 }, reveal);
   el('line', { x1: X0, y1: ya, x2: SLOT_X + SLOT_W, y2: ya, stroke: '#1f7a30', 'stroke-width': 3, 'stroke-dasharray': '7 7' }, reveal);
-  el('text', { x: SLOT_X - 8, y: ya - 10, class: 'chip', 'text-anchor': 'end', fill: '#1f7a30', style: 'fill:#1f7a30' }, reveal, fmt(answer));
+  let ly = Math.max(TOP - 16, ya - 22), vy = Math.max(TOP - 16, yv - 22);
+  if (Math.abs(vy - ly) < 46) vy = Math.min(BOTTOM - 24, yv + 62);   // the two numbers never touch
+  plate(cx(SLOT_COL), ly, fmt(answer), '#1f7a30');
+  if (value) plate(cx(SLOT_COL), vy, fmt(value), '#ca433d');
   render();
 }
 function resetState() {
-  value = null; started = false; locked = false; dragging = false;
+  value = null; started = false; locked = false; dragging = false; chipHidden = false;
   while (reveal.firstChild) reveal.removeChild(reveal.firstChild);
   bar.removeAttribute('stroke'); bar.removeAttribute('stroke-width'); bar.removeAttribute('stroke-dasharray');
   bar.setAttribute('fill', 'url(#gBlue)'); chip.style.fill = ''; guide.setAttribute('stroke', '#1e4c8a');
