@@ -20,7 +20,7 @@
    export finds every string in one place.
    =================================================================== */
 
-const TOTAL_SCREENS = 9;              // must equal the number of <section class="screen">
+const TOTAL_SCREENS = 19;             // must equal the number of <section class="screen">
 window.TOTAL_SCREENS = TOTAL_SCREENS;
 let currentScreen = 1;
 
@@ -751,7 +751,9 @@ function qSelect(opt) {
 
 /* Typed answers: digits only, and the check button follows what is typed. */
 function onTyped(input) {
-  const clean = input.value.replace(/[^\d]/g, '').slice(0, 4);
+  // 4 digits unless the box says otherwise (data-maxlen="6" for an answer such as 100000).
+  const maxLen = parseInt(input.getAttribute('data-maxlen'), 10) || 4;
+  const clean = input.value.replace(/[^\d]/g, '').slice(0, maxLen);
   if (clean !== input.value) input.value = clean;
   const u = unitOf(input);
   if (u && !qEnsure(u).done) {

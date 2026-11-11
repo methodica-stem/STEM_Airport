@@ -677,14 +677,3 @@ button, input, select, textarea { font-family: inherit; }
    One block per screen, by data-sid, in screen order. Example:
    [data-sid="q1"] .q-card { top: 140px; right: 80px; width: 1100px; }
    #feedback-popup.fb-q1 { left: 340px; bottom: 185px; }          */
-[data-sid="intro"] .intro-card {
-  position: absolute; top: 210px; left: 50%; transform: translateX(-50%);
-  width: 1000px; padding: 50px 60px; text-align: center;
-  background: rgba(255,255,255,.85); border-radius: 36px;
-}
-[data-sid="intro"] .intro-title { margin: 0; font-size: 88px; font-weight: 800; color: var(--subject-500); }
-[data-sid="intro"] .intro-subtitle { margin: 10px 0 0; font-size: 44px; font-weight: 600; }
-[data-sid="intro"] .intro-start { bottom: 140px; left: 50%; transform: translateX(-50%); }
-[data-sid="explain-model"] .figure-frame { top: 220px; left: 140px; width: 640px; }
-[data-sid="explain-model"] .term-tip { top: 330px; right: 220px; }
-[data-sid="finish"] .finish-btn { bottom: 140px; left: 50%; transform: translateX(-50%); }

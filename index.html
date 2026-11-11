@@ -3,12 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>שם הלומדה</title>
+<title>שדה תעופה</title>
 <link rel="icon" href="data:,">
 <link rel="stylesheet" href="styles.css">
-<!-- Images used only as CSS backgrounds (buttons, panels) are not fetched
-     until first painted. Preload the ones the first screens need here:
-<link rel="preload" as="image" href="assets/images/ui-btn-next.png"> -->
 </head>
 <body>
 <div id="app" role="main">
@@ -21,30 +18,83 @@
        data-sid    short ASCII name, stable when screens are renumbered
        data-type   opening | explain | video | tiles | hub | question | applet | finish
      Banner comment per screen: number, title, storyboard slides.
+     Skeleton (Phase 1): text is final, pictures / videos / applets are placeholders.
      =================================================================== -->
 
-<!-- ================= SCREEN 1 — פתיחה (שקף 2) ================= -->
-<section class="screen active" data-screen="1" data-sid="intro" data-type="opening" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
-  <!-- <img class="screen-bg" src="assets/images/intro-bg.jpg" alt=""> -->
-  <div class="intro-card">
-    <h1 class="intro-title">שם הלומדה</h1>
-    <p class="intro-subtitle">שאלת החקר של הלומדה</p>
+<!-- ================= SCREEN 1 — סרטון פתיחה — השיחה במטבח (שקפים 2-8) ================= -->
+<section class="screen active" data-screen="1" data-sid="video-intro" data-type="video" tabindex="-1">
+  <div class="video-wrap">
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <!-- Caption times are placeholders until the video and its SRT arrive. -->
+    <div class="vcap-src" data-clear-after="31" hidden>
+      <span data-t="0.4">עונת הטיסות בשיאה! שדה התעופה מתמלא בנוסעים, והצוותים נערכים לאחת התקופות העמוסות בשנה.</span>
+      <span data-t="4.4">אמא, את עובדת בשדה התעופה... למה דווקא עכשיו יש לכם כל כך הרבה עבודה?</span>
+      <span data-t="8.4">כי בחופשת הקיץ שדה התעופה הכי עמוס, ואנחנו צריכים להתכונן.</span>
+      <span data-t="12.4">אבל... מה כבר יש לעשות? אנשים באים, עולים למטוס וטסים.</span>
+      <span data-t="16.4">(צוחקת) אוי, מתני! הלוואי שזה היה כל כך פשוט... לפני שכל מטוס ממריא, הצוות שלנו מתכנן את העבודה מראש. הנתונים עוזרים לנו להחליט כמה עובדים יהיו בכל אזור, כמה עמדות ייפתחו, ואיך תתנהל הפעילות לאורך היום...</span>
+      <span data-t="23.4">באמת?!</span>
+      <span data-t="26.4">כן! אתה יודע מה... יש לי רעיון! אם אתה רוצה, תצטרף אליי מחר ליום עבודה ותראה בעצמך.</span>
+    </div>
+    <div class="video-caption hidden"><p></p></div>
+    <button class="play-btn-big" type="button" aria-label="הפעלת הסרטון"></button>
   </div>
-  <button class="btn-primary intro-start" type="button" data-action="next">מתחילים</button>
+  <p class="video-credit">המספרים במשימה מעובדים על פי נתונים משנת 2025</p>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
-<!-- ================= SCREEN 2 — סרטון פתיחה (שקפים 3-5) ================= -->
-<section class="screen" data-screen="2" data-sid="video-intro" data-type="video" tabindex="-1">
-  <div class="narration-banner"><p>שורת קריינות שמופיעה מעל הסרטון.</p></div>
+<!-- ================= SCREEN 2 — למחרת במשרד של אמא (שקף 9) ================= -->
+<section class="screen" data-screen="2" data-sid="story-office" data-type="explain" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background: storyboard picture image3 (slide 9) — no PSD frame"></div>
+  <div class="narration-banner"><p>למחרת הגיע מתן למשרד של אימו. על השולחן חיכו לה נתוני הנוסעים לקראת הישיבה הקרובה. מתן הסתקרן והציץ במספרים.</p></div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 3 — שאלה 1 — קריאת מספרים גדולים (שקפים 10-11) ================= -->
+<section class="screen" data-screen="3" data-sid="q1" data-type="question" data-kind="single" data-weight="12.5" data-step="1" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 2 (q1)"></div>
+  <div class="q-overlay"></div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 1</h2>
+    <p class="q-body">מתן החל להקריא בקול את מספר הנוסעים שעברו בכל אחד משדות התעופה בשנה האחרונה.</p>
+    <p class="q-instruction">הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון את מספר הנוסעים.</p>
+    <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
+      <!-- Each card: the number, a sound symbol (audio, pending) and the radio. -->
+      <div class="q-opt" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span><span class="audio-btn" data-pending-asset="audio or video: reading, Paris (slide 10)"></span></div>
+      <div class="q-opt" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span><span class="audio-btn" data-pending-asset="audio or video: reading, Tokyo (slide 10)"></span></div>
+      <div class="q-opt" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span><span class="audio-btn" data-pending-asset="audio or video: reading, Frankfurt (slide 10)"></span></div>
+      <div class="q-opt" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span><span class="audio-btn" data-pending-asset="audio or video: reading, Dubai (slide 10)"></span></div>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p>
+      <p>לחצו על סמל השמע לצד כל מספר כדי לשמוע איך קוראים נכון את המספרים:</p>
+      <p>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</p>
+      <p>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</p>
+      <p>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</p>
+      <p>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p>
+      <p>לחצו על סמל השמע לצד כל מספר כדי לשמוע איך קוראים נכון את המספרים:</p>
+      <p>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</p>
+      <p>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</p>
+      <p>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</p>
+      <p>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 4 — סרטון — מה זה אומדן? (שקפים 12-14) ================= -->
+<section class="screen" data-screen="4" data-sid="video-estimate" data-type="video" tabindex="-1">
   <div class="video-wrap">
-    <!-- data-pending-asset = no video file yet; remove it and add
-         <source src="assets/videos/video-intro.mp4#t=0.001" type="video/mp4"> -->
     <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
-    <div class="vcap-src" data-clear-after="9.5" hidden>
-      <span data-t="0.4">שורת כתובית ראשונה.</span>
-      <span data-t="3.2">שורת כתובית שנייה.</span>
-      <span data-t="6.1">שורת כתובית שלישית.</span>
+    <!-- Caption times are placeholders until the video and its SRT arrive. -->
+    <div class="vcap-src" data-clear-after="24" hidden>
+      <span data-t="0.4">היום אני מכינה דו"ח שמשווה בין השדה שלנו לשדות תעופה אחרים בעולם. בשביל ההשוואה, אנחנו משתמשים באומדן של מספר הנוסעים בשדות תעופה שונים בעולם.</span>
+      <span data-t="8.4">מה זה אומדן?</span>
+      <span data-t="12.4">שאלה מעולה! אומדן הוא הערכה מקורבת של מספר. כשמדובר בכמויות גדולות מאוד, אנחנו לא תמיד משתמשים במספר המדויק, אלא במספר מקורב. ככה קל יותר לחשב ולהשוות בין הנתונים.</span>
     </div>
     <div class="video-caption hidden"><p></p></div>
     <button class="play-btn-big" type="button" aria-label="הפעלת הסרטון"></button>
@@ -53,141 +103,387 @@
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
-<!-- ================= SCREEN 3 — השערות: לחיצה על דמויות (שקפים 6-10) ================= -->
-<section class="screen" data-screen="3" data-sid="hypotheses" data-type="tiles" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
-  <div class="narration-banner"><p>לחצו על כל אחת מהדמויות וגלו מה ההשערה שלה.</p></div>
-  <div class="tiles-board empty" aria-live="polite"></div>
-  <div class="tiles" data-mode="grayscale-once">
-    <div class="tile" data-tile-id="char1" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 1">
-      <span class="tile-face">1</span><span class="tile-check" aria-hidden="true">✓</span>
-      <div class="tile-content" hidden><strong>דמות 1:</strong> "ההשערה של הדמות הראשונה."</div>
-    </div>
-    <div class="tile" data-tile-id="char2" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 2">
-      <span class="tile-face">2</span><span class="tile-check" aria-hidden="true">✓</span>
-      <div class="tile-content" hidden><strong>דמות 2:</strong> "ההשערה של הדמות השנייה."</div>
-    </div>
-    <div class="tile" data-tile-id="char3" role="button" tabindex="0" aria-label="לחצו לשמיעת ההשערה של דמות 3">
-      <span class="tile-face">3</span><span class="tile-check" aria-hidden="true">✓</span>
-      <div class="tile-content" hidden><strong>דמות 3:</strong> "ההשערה של הדמות השלישית."</div>
-    </div>
-  </div>
-  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
-  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
-</section>
-
-<!-- ================= SCREEN 4 — הסבר עם מונח ותרשים (שקף 11) ================= -->
-<section class="screen" data-screen="4" data-sid="explain-model" data-type="explain" data-arrow-delay="2" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
-  <div class="text-panel">
-    <p>משפט הסבר שבו מופיע <button class="term" type="button" aria-describedby="tip-model">מונח חדש</button> שהלומדים עוד לא מכירים.</p>
-    <p>וכך נראה שבר בתוך הטקסט: <span class="frac"><span>3</span><span>4</span></span> מהשטח.</p>
-  </div>
-  <span class="term-tip" role="tooltip" id="tip-model">ההגדרה של המונח מופיעה כאן.</span>
-  <figure class="figure-frame" data-reopen-content>
-    <img src="assets/images/demo-chart.svg" alt="תרשים עמודות לדוגמה: חמש עמודות שגובהן עולה משמאל לימין.">
-    <button class="zoom-btn" type="button" data-zoom-src="assets/images/demo-chart.svg" data-zoom-alt="תרשים עמודות לדוגמה: חמש עמודות שגובהן עולה משמאל לימין." aria-label="הגדלת התרשים"></button>
-  </figure>
-  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
-  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
-</section>
-
-<!-- ================= SCREEN 5 — שאלה 1: בחירה יחידה (שקפים 12-13) ================= -->
-<section class="screen" data-screen="5" data-sid="q1" data-type="question" data-kind="single" data-weight="10" data-step="1" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
+<!-- ================= SCREEN 5 — שאלה 2 — עיגול לעשרות אלפים (שקפים 15-16) ================= -->
+<section class="screen" data-screen="5" data-sid="q2" data-type="question" data-kind="dnd" data-dnd-final="compare" data-weight="12.5" data-step="2" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 3 (q2)"></div>
   <div class="q-overlay"></div>
-  <button class="reopen-btn" type="button" data-reopen="explain-model">לצפייה בתרשים</button>
+  <button class="help-btn" type="button" data-popup="help-q2">עזרה</button>
+  <div class="popup-src" id="help-q2" hidden>
+    <p>כאשר מעגלים מספרים, מציגים אותם בצורה פחות מדויקת אך נוחה יותר לאומדן. הסימן ≈ מציין את המספר המעוגל ש"קרוב" למספר הנתון אך אינו שווה לו.</p>
+  </div>
   <div class="q-card">
-    <h2 class="q-title">שאלה 1</h2>
-    <p class="q-body"><strong>נוסח השאלה מופיע כאן?</strong></p>
-    <p class="q-instruction">סמנו את התשובה הנכונה.</p>
-    <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
-      <div class="q-opt" data-id="1" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה ראשונה.</div>
-      <div class="q-opt" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה שנייה (הנכונה).</div>
-      <div class="q-opt" data-id="3" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה שלישית.</div>
-      <div class="q-opt" data-id="4" role="radio" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה רביעית.</div>
+    <h2 class="q-title">שאלה מס' 2</h2>
+    <p class="q-body">אחת הדרכים לקבל אומדן שקרוב למספר המקורי הוא עיגול מספרים. במקרה שלנו, נעגל את המספרים לעשרות אלפים. לפניכם מוצגים מספרי הנוסעים שעברו בשדות התעופה.</p>
+    <p class="q-instruction">גררו את המספרים המתאימים כדי לעגל אותם לעשרות אלפים.</p>
+    <div class="dnd-bank" aria-label="מחסן מספרים">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">68,780,000</button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">68,770,000</button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">62,570,000</button>
+      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">62,560,000</button>
+      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">32,640,000</button>
+      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">32,630,000</button>
+    </div>
+    <div class="dnd-rows">
+      <div class="dnd-row"><span class="dnd-label">אמסטרדם:</span><span class="dnd-val">68,776,052 ≈</span><span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span></div>
+      <div class="dnd-row"><span class="dnd-label">ניו יורק:</span><span class="dnd-val">62,568,432 ≈</span><span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span></div>
+      <div class="dnd-row"><span class="dnd-label">וינה:</span><span class="dnd-val">32,634,803 ≈</span><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 3"></span></div>
     </div>
   </div>
-  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
-    <div data-fb="retry"><p class="fb-t">זו אינה התשובה.</p><p>רמז שמכוון את הלומדים בחזרה לתרשים.</p></div>
-    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>הסבר שמופיע אחרי תשובה נכונה.</p></div>
-    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>הסבר שמופיע אחרי שתי טעויות.</p></div>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>המספרים המעוגלים הנכונים מוצגים כעת.</p><p>כדי לעגל לעשרות אלפים, נבדוק את ספרת האלפים: אם היא 5 ומעלה, נעגל כלפי מעלה, ואם היא קטנה מ-5, נעגל כלפי מטה.</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית</p><p>המספרים המעוגלים הנכונים מוצגים כעת.</p><p>כדי לעגל לעשרות אלפים, נבדוק את ספרת האלפים: אם היא 5 ומעלה, נעגל כלפי מעלה, ואם היא קטנה מ-5, נעגל כלפי מטה.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>המספרים המעוגלים הנכונים מוצגים כעת.</p><p>כדי לעגל לעשרות אלפים, נבדוק את ספרת האלפים: אם היא 5 ומעלה, נעגל כלפי מעלה, ואם היא קטנה מ-5, נעגל כלפי מטה.</p></div>
   </div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
-<!-- ================= SCREEN 6 — שאלה 2: בחירה מרובה (שקפים 14-15) ================= -->
-<section class="screen" data-screen="6" data-sid="q2" data-type="question" data-kind="multi" data-weight="10" data-step="2" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
+<!-- ================= SCREEN 6 — הנתונים המבולגנים (שקף 17) ================= -->
+<section class="screen" data-screen="6" data-sid="story-data" data-type="explain" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background: storyboard picture image7 (slide 17) + small animation — no PSD frame"></div>
+  <div class="narration-banner"><p>אמו של מתן סיפרה לו שיש בעיה קטנה עם הנתונים שהגיעו... הם מבולגנים לגמרי! אולי מתן יוכל לעזור לה לעשות בהם סדר?</p></div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 7 — שאלה 3 — סידור שדות תעופה מהקטן לגדול (שקפים 18-19) ================= -->
+<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-weight="12.5" data-step="3" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 4 (q3)"></div>
   <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q3">עזרה</button>
+  <div class="popup-src" id="help-q3" hidden>
+    <p>בשדה התעופה ברומא עובר מספר הנוסעים הנמוך ביותר.</p>
+  </div>
   <div class="q-card">
-    <h2 class="q-title">שאלה 2</h2>
-    <p class="q-body"><strong>נוסח שאלה עם כמה תשובות נכונות?</strong></p>
-    <p class="q-instruction">סמנו את כל התשובות הנכונות.</p>
-    <div class="q-answers" role="group" aria-label="אפשרויות תשובה">
-      <div class="q-opt" data-multi data-id="1" data-correct role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה נכונה ראשונה.</div>
-      <div class="q-opt" data-multi data-id="2" role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>מסיח.</div>
-      <div class="q-opt" data-multi data-id="3" data-correct role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>תשובה נכונה שנייה.</div>
-      <div class="q-opt" data-multi data-id="4" role="checkbox" tabindex="0" aria-checked="false"><span class="q-mark"></span>מסיח נוסף.</div>
+    <h2 class="q-title">שאלה מס' 3</h2>
+    <p class="q-body">מתן הסתכל על נתוני החודשים יולי-אוגוסט, שכללו את סך כל הנוסעים (הנכנסים והיוצאים) שעברו בשדות תעופה שונים ברחבי העולם.</p>
+    <p class="q-body">חשוב לדעת: הנתונים מעוגלים לעשרות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q3" aria-label="מידע"></button></p>
+    <div class="popup-src" id="info-q3" hidden>
+      <p>כאשר מעגלים מספרים לעשרות אלפים, רושמים את המספר השלם בעשרות אלפים הקרוב לו ביותר.</p>
+      <p>לדוגמה: את המספר 12,486,743 מעגלים לעשרות אלפים ומקבלים 12,490,000.</p>
+    </div>
+    <p class="q-instruction">גררו וסדרו את שדות התעופה מהקטן לגדול לפי מספר הנוסעים שעברו בהם:</p>
+    <div class="dnd-bank" aria-label="מחסן שדות תעופה">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1"><span class="flag" data-pending-asset="flag: UK"></span><span class="chip-name">הית'רו</span> <span class="chip-place">בלונדון</span> <span class="chip-num">15,000,000</span></button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2"><span class="flag" data-pending-asset="flag: Germany"></span><span class="chip-name">פרנקפורט</span> <span class="chip-place">בגרמניה</span> <span class="chip-num">11,890,000</span></button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3"><span class="flag" data-pending-asset="flag: Spain"></span><span class="chip-name">אל פראט</span> <span class="chip-place">בברצלונה</span> <span class="chip-num">11,490,000</span></button>
+      <button class="dnd-chip" type="button" data-chip="c4" data-order="4"><span class="flag" data-pending-asset="flag: Netherlands"></span><span class="chip-name">סכיפהול</span> <span class="chip-place">אמסטרדם</span> <span class="chip-num">11,350,000</span></button>
+      <button class="dnd-chip" type="button" data-chip="c5" data-order="5"><span class="flag" data-pending-asset="flag: France"></span><span class="chip-name">שארל דה גול</span> <span class="chip-place">בצרפת</span> <span class="chip-num">12,310,000</span></button>
+      <button class="dnd-chip" type="button" data-chip="c6" data-order="6"><span class="flag" data-pending-asset="flag: Italy"></span><span class="chip-name">פיומיצ'ינו</span> <span class="chip-place">ברומא</span> <span class="chip-num">11,150,000</span></button>
+    </div>
+    <!-- The line: first slot (right) = the largest number of passengers, last slot (left) = the smallest. -->
+    <div class="order-line">
+      <span class="end-tag end-tag-max">מספר הנוסעים הגדול ביותר</span>
+      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום 1"></span>
+      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום 2"></span>
+      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום 3"></span>
+      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום 4"></span>
+      <span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום 5"></span>
+      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום 6"></span>
+      <span class="end-tag end-tag-min">מספר הנוסעים הקטן ביותר</span>
     </div>
   </div>
-  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
-    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p></div>
-    <div data-fb="retryPartial"><p class="fb-t">אתם בכיוון הנכון! יש תשובות נכונות נוספות.</p></div>
-    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>הסבר משותף לכל התוצאות.</p></div>
-    <div data-fb="partial"><p class="fb-t">זו תשובה חלקית.</p><p>הסבר משותף לכל התוצאות.</p></div>
-    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>הסבר משותף לכל התוצאות.</p></div>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>כעת שדות התעופה מסודרים מהקטן לגדול לפי מספר הנוסעים שעברו בהם.</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית</p><p>כעת שדות התעופה מסודרים מהקטן לגדול לפי מספר הנוסעים שעברו בהם.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>כעת שדות התעופה מסודרים מהקטן לגדול לפי מספר הנוסעים שעברו בהם.</p></div>
   </div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
-<!-- ================= SCREEN 7 — ישומון (שקף 16) ================= -->
-<section class="screen" data-screen="7" data-sid="demo-sim" data-type="applet" data-arrow-after="5" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
-  <div class="narration-banner"><p>הפעילו את ההדמיה וצפו במה שקורה.</p></div>
-  <div class="applet-frame" data-reopen-content>
-    <iframe src="assets/app/demo-applet.html" title="הדמיה לדוגמה"></iframe>
-  </div>
-  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
-  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
-</section>
-
-<!-- ================= SCREEN 8 — שאלה 3: גרירת מילים (שקפים 17-18) ================= -->
-<section class="screen" data-screen="8" data-sid="q3" data-type="question" data-kind="dnd" data-weight="10" data-step="3" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
+<!-- ================= SCREEN 8 — שאלה 4 סעיף א — תרגיל חיבור (שקפים 20-21) ================= -->
+<section class="screen" data-screen="8" data-sid="q4a" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 5 (q4a)"></div>
   <div class="q-overlay"></div>
-  <button class="reopen-btn" type="button" data-reopen="demo-sim">לצפייה בהדמיה</button>
-  <div class="q-card">
-    <h2 class="q-title">שאלה 3</h2>
-    <p class="q-instruction">השלימו את המילים החסרות בקטע באמצעות גרירת מילים מהמחסן.</p>
-    <div class="dnd-bank" aria-label="מחסן מילים">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">מילה א</button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">מילה ב</button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">מילה ג</button>
-    </div>
-    <p class="cloze">משפט ראשון עם <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span> באמצע,
-      ומשפט שני עם <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span>
-      ועוד <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 3"></span>.</p>
+  <button class="help-btn" type="button" data-popup="help-q4a">עזרה</button>
+  <div class="popup-src" id="help-q4a" hidden>
+    <p>סך כל הנוסעים הוא תוצאה של תרגיל חיבור.</p>
   </div>
-  <button class="btn-check" type="button" disabled>האם צדקתי?</button>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 4, סעיף א'</h2>
+    <p class="q-body">אחד הנתונים בדוח הוא המספר הכולל של הנוסעים שעברו בשדה התעופה בישראל בחודשים מרץ-אפריל. באותם חודשים, עברו בשדה התעופה כ-1,600,000 נוסעים שנכנסו לישראל וכ-1,800,000 נוסעים שיצאו ממנה. שימו לב, הנתונים מעוגלים למאות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q4a" aria-label="מידע"></button></p>
+    <div class="popup-src" id="info-q4a" hidden>
+      <p>ניתן לעגל מספרים לעשרות אלפים, מאות אלפים, מיליונים וכדומה, לפי הצורך.</p>
+    </div>
+    <p class="q-instruction">גררו את המספרים והפעולה המתאימים כדי ליצור תרגיל לחישוב מספר הנוסעים הכולל בתקופה זו. גררו גם את התוצאה למקום המתאים.</p>
+    <!-- The equation reads left to right: number, sign, number = result. The two numbers may swap places. -->
+    <div class="eq-row" dir="ltr">
+      <span class="dnd-slot" data-accept="c1 c3" role="button" tabindex="0" aria-label="מקום ריק 1"></span>
+      <span class="dnd-slot" data-accept="c10" role="button" tabindex="0" aria-label="מקום ריק 2"></span>
+      <span class="dnd-slot" data-accept="c1 c3" role="button" tabindex="0" aria-label="מקום ריק 3"></span>
+      <span class="eq-sign">=</span>
+      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 4"></span>
+    </div>
+    <div class="dnd-bank" aria-label="מחסן מספרים ופעולות">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">1,600,000</button>
+      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">200,000</button>
+      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">-</button>
+      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">3,040,000</button>
+      <button class="dnd-chip" type="button" data-chip="c7" data-order="7">3,004,000</button>
+      <button class="dnd-chip" type="button" data-chip="c8" data-order="8">20,000</button>
+      <button class="dnd-chip" type="button" data-chip="c9" data-order="9">2,000</button>
+      <button class="dnd-chip" type="button" data-chip="c10" data-order="10">+</button>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
-    <div data-fb="retry"><p class="fb-t">נסו שוב! חלק מהמילים לא במקום.</p></div>
-    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
-    <div data-fb="partial"><p class="fb-t">נכון חלקית.</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
-    <div data-fb="wrong2"><p class="fb-t">זו טעות, כל הכבוד על הניסיון.</p><p>התשובה הנכונה מופיעה כעת על המסך.</p></div>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>מספר העוברים בשדה התעופה הוא הסכום של מספר היוצאים ומספר הנכנסים.</p><p>החישוב: 3,400,000 = 1,800,000 + 1,600,000</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית</p><p>מספר העוברים בשדה התעופה הוא הסכום של מספר היוצאים ומספר הנכנסים.</p><p>החישוב: 3,400,000 = 1,800,000 + 1,600,000</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>מספר העוברים בשדה התעופה הוא הסכום של מספר היוצאים ומספר הנכנסים.</p><p>החישוב: 3,400,000 = 1,800,000 + 1,600,000</p></div>
   </div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
 </section>
 
-<!-- ================= SCREEN 9 — סיום (שקף 19) ================= -->
-<section class="screen" data-screen="9" data-sid="finish" data-type="finish" tabindex="-1">
-  <div class="screen-bg bg-placeholder"></div>
-  <div class="narration-banner"><p>משפט סיכום שסוגר את הסיפור.</p></div>
+<!-- ================= SCREEN 9 — שאלה 4 סעיף ב — תרגיל חיסור (שקפים 22-23) ================= -->
+<section class="screen" data-screen="9" data-sid="q4b" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 6 (q4b)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q4b">עזרה</button>
+  <div class="popup-src" id="help-q4b" hidden>
+    <p>הפרש הוא תוצאה של תרגיל חיסור.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 4, סעיף ב'</h2>
+    <p class="q-body">הדוח מציג גם את ההפרש בין מספר הנוסעים היוצאים (1,800,000) למספר הנוסעים הנכנסים (1,600,000) משדה התעופה.</p>
+    <p class="q-instruction">גררו את המספרים והפעולה המתאימים כדי ליצור תרגיל לחישוב ההפרש בין מספר הנוסעים היוצאים משדה התעופה למספר הנוסעים הנכנסים אליו.</p>
+    <!-- Left to right: 1,800,000 - 1,600,000 = 200,000 (the order of the numbers matters here). -->
+    <div class="eq-row" dir="ltr">
+      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span>
+      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 2"></span>
+      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 3"></span>
+      <span class="eq-sign">=</span>
+      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 4"></span>
+    </div>
+    <div class="dnd-bank" aria-label="מחסן מספרים ופעולות">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">200,000</button>
+      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">20,000</button>
+      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">1,600,000</button>
+      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">-</button>
+      <button class="dnd-chip" type="button" data-chip="c7" data-order="7">+</button>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>יש להפחית את מספר הנוסעים שנכנסים ממספר הנוסעים שיוצאים.</p><p>החישוב: 200,000 = 1,600,000 – 1,800,000</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית</p><p>יש להפחית את מספר הנוסעים שנכנסים ממספר הנוסעים שיוצאים.</p><p>החישוב: 200,000 = 1,600,000 – 1,800,000</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>יש להפחית את מספר הנוסעים שנכנסים ממספר הנוסעים שיוצאים.</p><p>החישוב: 200,000 = 1,600,000 – 1,800,000</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 10 — מתן נזכר בחופשה (שקף 24) ================= -->
+<section class="screen" data-screen="10" data-sid="story-holiday" data-type="explain" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background: storyboard picture image17 (slide 24) + small animation — no PSD frame"></div>
+  <div class="narration-banner"><p>בזמן שעברו על הנתונים, מתן נזכר שגם המשפחה שלהם טסה לחופשה בקיץ שעבר! הוא רצה לדעת כמה מהנוסעים היו ילדים וכמה מבוגרים. אמו הציעה לו לבדוק את הנתונים ולגלות בעצמו...</p></div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 11 — שאלה 5 — התאמת תרגיל לתיאור מילולי (שקפים 25-26) ================= -->
+<section class="screen" data-screen="11" data-sid="q5" data-type="question" data-kind="dnd" data-dnd-final="compare" data-weight="12.5" data-step="5" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 7 (q5)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q5">עזרה</button>
+  <div class="popup-src" id="help-q5" hidden>
+    <p>מספר המבוגרים הוא ההפרש בין מספר הנוסעים למספר הילדים.</p>
+    <p>שימו לב לסדר פעולות חשבון.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 5</h2>
+    <p class="q-body">ב-62 הימים של חודשי יולי-אוגוסט עברו <strong>בכל יום כ-70,000 נוסעים</strong>, מתוכם <strong>כ-10,000 ילדים</strong> (הנתונים מעוגלים לעשרות אלפים).</p>
+    <p class="q-instruction">גררו לכל תיאור מילולי את התרגיל המתאים לחישוב האומדן. שימו לב: יש שני תרגילים שאין להם תיאור מתאים.</p>
+    <div class="dnd-rows">
+      <div class="dnd-row"><span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span><span class="dnd-label">מספר הילדים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
+      <div class="dnd-row"><span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 2"></span><span class="dnd-label">מספר המבוגרים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
+      <div class="dnd-row"><span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום ריק 3"></span><span class="dnd-label">מספר הנוסעים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
+      <div class="dnd-row"><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 4"></span><span class="dnd-label">מספר המבוגרים שעברו בשדה התעופה בחודש אחד.</span></div>
+    </div>
+    <div class="dnd-bank" aria-label="מחסן תרגילים">
+      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">2 : 62 × 10,000 - 70,000</button>
+      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">62 × 10,000</button>
+      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">62 × 10,000 - 70,000</button>
+      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">62 × 70,000</button>
+      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">62 × (10,000 - 70,000)</button>
+      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">2 : 62 × (10,000 - 70,000)</button>
+    </div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>כדי לבחור את התרגיל הנכון, חשוב להבין מה מבקשים לחשב.</p><p>התשובות הנכונות מוצגות כעת, השוו אותן לתשובתכם.</p></div>
+    <div data-fb="partial"><p class="fb-t">נכון חלקית</p><p>כדי לבחור את התרגיל הנכון, חשוב להבין מה מבקשים לחשב.</p><p>התשובות הנכונות מוצגות כעת, השוו אותן לתשובתכם.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>כדי לבחור את התרגיל הנכון, חשוב להבין מה מבקשים לחשב.</p><p>התשובות הנכונות מוצגות כעת, השוו אותן לתשובתכם.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 12 — אמא מציגה את הדו"ח לצוות (שקף 27) ================= -->
+<section class="screen" data-screen="12" data-sid="story-team" data-type="explain" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background: storyboard picture image19 (slide 27) — no PSD frame"></div>
+  <div class="narration-banner"><p>אמא של מתן הציגה את הדו"ח לצוות שלה.</p></div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 13 — סרטון — איזו דיאגרמה מתאימה? (שקפים 28-30) ================= -->
+<section class="screen" data-screen="13" data-sid="video-chart" data-type="video" tabindex="-1">
+  <div class="video-wrap">
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <!-- Caption times are placeholders until the video and its SRT arrive. -->
+    <div class="vcap-src" data-clear-after="24" hidden>
+      <span data-t="0.4">אולי כדאי שנבנה מהנתונים דיאגרמה, כדי שיהיה קל לראות כמה אנשים עברו בשדה התעופה שלנו בשנה האחרונה.</span>
+      <span data-t="8.4">דיאגרמה! למדתי על זה בבית הספר! אבל איזה סוג של דיאגרמה?</span>
+      <span data-t="14.4">דיאגרמת עמודות תתאים כאן. אם נסרטט עמודות בגבהים שונים, יהיה לנו קל לראות את הערכים של הנתונים השונים ולהשוות ביניהם.</span>
+    </div>
+    <div class="video-caption hidden"><p></p></div>
+    <button class="play-btn-big" type="button" aria-label="הפעלת הסרטון"></button>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 14 — שאלה 6 סעיף א — שרטוט עמודה (נובמבר-דצמבר) (שקפים 31-32) ================= -->
+<section class="screen" data-screen="14" data-sid="q6a" data-type="question" data-kind="applet" data-weight="6.25" data-step="6" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 8 (q6a)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q6a">עזרה</button>
+  <div class="popup-src" id="help-q6a" hidden>
+    <p>כדי למצוא כמות שהיא פי 2 מכמות אחרת, כופלים את הכמות ב-2.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 6, סעיף א'</h2>
+    <p class="q-body">הדוח הציג את הנתונים השנתיים (הנתונים מעוגלים למאות אלפים). בחודשים <strong>נובמבר-דצמבר</strong> עברו בשדה התעופה פי 2 יותר נוסעים מאשר בחודשים מאי-יוני.</p>
+    <p class="q-instruction">באמצעות העכבר גררו את עמודה מתאימה למספר הנוסעים בחודשים נובמבר-דצמבר.</p>
+    <div class="applet-frame" data-pending-asset="applet: graph builder, Nov–Dec (slides 31–32) — file applets/נובמבר-דצמבר.html"></div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>פי 2 מ-1,200,000 הם:</p><p><span class="ltr">1,200,000 × 2 = 2,400,000</span></p><p>כלומר, בנובמבר-דצמבר עברו כ-2,400,000 נוסעים.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>פי 2 מ-1,200,000 הם:</p><p><span class="ltr">1,200,000 × 2 = 2,400,000</span></p><p>כלומר, בנובמבר-דצמבר עברו כ-2,400,000 נוסעים.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 15 — שאלה 6 סעיף ב — שרטוט עמודה (ספטמבר-אוקטובר) (שקפים 33-34) ================= -->
+<section class="screen" data-screen="15" data-sid="q6b" data-type="question" data-kind="applet" data-weight="6.25" data-step="6" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 9 (q6b)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q6b">עזרה</button>
+  <div class="popup-src" id="help-q6b" hidden>
+    <p>כדי למצוא את מספר הנוסעים שעברו בחודשים ספטמבר-אוקטובר, יש לבצע תרגיל חיסור.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 6, סעיף ב'</h2>
+    <p class="q-body">בחודשים ספטמבר-אוקטובר, עברו 1,400,000 נוסעים פחות מאשר בחודשים יולי-אוגוסט.</p>
+    <p class="q-instruction">באמצעות גרירת העכבר, סרטטו עמודה מתאימה למספר הנוסעים בחודשים ספטמבר-אוקטובר.</p>
+    <div class="applet-frame" data-pending-asset="applet: graph builder, Sep–Oct (slides 33–34) — file applets/ספטמבר-אוקטובר.html"></div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>נחסר 1,400,000 ממספר הנוסעים בחודשים יולי-אוגוסט:</p><p><span class="ltr">4,300,000 – 1,400,000 = 2,900,000</span></p><p>בספטמבר-אוקטובר עברו כ-2,900,000 נוסעים.</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>נחסר 1,400,000 ממספר הנוסעים בחודשים יולי-אוגוסט:</p><p><span class="ltr">4,300,000 – 1,400,000 = 2,900,000</span></p><p>בספטמבר-אוקטובר עברו כ-2,900,000 נוסעים.</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 16 — הצוות עובר לבדוק יום רגיל (שקף 35) ================= -->
+<section class="screen" data-screen="16" data-sid="story-daily" data-type="explain" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background: storyboard picture image19 (slide 35) + small animation — no PSD frame"></div>
+  <div class="narration-banner"><p>אחרי שבדקו את הנתונים החודשיים, הצוות עבר לבדוק מה קורה בשדה התעופה ביום רגיל. המטרה הייתה להבין איך כדאי לחלק את צוותי העבודה בין האזורים השונים בכל יום.</p></div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 17 — שאלה 7 — מספר הטיסות (שקפים 36-37) ================= -->
+<section class="screen" data-screen="17" data-sid="q7" data-type="question" data-kind="input" data-weight="12.5" data-step="7" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 10 (q7)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q7">עזרה</button>
+  <div class="popup-src" id="help-q7" hidden>
+    <p>מספר הטיסות הוא תוצאה של תרגיל חילוק.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 7</h2>
+    <p class="q-body">ביום מסוים מצאו שכמות הנוסעים הנכנסים לארץ היא כ-<strong>60,000</strong>, וכל מטוס מכיל בערך <strong>300</strong> נוסעים. כמה טיסות נחתו ביום אחד בשדה התעופה?</p>
+    <p class="q-instruction">חשבו את מספר הטיסות שנחתו והקלידו את התשובה:</p>
+    <p class="q-answer-line"><span class="q-input" data-answer="200" data-match="value"><input class="q-in" inputmode="numeric" aria-label="מספר הטיסות"></span> טיסות.</p>
+    <div class="figure-frame" data-pending-asset="airplane picture (slide 36)"></div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p><p>כדי למצוא את מספר הטיסות יש לחלק את 60,000 ב-300, כך:</p><p>200 = 300 : 60,000</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p><p>כדי למצוא את מספר הטיסות יש לחלק את 60,000 ב-300, כך:</p><p>200 = 300 : 60,000</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 18 — שאלה 8 — מספר המזוודות (שקפים 38-39) ================= -->
+<section class="screen" data-screen="18" data-sid="q8" data-type="question" data-kind="input" data-weight="12.5" data-step="8" tabindex="-1">
+  <div class="screen-bg" data-pending-asset="background, PSD frame 11 (q8)"></div>
+  <div class="q-overlay"></div>
+  <button class="help-btn" type="button" data-popup="help-q8">עזרה</button>
+  <div class="popup-src" id="help-q8" hidden>
+    <p>כדי למצוא שליש של מספר, עלינו לחלק אותו ב-3.</p>
+  </div>
+  <div class="q-card">
+    <h2 class="q-title">שאלה מס' 8</h2>
+    <p class="q-body">ביום מסוים מצאו שכמות היוצאים מהארץ היא כ-<strong>75,000</strong> נוסעים.</p>
+    <p class="q-body"><span class="frac"><span>1</span><span>3</span></span> מהטיסות באותו יום הן ליעדים רחוקים, וכל נוסע בהן מגיע עם <strong>2 מזוודות</strong> נוסף על תיק היד. יתר הטיסות הן ליעדים קרובים, וכל נוסע בהן מגיע עם <strong>מזוודה אחת</strong> ותיק יד. את כל המזוודות שולחים לתא המטען, ואת תיקי היד כל הנוסעים נושאים עימם למטוס. כמה מזוודות מגיעות להטענה בתא המטען?</p>
+    <p class="q-instruction">חשבו את מספר המזוודות להטענה בתא המטען והקלידו את התשובה:</p>
+    <p class="q-answer-line"><span class="q-input" data-answer="100000" data-match="value"><input class="q-in" inputmode="numeric" data-maxlen="6" aria-label="מספר המזוודות"></span> מזוודות.</p>
+    <div class="figure-frame" data-pending-asset="suitcase on a conveyor belt picture (slide 38)"></div>
+  </div>
+  <button class="btn-check" type="button" disabled>צדקתי?</button>
+  <div class="fb-src" hidden>
+    <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
+    <div data-fb="correct"><p class="fb-t">צדקת!</p>
+      <p>בשלב הראשון נמצא את מספר הנוסעים ליעדים רחוקים, כך:</p><p>25,000 = 3 : 75,000</p>
+      <p>כל נוסע מגיע עם 2 מזוודות ולכן סה"כ המזוודות ליעדים רחוקים הוא:</p><p>50,000 = 2 × 25,000</p>
+      <p>מספר הנוסעים ליעדים הקרובים הוא:</p><p>50,000 = 25,000 – 75,000</p>
+      <p>ביעדים הקרובים כל נוסע מגיע עם מזוודה אחת, ולכן סך המזוודות לכל היעדים הוא:</p><p>100,000 = 50,000 + 50,000</p></div>
+    <div data-fb="wrong2"><p class="fb-t">זו טעות</p>
+      <p>בשלב הראשון נמצא את מספר הנוסעים ליעדים רחוקים, כך:</p><p>25,000 = 3 : 75,000</p>
+      <p>כל נוסע מגיע עם 2 מזוודות ולכן סה"כ המזוודות ליעדים רחוקים הוא:</p><p>50,000 = 2 × 25,000</p>
+      <p>מספר הנוסעים ליעדים הקרובים הוא:</p><p>50,000 = 25,000 – 75,000</p>
+      <p>ביעדים הקרובים כל נוסע מגיע עם מזוודה אחת, ולכן סך המזוודות לכל היעדים הוא:</p><p>100,000 = 50,000 + 50,000</p></div>
+  </div>
+  <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
+  <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
+</section>
+
+<!-- ================= SCREEN 19 — סרטון הסיום וסיימתי (שקפים 40-42) ================= -->
+<section class="screen" data-screen="19" data-sid="finish" data-type="finish" tabindex="-1">
+  <div class="video-wrap">
+    <video class="video-el" playsinline preload="metadata" disablepictureinpicture controlslist="nodownload noremoteplayback nofullscreen noplaybackrate" data-pending-asset></video>
+    <!-- Caption times are placeholders until the video and its SRT arrive. -->
+    <div class="vcap-src" data-clear-after="30" hidden>
+      <span data-t="0.4">צוות יקר, בזכות העבודה המשותפת שלנו, אנחנו ערוכים לקראת עונת הטיסות... אהממ... הקיץ! עכשיו אנחנו יודעים מתי צפוי עומס, ולכמה נוסעים, מטוסים ומזוודות נצטרך להיערך. ככה נוכל לתכנן את צוותי העבודה ואת הפעילות בשדה בצורה הכי טובה שאפשר!</span>
+      <span data-t="14.4">טוב... אז מתברר שזה בכלל לא רק "באים, עולים למטוס וטסים..." (אמא ומתן צוחקים ביניהם, והאחרים מביטים בהם בחיוך שמסגיר שלא הבינו את הבדיחה הפרטית) עכשיו אני מבין איך הנתונים מהשנה שעברה עוזרים לתכנן את הפעילות בשדה התעופה לקראת השנה הבאה!</span>
+    </div>
+    <div class="video-caption hidden"><p></p></div>
+    <button class="play-btn-big" type="button" aria-label="הפעלת הסרטון"></button>
+  </div>
+  <!-- Phase 4: HOOKS['finish'] shows this button only when the video ends (slide 41 note). -->
   <button class="btn-primary finish-btn" type="button" data-action="finish">סיימתי</button>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
 </section>
@@ -202,14 +498,14 @@
 </div>
 
 <!-- The end of the lomda (script.js: finishLomda). Score pop-up first; its X shows the dark screen that
-     sends the learner back to the Moodle. The wording is the approved house text (Flickering Lights);
+     sends the learner back to the Moodle. The wording is the approved house text (slide 42 has the same words);
      "העמוד הבא" must be the label of the Moodle quiz's next-page button — ask the content team if it is not. -->
 <div id="final-score" role="dialog" aria-modal="true" aria-labelledby="final-score-title" tabindex="-1" hidden>
   <div class="final-score-card">
     <button class="final-score-close" type="button" aria-label="סגירה"></button>
     <h1 id="final-score-title">כל הכבוד, המשימה הושלמה!</h1>
     <p class="final-score-value">הציון שלך הוא <bdi data-final-grade>0</bdi></p>
-    <p class="final-score-hint">יש לסגור את המשימה בלחיצה על X</p>
+    <p class="final-score-hint">יש לסגור את המשימה בלחיצה על X.</p>
   </div>
 </div>
 <div id="final-return" role="dialog" aria-modal="true" aria-labelledby="final-return-text" tabindex="-1" hidden>
