@@ -975,3 +975,53 @@ button, input, select, textarea { font-family: inherit; }
 [data-sid="q5"] .dnd-fix.badge { white-space: nowrap; font-size: 34px; padding: 0 4px; }
 #feedback-popup.fb-q4a.correct, #feedback-popup.fb-q4a.partial, #feedback-popup.fb-q4a.wrong2,
 #feedback-popup.fb-q4b.correct, #feedback-popup.fb-q4b.partial, #feedback-popup.fb-q4b.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
+
+/* ---------- 3d. Review round 4 ---------- */
+/* focus frames only for keyboard users (html.kbd is set by script.js) */
+html:not(.kbd) :focus-visible { outline: none; }
+html:not(.kbd) [data-sid="q1"] .reader-card:focus-visible .q-mark { outline: none; }
+.dnd-chip.picked { outline: none; transform: translateY(-4px) scale(1.03); box-shadow: inset 0 3px 3px rgba(255,255,255,.75), 0 10px 16px rgba(0,0,0,.35); }
+html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3px; }
+
+/* a card in a slot fills the slot exactly (the slot has no frame of its own then) */
+.dnd-slot.filled { border-width: 0; background: none; }
+.dnd-slot > .dnd-chip { width: 100%; height: 100%; min-height: 0; margin: 0; overflow: hidden; white-space: nowrap; }
+.dnd-slot { height: 76px; padding: 0; }
+.dnd-fix { height: 76px; width: 270px; display: flex; align-items: center; justify-content: center; box-sizing: border-box; }
+[data-dnd-mode="swap"] .dnd-chip { transition: transform .2s ease; }
+[data-dnd-mode="swap"] .dnd-chip.previewing { z-index: 3; }
+[data-dnd-mode="swap"] .dnd-slot > .dnd-chip { white-space: normal; }
+
+/* q1: the real radio button covers the painted ring, so there is one ring only */
+[data-sid="q1"] .reader-card .q-mark { top: 17px; right: 29px; width: 60px; height: 60px; border: 5px solid #0E1B4D; background: #fff; --mark-size: 50px; }
+[data-sid="q1"] .reader-card.selected:not(.correct):not(.wrong) .q-mark::after { inset: 9px; }
+
+/* q2: the number and its sign sit right beside the box (they form the equation) */
+[data-sid="q2"] .dnd-row { grid-template-columns: 170px 56px 270px auto 270px; column-gap: 12px; }
+[data-sid="q2"] .dnd-val { grid-column: 4; }
+[data-sid="q2"] .dnd-fix { grid-column: 5; width: 270px; }
+
+/* q3: an ordering question; the right order simply appears, no frames or marks */
+[data-sid="q3"] .order-line .dnd-slot { height: 256px; }
+[data-sid="q3"] .order-line .dnd-slot.filled { border-width: 0; }
+[data-sid="q3"] .dnd-slot > .dnd-chip { width: 264px; height: 256px; margin: 0 3px; }
+[data-sid="q3"] .dnd-chip { transition: transform .2s ease; }
+[data-sid="q3"] .dnd-slot, [data-sid="q3"] .dnd-slot.filled { border-width: 3px; border-color: transparent; }
+
+/* q4: the whole equation is framed once and marked once; the bank goes away in the feedback */
+.eq-row { gap: 22px; position: relative; padding: 12px 16px; border-radius: 30px; margin: 0 0 14px; }
+.eq-sign { margin: 0; }
+.eq-row.eq-correct { box-shadow: 0 0 0 8px var(--opt-correct); }
+.eq-row.eq-wrong { box-shadow: 0 0 0 8px var(--opt-wrong); }
+.eq-row .dnd-mark.badge { right: -84px; top: 50%; margin-top: -28px; }
+[data-sid="q4a"].dnd-final .dnd-bank, [data-sid="q4b"].dnd-final .dnd-bank, [data-sid="q5"].dnd-final .dnd-bank { display: none; }
+[data-sid="q4a"] .dnd-slot > .dnd-chip, [data-sid="q4b"] .dnd-slot > .dnd-chip { padding: 0 4px; }
+
+/* q5: in the feedback the bank goes away and the right cards appear above the wrong boxes */
+[data-sid="q5"] .dnd-cols { transition: margin-top .3s ease; }
+[data-sid="q5"].dnd-final .dnd-cols { margin-top: 100px; }
+[data-sid="q5"] .dnd-fix.badge { top: -90px; bottom: auto; }
+
+[data-sid="q2"] .dnd-row > * { grid-row: 1; }
+.eq-row { width: fit-content; margin-left: auto; margin-right: auto; }
+[data-sid="q5"] .dnd-fix.badge { width: auto; }

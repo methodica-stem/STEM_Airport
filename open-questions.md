@@ -15,7 +15,7 @@ The finish uses the approved house ending: score pop-up, then a dark screen: "כ
 
 **3 · "זו טעות" and the partial result (every question)**
 The storyboard's title is "צדקת! / זו טעות". The house wording for a final wrong answer is "זו טעות, כל הכבוד על הניסיון." I built the storyboard's "זו טעות". Please say which one you want.
-Questions 2, 3, 4א, 4ב and 5 have several parts to get right, so they need a third result for an answer that is partly right: I wrote **"נכון חלקית"** (new wording, not in the storyboard) with the same explanation as "זו טעות". Please confirm the wording, and say whether a partly right answer earns part of the points (until you answer, it earns 0).
+Questions 2 and 5 have several parts to get right, so they have a third result for an answer that is partly right: I wrote **"נכון חלקית"** (new wording, not in the storyboard) with the same explanation as "זו טעות". Questions 3, 4א and 4ב have no partial result (the developer's decision, following the script: the answer is right or wrong). Please confirm the wording, and say whether a partly right answer earns part of the points (until you answer, it earns 0).
 
 **4 · Retry text on the first wrong answer (slide 10 note)**
 "זו אינה התשובה, נסו שוב. תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז." is built for every question, as the note says "לאורך כל הלומדה". Question 7 and 8 have a typed answer: the same text fits. OK?

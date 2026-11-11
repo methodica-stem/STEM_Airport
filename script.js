@@ -933,7 +933,12 @@ function renderFinal(u, cfg, st, justChecked) {
   u.querySelectorAll('textarea[data-min-chars]').forEach(function (t) { t.disabled = true; });   // the explanation is final with the answer
   resetFreeHint(u);
   if (cfg.kind === 'dnd') {
-    if (unitScreen(u).getAttribute('data-dnd-final') === 'compare') { dndCompare(u); dndLock(u); return; }   // keep the learner's cards, show the right ones beside the wrong rows
+    const finalMode = unitScreen(u).getAttribute('data-dnd-final');
+    if (finalMode === 'compare') { dndCompare(u); dndLock(u); return; }   // keep the learner's cards, show the right ones beside the wrong rows
+    // "reveal": no frames and no marks, the right order simply appears (an ordering question without a partial result)
+    if (finalMode === 'reveal') { unitScreen(u).classList.add('dnd-final'); dndFlip(unitScreen(u), function () { dndRevealCorrect(u); }); dndLock(u); return; }
+    // "whole": the learner's equation stays, one frame and one mark for all of it, the bank goes away
+    if (finalMode === 'whole') { dndWhole(unitScreen(u), st.outcome === 'correct'); dndLock(u); return; }
     if (st.outcome === 'correct') { dndMark(u, true); dndLock(u); return; }
     dndMark(u, false);
     dndLock(u);
@@ -999,6 +1004,7 @@ function dndRemember(s) {
 }
 function dndRefresh(s) {
   s.querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.toggle('filled', !!sl.querySelector('.dnd-chip')); });
+  s.querySelectorAll('.dnd-chip').forEach(dndFit);
   updateCheckable(s);
 }
 function dndReset(s) {
@@ -1008,22 +1014,26 @@ function dndReset(s) {
   chips.forEach(function (c) { c.classList.remove('picked', 'locked'); c.disabled = false; c._home.appendChild(c); });
   s.querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.remove('correct', 'wrong', 'drop-target'); });
   s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
-  s.classList.remove('dnd-locked');
+  s.querySelectorAll('.eq-row').forEach(function (r) { r.classList.remove('eq-correct', 'eq-wrong'); });
+  s.classList.remove('dnd-locked', 'dnd-final');
+  s.querySelectorAll('.dnd-chip').forEach(function (c) { c.style.fontSize = ''; });
   qEnsure(s).touched = false;
   dndRefresh(s);
 }
 /* Put a chip in a slot. If the slot is taken, the chip already there moves to
    where the new one came from (another slot = a swap), or back to the bank. */
-function dndPlace(chip, slot) {
+function dndPlace(chip, slot, fromRects) {
   const s = screenOf(chip);
   const from = chip.parentElement;
   const prev = slot.querySelector('.dnd-chip');
   if (prev === chip) return;
-  if (prev) {
-    if (from.classList.contains('dnd-slot')) from.appendChild(prev);
-    else dndHome(prev).appendChild(prev);
-  }
-  slot.appendChild(chip);
+  dndFlip(s, function () {
+    if (prev) {
+      if (from.classList.contains('dnd-slot')) from.appendChild(prev);
+      else dndHome(prev).appendChild(prev);
+    }
+    slot.appendChild(chip);
+  }, fromRects);
   qEnsure(s).touched = true;
   dndRefresh(s);
   announce(uiText('dnd-placed'));
@@ -1091,13 +1101,14 @@ document.addEventListener('pointermove', function (e) {
     d.ghost.style.height = (r.height / k) + 'px';
     d.offX = (e.clientX - r.left) / k;
     d.offY = (e.clientY - r.top) / k;
-    document.getElementById('app').appendChild(d.ghost);
+    screenOf(d.chip).appendChild(d.ghost);          // inside the screen, so the screen's own card styles apply to it
     d.chip.classList.add('dragging');
   }
   d.ghost.style.left = ((e.clientX - app.left) / k - d.offX) + 'px';
   d.ghost.style.top = ((e.clientY - app.top) / k - d.offY) + 'px';
   const slot = dndSlotAt(screenOf(d.chip), e.clientX, e.clientY);
-  screenOf(d.chip).querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.toggle('drop-target', sl === slot); });
+  screenOf(d.chip).querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.toggle('drop-target', sl === slot && !dndSwapMode(screenOf(d.chip))); });
+  if (dndSwapMode(screenOf(d.chip))) dndPreview(screenOf(d.chip), d.chip, slot);
 });
 function dndEndDrag(e) {
   if (!dndDrag) return;
@@ -1106,7 +1117,10 @@ function dndEndDrag(e) {
     const s = screenOf(d.chip);
     const slot = dndSlotAt(s, e.clientX, e.clientY);
     s.querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.remove('drop-target'); });
-    if (slot) dndPlace(d.chip, slot);
+    const rects = dndRects(s);                                  // the cards where they are now (the previewed one included)
+    if (d.ghost) rects.set(d.chip, d.ghost.getBoundingClientRect());
+    dndClearPreview(s);
+    if (slot) dndPlace(d.chip, slot, rects);
     else if (d.chip.closest('.dnd-slot')) dndReturn(d.chip);   // dragged out of a slot -> back to the bank
     d.ghost.remove();
     d.chip.classList.remove('dragging');
@@ -1143,6 +1157,7 @@ function dndMark(s, allRight) {
    Row order in the DOM: label, mark, slot (the learner's card), correct card; give the row a grid so the columns line up
    (screen-patterns.md, "Drag to rows: the final state"). */
 function dndCompare(s) {
+  s.classList.add('dnd-final');
   const badges = s.hasAttribute('data-dnd-badges');
   s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
   s.querySelectorAll('.dnd-slot').forEach(function (sl) {
@@ -1165,6 +1180,58 @@ function dndCompare(s) {
     fix.setAttribute('aria-label', uiText('dnd-correct-is') + ' ' + fix.textContent);
     if (badges) { fix.classList.add('badge'); host.appendChild(fix); }
     else sl.insertAdjacentElement('afterend', fix);
+  });
+}
+/* Final state "whole": one frame (green or red) around the whole equation and one mark at its right end. */
+function dndWhole(s, right) {
+  s.classList.add('dnd-final');
+  const row = s.querySelector('.eq-row') || s;
+  row.classList.add(right ? 'eq-correct' : 'eq-wrong');
+  const mark = document.createElement('span');
+  mark.className = 'dnd-mark badge ' + (right ? 'ok' : 'no');
+  mark.setAttribute('role', 'img');
+  mark.setAttribute('aria-label', uiText(right ? 'dnd-right' : 'dnd-wrong'));
+  row.appendChild(mark);
+}
+/* A chip in a slot shrinks its text until it fits the slot (a number in the small box of the signs). */
+function dndFit(chip) {
+  chip.style.fontSize = '';
+  if (!chip.closest('.dnd-slot')) return;
+  let size = parseFloat(getComputedStyle(chip).fontSize);
+  while (chip.scrollWidth > chip.clientWidth + 1 && size > 20) { size -= 2; chip.style.fontSize = size + 'px'; }
+}
+/* In a swap question the cards move to their new places instead of jumping: FLIP (measure, change, animate from the old place). */
+function dndRects(s) {
+  const m = new Map();
+  s.querySelectorAll('.dnd-chip').forEach(function (c) { m.set(c, c.getBoundingClientRect()); });
+  return m;
+}
+function dndFlip(s, change, from) {
+  const before = from || dndRects(s), k = appScale();
+  change();
+  if (!dndSwapMode(s) || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;
+  s.querySelectorAll('.dnd-chip').forEach(function (c) {
+    const a = before.get(c); if (!a || !c.animate) return;
+    const b = c.getBoundingClientRect();
+    const dx = (a.left - b.left) / k, dy = (a.top - b.top) / k;
+    if (Math.abs(dx) < 1 && Math.abs(dy) < 1) return;
+    c.animate([{ transform: 'translate(' + dx + 'px,' + dy + 'px)' }, { transform: 'none' }], { duration: 300, easing: 'ease-in-out' });
+  });
+}
+/* While a card is dragged over another card's place, that card slides to the dragged card's place (a preview of the swap). */
+function dndPreview(s, chip, slot) {
+  const k = appScale();
+  s.querySelectorAll('.dnd-chip.previewing').forEach(function (c) { c.classList.remove('previewing'); c.style.transform = ''; });
+  if (!slot || !chip) return;
+  const target = slot.querySelector('.dnd-chip'), from = chip.closest('.dnd-slot');
+  if (!target || target === chip || !from || from === slot) return;
+  const rf = from.getBoundingClientRect(), rt = slot.getBoundingClientRect();
+  target.classList.add('previewing');
+  target.style.transform = 'translate(' + ((rf.left - rt.left) / k) + 'px,' + ((rf.top - rt.top) / k) + 'px)';
+}
+function dndClearPreview(s) {
+  s.querySelectorAll('.dnd-chip.previewing').forEach(function (c) {
+    c.style.transition = 'none'; c.style.transform = ''; c.classList.remove('previewing'); void c.offsetWidth; c.style.transition = '';
   });
 }
 function dndLock(s) {
@@ -1535,3 +1602,11 @@ document.addEventListener('click', function (e) {
   }
 });
 document.addEventListener('lomda:end', readerStop);
+
+
+/* Focus frames belong to the keyboard: <html class="kbd"> appears on a key press and goes at the next pointer press,
+   so a mouse or touch user never sees a blue frame around a card or a button. */
+document.addEventListener('keydown', function (e) {
+  if (e.key === 'Tab' || e.key === 'Enter' || e.key === ' ' || e.key.indexOf('Arrow') === 0) document.documentElement.classList.add('kbd');
+}, true);
+document.addEventListener('pointerdown', function () { document.documentElement.classList.remove('kbd'); }, true);
