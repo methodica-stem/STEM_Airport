@@ -3,8 +3,8 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 4 · batch A (screens 1–5) is built and waiting for the developer's approval by screenshot; next batch B (screens 6–10: story, q3, q4a, q4b, story)
-**Waiting on you:** look at the screenshots of screens 1–5 and say "fine" or what to change; confirm the screen map (still open from Phase 1)
+**Now:** Phase 4 · screens 1–10 built (batches A and B) and waiting for the developer's approval by screenshot; next batch C (screens 11–15: q5, story, video, the two graph applets)
+**Waiting on you:** look at the screenshots of screens 1–10 and say "fine" or what to change; confirm the screen map (open since Phase 1)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
 ## Inputs
@@ -22,7 +22,7 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - [x] 2 · Design reference — PSD inventory, frames mapped to screens (checked against the text layers), mockups for the overlay (12 files in `_design-reference/mockups/`), colour tokens set (2026-11-11)
 - [x] 3 · ASSET_CHECKLIST.md written (2026-11-11; all 19 rows resolve in a dry run)
 - [x] 3 · ✋ Assets exported and checked (check_assets.py: 23 files, 0 errors, 0 warnings); developer approved the contact sheet of batch 1 (2026-11-11); batch 2 (flags, airplane, suitcase) looked right on the sheet
-- [ ] 4 · Screens built (tick per batch below) — batch A, screens 1–5, built 2026-11-11
+- [ ] 4 · Screens built (tick per batch below) — batch A, screens 1–5, and batch B, screens 6–10, built 2026-11-11
 - [ ] 5 · Applets built and signed off; videos and audio in
 - [ ] 6 · Self-QA passed (qa_check.py 0 errors, walk-through done)
 - [ ] 7 · Translation export done (both sweeps pass), ASSET_LOCALIZATION.md written
@@ -36,11 +36,11 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 | 3 | q1 | ✔ | ✔ | ☐ |
 | 4 | video-estimate | ✔ | ✔ | ☐ |
 | 5 | q2 | ✔ | ✔ | ☐ |
-| 6 | story-data | skeleton | ☐ | ☐ |
-| 7 | q3 | skeleton | ☐ | ☐ |
-| 8 | q4a | skeleton | ☐ | ☐ |
-| 9 | q4b | skeleton | ☐ | ☐ |
-| 10 | story-holiday | skeleton | ☐ | ☐ |
+| 6 | story-data | ✔ | ✔ | ☐ |
+| 7 | q3 | ✔ | ✔ | ☐ |
+| 8 | q4a | ✔ | ✔ | ☐ |
+| 9 | q4b | ✔ | ✔ | ☐ |
+| 10 | story-holiday | ✔ | ✔ | ☐ |
 | 11 | q5 | skeleton | ☐ | ☐ |
 | 12 | story-team | skeleton | ☐ | ☐ |
 | 13 | video-chart | skeleton | ☐ | ☐ |
@@ -73,6 +73,8 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - 2026-11-11 · Narration bubbles use the park-drones style (translucent card flush to the top-right corner, 64 px corner at the bottom-left, same house text size), text from the script only. The five picture screens are animated in code like park-drones: a slow drift/zoom of the whole scene, a pulse of daylight over the windows, and soft pulses over screens and the tablet (opacity and transform only; reduced motion leaves the picture still). Screen 6 does not need a generated variant. · developer, applied by Claude
 
 - 2026-11-11 · Developer's decision: the design's large white panel (1896×1056 at x 12, y 12, black outline) on ALL ten question screens, replacing the skill's smaller house panel. The help button, pills, arrows and "צדקתי?" sit inside it as in the PSD ("צדקתי?" at the design's height, bottom 88). The band under the content, between the two arrows, takes the feedback boxes. Question 1: cards 350 px wide, both feedback boxes in the band under them (layout_check clean on screens 3 and 5; the earlier expected final-state overlaps on q1 are gone). Question 1 uses only the script's skyline picture; the narration of the four readings (and of the feedback readings) is to be added later: the `.reader-media` hooks on each card are in place (audio pending). · developer, applied by Claude
+
+- 2026-11-11 · Batch B decisions: q3 is the pre-filled swap variant (`data-dnd-mode="swap"`): the six airport cards start in the storyboard's order (slide 18; the two end cards are already right) and the learner swaps them into order; the check button appears after the first move. The cards, end labels and line are CSS; the flags are the PSD's exported pictures. q4a/q4b: the equation row reads left to right with five slots (number, sign, number, =, result); q4a takes the two numbers in either order, q4b only 1,800,000 first. Help and information texts open as popups beside their buttons (help at the top left, information near the bulb; Escape or a click outside closes). All retry and final boxes sit in the band under the content; `layout_check.py` is clean on screens 7–10. Screens 6 and 10 are the animated stills. · Claude
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).

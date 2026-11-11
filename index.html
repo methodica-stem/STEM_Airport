@@ -112,7 +112,7 @@
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q2">עזרה</button>
-  <div class="popup-src" id="help-q2" hidden>
+  <div class="popup-src popup-by-btn" id="help-q2" hidden>
     <p>כאשר מעגלים מספרים, מציגים אותם בצורה פחות מדויקת אך נוחה יותר לאומדן. הסימן ≈ מציין את המספר המעוגל ש"קרוב" למספר הנתון אך אינו שווה לו.</p>
   </div>
   <div class="q-card">
@@ -159,40 +159,36 @@
 </section>
 
 <!-- ================= SCREEN 7 — שאלה 3 — סידור שדות תעופה מהקטן לגדול (שקפים 18-19) ================= -->
-<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-weight="12.5" data-step="3" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 4 (q3)"></div>
+<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-dnd-mode="swap" data-weight="12.5" data-step="3" tabindex="-1">
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q3">עזרה</button>
-  <div class="popup-src" id="help-q3" hidden>
+  <div class="popup-src popup-by-btn" id="help-q3" hidden>
     <p>בשדה התעופה ברומא עובר מספר הנוסעים הנמוך ביותר.</p>
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 3</h2>
     <p class="q-body">מתן הסתכל על נתוני החודשים יולי-אוגוסט, שכללו את סך כל הנוסעים (הנכנסים והיוצאים) שעברו בשדות תעופה שונים ברחבי העולם.</p>
     <p class="q-body">חשוב לדעת: הנתונים מעוגלים לעשרות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q3" aria-label="מידע"></button></p>
-    <div class="popup-src" id="info-q3" hidden>
+    <div class="popup-src popup-by-btn" id="info-q3" hidden>
       <p>כאשר מעגלים מספרים לעשרות אלפים, רושמים את המספר השלם בעשרות אלפים הקרוב לו ביותר.</p>
       <p>לדוגמה: את המספר 12,486,743 מעגלים לעשרות אלפים ומקבלים 12,490,000.</p>
     </div>
     <p class="q-instruction">גררו וסדרו את שדות התעופה מהקטן לגדול לפי מספר הנוסעים שעברו בהם:</p>
-    <div class="dnd-bank" aria-label="מחסן שדות תעופה">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1"><span class="flag" data-pending-asset="flag: UK"></span><span class="chip-name">הית'רו</span> <span class="chip-place">בלונדון</span> <span class="chip-num">15,000,000</span></button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2"><span class="flag" data-pending-asset="flag: Germany"></span><span class="chip-name">פרנקפורט</span> <span class="chip-place">בגרמניה</span> <span class="chip-num">11,890,000</span></button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3"><span class="flag" data-pending-asset="flag: Spain"></span><span class="chip-name">אל פראט</span> <span class="chip-place">בברצלונה</span> <span class="chip-num">11,490,000</span></button>
-      <button class="dnd-chip" type="button" data-chip="c4" data-order="4"><span class="flag" data-pending-asset="flag: Netherlands"></span><span class="chip-name">סכיפהול</span> <span class="chip-place">אמסטרדם</span> <span class="chip-num">11,350,000</span></button>
-      <button class="dnd-chip" type="button" data-chip="c5" data-order="5"><span class="flag" data-pending-asset="flag: France"></span><span class="chip-name">שארל דה גול</span> <span class="chip-place">בצרפת</span> <span class="chip-num">12,310,000</span></button>
-      <button class="dnd-chip" type="button" data-chip="c6" data-order="6"><span class="flag" data-pending-asset="flag: Italy"></span><span class="chip-name">פיומיצ'ינו</span> <span class="chip-place">ברומא</span> <span class="chip-num">11,150,000</span></button>
+    <!-- The cards start in the row in the storyboard's order (slide 18); the learner swaps them into order.
+         The first slot (right) is the largest number of passengers, the last (left) the smallest. -->
+    <div class="order-line" aria-label="שדות תעופה">
+      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום 1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1"><span class="chip-name">הית'רו</span><span class="chip-place">בלונדון</span><span class="chip-num">15,000,000</span><img class="flag" src="assets/images/q3-flag-uk.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום 2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2"><span class="chip-name">פרנקפורט</span><span class="chip-place">בגרמניה</span><span class="chip-num">11,890,000</span><img class="flag" src="assets/images/q3-flag-de.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום 3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3"><span class="chip-name">אל פראט</span><span class="chip-place">בברצלונה</span><span class="chip-num">11,490,000</span><img class="flag" src="assets/images/q3-flag-es.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום 4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4"><span class="chip-name">סכיפהול</span><span class="chip-place">אמסטרדם</span><span class="chip-num">11,350,000</span><img class="flag" src="assets/images/q3-flag-nl.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום 5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5"><span class="chip-name">שארל דה גול</span><span class="chip-place">בצרפת</span><span class="chip-num">12,310,000</span><img class="flag" src="assets/images/q3-flag-fr.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום 6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6"><span class="chip-name">פיומיצ'ינו</span><span class="chip-place">ברומא</span><span class="chip-num">11,150,000</span><img class="flag" src="assets/images/q3-flag-it.png" alt=""></button></span>
     </div>
-    <!-- The line: first slot (right) = the largest number of passengers, last slot (left) = the smallest. -->
-    <div class="order-line">
-      <span class="end-tag end-tag-max">מספר הנוסעים הגדול ביותר</span>
-      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום 1"></span>
-      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום 2"></span>
-      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום 3"></span>
-      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום 4"></span>
-      <span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום 5"></span>
-      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום 6"></span>
-      <span class="end-tag end-tag-min">מספר הנוסעים הקטן ביותר</span>
+    <div class="order-axis">
+      <span class="end-tag">מספר הנוסעים הגדול ביותר</span>
+      <span class="axis-line"></span>
+      <span class="end-tag">מספר הנוסעים הקטן ביותר</span>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -208,16 +204,16 @@
 
 <!-- ================= SCREEN 8 — שאלה 4 סעיף א — תרגיל חיבור (שקפים 20-21) ================= -->
 <section class="screen" data-screen="8" data-sid="q4a" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 5 (q4a)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q4a">עזרה</button>
-  <div class="popup-src" id="help-q4a" hidden>
+  <div class="popup-src popup-by-btn" id="help-q4a" hidden>
     <p>סך כל הנוסעים הוא תוצאה של תרגיל חיבור.</p>
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 4, סעיף א'</h2>
     <p class="q-body">אחד הנתונים בדוח הוא המספר הכולל של הנוסעים שעברו בשדה התעופה בישראל בחודשים מרץ-אפריל. באותם חודשים, עברו בשדה התעופה כ-1,600,000 נוסעים שנכנסו לישראל וכ-1,800,000 נוסעים שיצאו ממנה. שימו לב, הנתונים מעוגלים למאות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q4a" aria-label="מידע"></button></p>
-    <div class="popup-src" id="info-q4a" hidden>
+    <div class="popup-src popup-by-btn" id="info-q4a" hidden>
       <p>ניתן לעגל מספרים לעשרות אלפים, מאות אלפים, מיליונים וכדומה, לפי הצורך.</p>
     </div>
     <p class="q-instruction">גררו את המספרים והפעולה המתאימים כדי ליצור תרגיל לחישוב מספר הנוסעים הכולל בתקופה זו. גררו גם את התוצאה למקום המתאים.</p>
@@ -255,10 +251,10 @@
 
 <!-- ================= SCREEN 9 — שאלה 4 סעיף ב — תרגיל חיסור (שקפים 22-23) ================= -->
 <section class="screen" data-screen="9" data-sid="q4b" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 6 (q4b)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q4b">עזרה</button>
-  <div class="popup-src" id="help-q4b" hidden>
+  <div class="popup-src popup-by-btn" id="help-q4b" hidden>
     <p>הפרש הוא תוצאה של תרגיל חיסור.</p>
   </div>
   <div class="q-card">
@@ -310,10 +306,10 @@
 
 <!-- ================= SCREEN 11 — שאלה 5 — התאמת תרגיל לתיאור מילולי (שקפים 25-26) ================= -->
 <section class="screen" data-screen="11" data-sid="q5" data-type="question" data-kind="dnd" data-dnd-final="compare" data-weight="12.5" data-step="5" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 7 (q5)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q5">עזרה</button>
-  <div class="popup-src" id="help-q5" hidden>
+  <div class="popup-src popup-by-btn" id="help-q5" hidden>
     <p>מספר המבוגרים הוא ההפרש בין מספר הנוסעים למספר הילדים.</p>
     <p>שימו לב לסדר פעולות חשבון.</p>
   </div>
@@ -378,10 +374,10 @@
 
 <!-- ================= SCREEN 14 — שאלה 6 סעיף א — שרטוט עמודה (נובמבר-דצמבר) (שקפים 31-32) ================= -->
 <section class="screen" data-screen="14" data-sid="q6a" data-type="question" data-kind="applet" data-weight="6.25" data-step="6" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 8 (q6a)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q6a">עזרה</button>
-  <div class="popup-src" id="help-q6a" hidden>
+  <div class="popup-src popup-by-btn" id="help-q6a" hidden>
     <p>כדי למצוא כמות שהיא פי 2 מכמות אחרת, כופלים את הכמות ב-2.</p>
   </div>
   <div class="q-card">
@@ -402,10 +398,10 @@
 
 <!-- ================= SCREEN 15 — שאלה 6 סעיף ב — שרטוט עמודה (ספטמבר-אוקטובר) (שקפים 33-34) ================= -->
 <section class="screen" data-screen="15" data-sid="q6b" data-type="question" data-kind="applet" data-weight="6.25" data-step="6" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 9 (q6b)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q6b">עזרה</button>
-  <div class="popup-src" id="help-q6b" hidden>
+  <div class="popup-src popup-by-btn" id="help-q6b" hidden>
     <p>כדי למצוא את מספר הנוסעים שעברו בחודשים ספטמבר-אוקטובר, יש לבצע תרגיל חיסור.</p>
   </div>
   <div class="q-card">
@@ -438,10 +434,10 @@
 
 <!-- ================= SCREEN 17 — שאלה 7 — מספר הטיסות (שקפים 36-37) ================= -->
 <section class="screen" data-screen="17" data-sid="q7" data-type="question" data-kind="input" data-weight="12.5" data-step="7" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 10 (q7)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q7">עזרה</button>
-  <div class="popup-src" id="help-q7" hidden>
+  <div class="popup-src popup-by-btn" id="help-q7" hidden>
     <p>מספר הטיסות הוא תוצאה של תרגיל חילוק.</p>
   </div>
   <div class="q-card">
@@ -463,10 +459,10 @@
 
 <!-- ================= SCREEN 18 — שאלה 8 — מספר המזוודות (שקפים 38-39) ================= -->
 <section class="screen" data-screen="18" data-sid="q8" data-type="question" data-kind="input" data-weight="12.5" data-step="8" tabindex="-1">
-  <div class="screen-bg" data-pending-asset="background, PSD frame 11 (q8)"></div>
+  <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q8">עזרה</button>
-  <div class="popup-src" id="help-q8" hidden>
+  <div class="popup-src popup-by-btn" id="help-q8" hidden>
     <p>כדי למצוא שליש של מספר, עלינו לחלק אותו ב-3.</p>
   </div>
   <div class="q-card">
