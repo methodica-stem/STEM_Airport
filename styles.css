@@ -1025,3 +1025,22 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 [data-sid="q2"] .dnd-row > * { grid-row: 1; }
 .eq-row { width: fit-content; margin-left: auto; margin-right: auto; }
 [data-sid="q5"] .dnd-fix.badge { width: auto; }
+
+/* ---- 14 and 15 · q6a, q6b: the graph applet on the right (as in the PSD), the question text on the left ---- */
+[data-sid="q6a"] .q-card, [data-sid="q6b"] .q-card { display: grid; grid-template-columns: 1052px 1fr; column-gap: 24px; align-content: start; padding-top: 126px; padding-bottom: 0; }
+[data-sid="q6a"] .q-title, [data-sid="q6b"] .q-title { margin-bottom: 4px; }
+[data-sid="q6a"] .q-body, [data-sid="q6b"] .q-body, [data-sid="q6a"] .q-instruction, [data-sid="q6b"] .q-instruction { margin-bottom: 8px; }
+[data-sid="q6a"] .q-title, [data-sid="q6b"] .q-title,
+[data-sid="q6a"] .q-body, [data-sid="q6b"] .q-body,
+[data-sid="q6a"] .q-instruction, [data-sid="q6b"] .q-instruction { grid-column: 2; }
+[data-sid="q6a"] .applet-frame, [data-sid="q6b"] .applet-frame {
+  position: relative; grid-column: 1; grid-row: 1 / span 4; top: auto; left: auto; width: 1052px; height: 700px;
+  margin: 0; border-radius: 0; box-shadow: none; background: #fff; overflow: hidden;
+}
+[data-sid="q6a"] .applet-frame iframe, [data-sid="q6b"] .applet-frame iframe { width: 1052px; height: 700px; border: 0; display: block; }
+/* the feedback sits in the left column, right beside the graph, under the question text (as in the storyboard) */
+#feedback-popup.fb-q6a.retry, #feedback-popup.fb-q6b.retry { left: 109px; bottom: 150px; width: 640px; max-width: none; }
+[data-sid="q6a"] .btn-check, [data-sid="q6b"] .btn-check { left: 800px; }      /* under the graph, so the box on the left never meets it */
+#feedback-popup.fb-q6a.correct, #feedback-popup.fb-q6a.wrong2, #feedback-popup.fb-q6b.correct, #feedback-popup.fb-q6b.wrong2 { left: 109px; bottom: 148px; width: 640px; max-width: none; padding-top: 12px; padding-bottom: 12px; }
+#feedback-popup.fb-q6a.correct .fb-body p, #feedback-popup.fb-q6a.wrong2 .fb-body p, #feedback-popup.fb-q6b.correct .fb-body p, #feedback-popup.fb-q6b.wrong2 .fb-body p { font-size: 36px; margin-bottom: 2px; }
+

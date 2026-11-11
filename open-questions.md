@@ -73,7 +73,7 @@ There is a purple box "עיצוב" with no instruction on each. Was there a desi
 ## Questions 6–8
 
 **19 · Question 6: the answer when the learner draws a column (slides 31, 33)**
-The learner drags a column up to a height. How near to 2,400,000 / 2,900,000 counts as right? *Suggestion:* a small tolerance, about half a division of the axis (I will look at the two applet files you sent before I fix a number). Does a wrong try give the retry text, then the solution on the second? (As in the other questions.)
+The learner drags a column up to a height. I kept the content team's own rule from the applet files: the column snaps to 100,000 and anything within one step (±100,000) counts as right (so 2,300,000–2,500,000 for 6א and 2,800,000–3,000,000 for 6ב); the right height is then shown exactly. Please confirm, or say the answer must be exact. Does a wrong try give the retry text, then the solution on the second? (As in the other questions.)
 
 **20 · Question 6: feedback text of 6א is damaged in the file (slide 32)**
 The text reads "× 2 = 2,400,0001,200,000" and ends with a doubled "נוסעים. נוסעים." The slide's picture shows it right. I used: "פי 2 מ-1,200,000 הם: 1,200,000 × 2 = 2,400,000 כלומר, בנובמבר-דצמבר עברו כ-2,400,000 נוסעים." Please confirm. (The feedback box in the storyboard is also too small for its text.)

@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>דיאגרמת עמודות</title>
+<!-- The bar-chart drawing applet of questions 6א and 6ב (the content team's chart, rebuilt as one small vanilla page:
+     the same chart, the same drag-and-snap, the same numbers; bigger text, a blinking drag handle, the answer is decided
+     by the lomda and sent back to show the solution). ?part=a draws the Nov–Dec column, ?part=b the Sep–Oct column.
+     Messages to the lomda: APPLET_STARTED (first touch), APPLET_VALUE {value}. From the lomda: APPLET_RESET,
+     APPLET_FINAL {answer, ok}. Every learner-facing string is in STRINGS. -->
+<style>
+@font-face { font-family: 'Assistant'; src: url('../fonts/Assistant-Regular.ttf') format('truetype'); font-weight: 400; }
+@font-face { font-family: 'Assistant'; src: url('../fonts/Assistant-SemiBold.ttf') format('truetype'); font-weight: 600; }
+@font-face { font-family: 'Assistant'; src: url('../fonts/Assistant-Bold.ttf') format('truetype'); font-weight: 700; }
+@font-face { font-family: 'Assistant'; src: url('../fonts/Assistant-ExtraBold.ttf') format('truetype'); font-weight: 800; }
+html, body { margin: 0; height: 100%; background: #fff; overflow: hidden; font-family: 'Assistant', system-ui, sans-serif; color: #1b2430; }
+svg { display: block; width: 100%; height: 100%; touch-action: none; user-select: none; -webkit-user-select: none; }
+button, input { font-family: inherit; }
+.axis-num { font-size: 28px; font-weight: 600; fill: #3d4a5c; direction: ltr; }
+.month { font-size: 28px; font-weight: 600; fill: #1b2430; }
+.val { font-size: 30px; font-weight: 800; fill: #1b2430; direction: ltr; }
+.title { font-size: 30px; font-weight: 800; fill: #1b2430; }
+.chip { font-size: 34px; font-weight: 800; fill: #1e4c8a; direction: ltr; }
+.slot { cursor: ns-resize; }
+#slot:focus-visible { outline: none; }
+#slot:focus-visible .slot-rect { stroke: #004CC4; stroke-width: 5; }
+/* the drag handle: a small double-ended pill with arrows, blinking until the learner has touched it */
+.pill.idle { animation: pillBlink 1.2s ease-in-out infinite; }
+@keyframes pillBlink { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .pill.idle { animation: none; } }
+</style>
+</head>
+<body>
+<svg id="chart" role="application" viewBox="0 0 1050 700" preserveAspectRatio="xMidYMid meet"></svg>
+<script>
+/* ---------- strings (the only learner-facing text of this applet) ---------- */
+const STRINGS = {
+  axisTitle: 'מספר הנוסעים',
+  months: [['ינואר–', 'פברואר'], ['מרץ–', 'אפריל'], ['מאי–', 'יוני'], ['יולי–', 'אוגוסט'], ['ספטמבר–', 'אוקטובר'], ['נובמבר–', 'דצמבר']],
+  chartLabel: {
+    a: 'דיאגרמת עמודות של מספר הנוסעים לפי תקופות בשנה. ציר המספרים בצד שמאל, והעמודות מסודרות משמאל לימין: ינואר–פברואר 1,900,000, מרץ–אפריל 3,400,000, מאי–יוני 1,200,000, יולי–אוגוסט 4,300,000. אזור הסרטוט של נובמבר–דצמבר נמצא בעמודה הימנית ביותר.',
+    b: 'דיאגרמת עמודות של מספר הנוסעים לפי תקופות בשנה. ציר המספרים בצד שמאל, והעמודות מסודרות משמאל לימין: ינואר–פברואר 1,900,000, מרץ–אפריל 3,400,000, מאי–יוני 1,200,000, יולי–אוגוסט 4,300,000, נובמבר–דצמבר 2,400,000. אזור הסרטוט של ספטמבר–אוקטובר נמצא בעמודה החמישית משמאל.'
+  },
+  slotLabel: 'גובה העמודה, חצים למעלה ולמטה משנים אותו'
+};
+
+/* ---------- geometry (viewBox units are screen pixels at the size the lomda gives the frame, 1050 x 700) ---------- */
+const NS = 'http://www.w3.org/2000/svg';
+const PART = (new URLSearchParams(location.search).get('part') === 'b') ? 'b' : 'a';
+const W = 1050, H = 700;
+const X0 = 176, COL = 144, N = 6;                    // the axis, the width of a column, the number of columns
+const TOP = 60, BOTTOM = 600;                         // 4,800,000 and 0
+const MAX = 4800000, SNAP = 100000;
+const FIXED = [1900000, 3400000, 1200000, 4300000];   // Jan–Feb … Jul–Aug
+const SLOT_COL = PART === 'a' ? 5 : 4;               // the column the learner draws
+const EXTRA = PART === 'b' ? { col: 5, value: 2400000 } : null;   // part B shows the Nov–Dec column already drawn
+const cx = (c) => X0 + COL * c + COL / 2;
+const yOf = (v) => BOTTOM - (v / MAX) * (BOTTOM - TOP);
+const fmt = (v) => v.toLocaleString('en-US');
+
+const svg = document.getElementById('chart');
+svg.setAttribute('aria-label', STRINGS.chartLabel[PART]);
+const el = (tag, attrs, parent, text) => {
+  const e = document.createElementNS(NS, tag);
+  Object.keys(attrs || {}).forEach((k) => e.setAttribute(k, attrs[k]));
+  if (text != null) e.textContent = text;
+  (parent || svg).appendChild(e);
+  return e;
+};
+
+/* ---------- the static chart ---------- */
+const defs = el('defs');
+const grad = (id, a, b) => { const g = el('linearGradient', { id, x1: 0, y1: 0, x2: 0, y2: 1 }, defs); el('stop', { offset: '0', 'stop-color': a }, g); el('stop', { offset: '1', 'stop-color': b }, g); };
+grad('gBlue', '#3d93f5', '#1558c0');
+grad('gGreen', '#49b25a', '#1f7a30');
+grad('gPill', '#3a82ee', '#0f4bb0');
+
+el('text', { x: 4, y: 32, class: 'title', direction: 'ltr', 'text-anchor': 'start' }, svg, STRINGS.axisTitle);
+for (let v = 0; v <= MAX; v += 400000) {
+  const y = yOf(v);
+  if (v > 0) el('line', { x1: X0, y1: y, x2: X0 + COL * N, y2: y, stroke: '#dfe5ee', 'stroke-width': 1.5 });
+  el('line', { x1: X0 - 10, y1: y, x2: X0, y2: y, stroke: '#1b2430', 'stroke-width': 2.5 });
+  el('text', { x: X0 - 16, y: y + 10, class: 'axis-num', 'text-anchor': 'end' }, svg, fmt(v));
+  if (v < MAX) el('line', { x1: X0 - 6, y1: yOf(v + 200000), x2: X0, y2: yOf(v + 200000), stroke: '#8b97a8', 'stroke-width': 2 });
+}
+el('line', { x1: X0, y1: TOP - 10, x2: X0, y2: BOTTOM + 3, stroke: '#1b2430', 'stroke-width': 3 });
+el('line', { x1: X0 - 10, y1: BOTTOM, x2: X0 + COL * N, y2: BOTTOM, stroke: '#1b2430', 'stroke-width': 3 });
+
+const drawBar = (c, v, fill) => {
+  el('rect', { x: cx(c) - 48, y: yOf(v), width: 96, height: BOTTOM - yOf(v), fill: fill || 'url(#gBlue)' });
+  el('text', { x: cx(c), y: yOf(v) - 12, class: 'val', 'text-anchor': 'middle' }, svg, fmt(v));
+};
+FIXED.forEach((v, c) => drawBar(c, v));
+if (EXTRA) drawBar(EXTRA.col, EXTRA.value);
+
+STRINGS.months.forEach((m, c) => {
+  el('text', { x: cx(c), y: 644, class: 'month', 'text-anchor': 'middle' }, svg, m[0]);
+  el('text', { x: cx(c), y: 676, class: 'month', 'text-anchor': 'middle' }, svg, m[1]);
+});
+
+/* ---------- the drawing area, the learner's column, the handle ---------- */
+const SLOT_X = cx(SLOT_COL) - 62, SLOT_W = 124;
+const slot = el('g', { id: 'slot', class: 'slot', tabindex: 0, role: 'slider', 'aria-label': STRINGS.slotLabel, 'aria-valuemin': 0, 'aria-valuemax': MAX, 'aria-valuenow': 0 });
+const slotRect = el('rect', { class: 'slot-rect', x: SLOT_X, y: TOP - 10, width: SLOT_W, height: BOTTOM - TOP + 10, rx: 10, fill: '#f2f6fb', stroke: '#9db6dd', 'stroke-width': 3, 'stroke-dasharray': '9 8' }, slot);
+const live = el('g', {});                                   // dashed guide, value, learner's bar
+const guide = el('line', { x1: X0, x2: SLOT_X + SLOT_W, stroke: '#1e4c8a', 'stroke-width': 2.5, 'stroke-dasharray': '7 7', visibility: 'hidden' }, live);
+const bar = el('rect', { x: cx(SLOT_COL) - 48, width: 96, fill: 'url(#gBlue)', visibility: 'hidden', 'pointer-events': 'none' }, live);
+const chip = el('text', { x: cx(SLOT_COL), class: 'chip', 'text-anchor': 'middle', visibility: 'hidden', 'pointer-events': 'none' }, live, '');
+const reveal = el('g', { 'pointer-events': 'none' });         // the solution, after the final check
+
+const pill = el('g', { class: 'pill idle', 'pointer-events': 'none', 'aria-hidden': 'true' });
+el('rect', { x: -32, y: -58, width: 64, height: 116, rx: 32, fill: 'url(#gPill)', stroke: '#fff', 'stroke-width': 5 }, pill);
+el('rect', { x: -33, y: -59, width: 66, height: 118, rx: 33, fill: 'none', stroke: '#0b3a8c', 'stroke-width': 2 }, pill);
+el('path', { d: 'M0 -38 V38 M-17 -21 L0 -38 L17 -21 M-17 21 L0 38 L17 21', fill: 'none', stroke: '#fff', 'stroke-width': 7, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, pill);
+
+const MAXV = MAX;
+let value = null, started = false, locked = false, dragging = false;
+
+function post(msg) { try { window.parent.postMessage(msg, '*'); } catch (e) {} }
+
+function render() {
+  const has = value !== null && value > 0;
+  const y = has ? yOf(value) : BOTTOM;
+  bar.setAttribute('visibility', has ? 'visible' : 'hidden');
+  guide.setAttribute('visibility', has ? 'visible' : 'hidden');
+  chip.setAttribute('visibility', has ? 'visible' : 'hidden');
+  if (has) {
+    bar.setAttribute('y', y); bar.setAttribute('height', BOTTOM - y);
+    guide.setAttribute('y1', y); guide.setAttribute('y2', y);
+    chip.setAttribute('y', Math.max(TOP + 30, y - 72)); chip.textContent = fmt(value);
+  }
+  if (!locked) bar.setAttribute('fill', dragging ? '#8fb8e6' : 'url(#gBlue)');
+  slotRect.setAttribute('fill', has ? 'transparent' : '#f2f6fb');
+  slotRect.setAttribute('stroke', dragging ? '#2f6bbd' : '#9db6dd');
+  // the handle sits at the foot of the area until it is touched, then rides on the top of the column
+  const py = has ? Math.min(Math.max(y, TOP + 58), BOTTOM - 62) : BOTTOM - 74;
+  pill.setAttribute('transform', 'translate(' + cx(SLOT_COL) + ' ' + py + ')');
+  pill.setAttribute('class', 'pill' + (started ? '' : ' idle'));
+  pill.style.display = locked ? 'none' : '';
+  slot.setAttribute('aria-valuenow', value || 0);
+  slot.setAttribute('aria-valuetext', has ? fmt(value) : '0');
+}
+
+function valueAt(e) {
+  const r = svg.getBoundingClientRect();
+  const k = Math.min(r.width / W, r.height / H);               // preserveAspectRatio meet
+  const oy = (r.height - H * k) / 2;
+  const y = (e.clientY - r.top - oy) / k;
+  const raw = ((BOTTOM - y) / (BOTTOM - TOP)) * MAXV;
+  return Math.max(0, Math.min(MAXV, Math.round(raw / SNAP) * SNAP));
+}
+function xInSlot(e) {
+  const r = svg.getBoundingClientRect();
+  const k = Math.min(r.width / W, r.height / H);
+  const ox = (r.width - W * k) / 2;
+  const x = (e.clientX - r.left - ox) / k;
+  return x >= SLOT_X - 10 && x <= SLOT_X + SLOT_W + 10;
+}
+function touched() { if (!started) { started = true; post({ type: 'APPLET_STARTED' }); } }
+function setValue(v) {
+  if (v === value) return;
+  value = v; touched(); render();
+  post({ type: 'APPLET_VALUE', value: value > 0 ? value : null });
+}
+
+svg.addEventListener('pointerdown', function (e) {
+  if (locked || !xInSlot(e)) return;
+  dragging = true;
+  try { svg.setPointerCapture(e.pointerId); } catch (err) {}
+  slot.focus({ preventScroll: true });
+  setValue(valueAt(e));
+  render();
+});
+svg.addEventListener('pointermove', function (e) { if (dragging) setValue(valueAt(e)); });
+function endDrag() { if (dragging) { dragging = false; render(); } }
+svg.addEventListener('pointerup', endDrag);
+svg.addEventListener('pointercancel', endDrag);
+
+slot.addEventListener('keydown', function (e) {
+  if (locked) return;
+  const v = value || 0;
+  const step = { ArrowUp: SNAP, ArrowRight: SNAP, ArrowDown: -SNAP, ArrowLeft: -SNAP, PageUp: 4 * SNAP, PageDown: -4 * SNAP }[e.key];
+  if (step === undefined && e.key !== 'Home' && e.key !== 'End') return;
+  e.preventDefault();
+  setValue(e.key === 'Home' ? 0 : e.key === 'End' ? MAXV : Math.max(0, Math.min(MAXV, v + step)));
+});
+
+/* ---------- the lomda decides; the applet shows ---------- */
+function finalState(answer, ok) {
+  locked = true; dragging = false;
+  while (reveal.firstChild) reveal.removeChild(reveal.firstChild);
+  const ya = yOf(answer);
+  if (ok) { value = answer; bar.setAttribute('fill', 'url(#gGreen)'); chip.style.fill = '#1f7a30'; guide.setAttribute('stroke', '#1f7a30'); render(); return; }
+  // wrong: the learner's column stays as a red outline, the right column is drawn solid green beside the guide line
+  bar.setAttribute('fill', 'rgba(200,70,60,.18)'); bar.setAttribute('stroke', '#ca433d'); bar.setAttribute('stroke-width', 4); bar.setAttribute('stroke-dasharray', '8 6');
+  el('rect', { x: cx(SLOT_COL) - 48, y: ya, width: 96, height: BOTTOM - ya, fill: 'url(#gGreen)', opacity: 0.92 }, reveal);
+  el('line', { x1: X0, y1: ya, x2: SLOT_X + SLOT_W, y2: ya, stroke: '#1f7a30', 'stroke-width': 3, 'stroke-dasharray': '7 7' }, reveal);
+  el('text', { x: SLOT_X - 8, y: ya - 10, class: 'chip', 'text-anchor': 'end', fill: '#1f7a30', style: 'fill:#1f7a30' }, reveal, fmt(answer));
+  render();
+}
+function resetState() {
+  value = null; started = false; locked = false; dragging = false;
+  while (reveal.firstChild) reveal.removeChild(reveal.firstChild);
+  bar.removeAttribute('stroke'); bar.removeAttribute('stroke-width'); bar.removeAttribute('stroke-dasharray');
+  bar.setAttribute('fill', 'url(#gBlue)'); chip.style.fill = ''; guide.setAttribute('stroke', '#1e4c8a');
+  render();
+}
+window.addEventListener('message', function (e) {
+  const d = e.data;
+  if (!d || typeof d !== 'object') return;
+  if (d.type === 'APPLET_RESET') resetState();
+  else if (d.type === 'APPLET_FINAL') {
+    if (typeof d.value === 'number' && d.value > 0) { value = d.value; started = true; }
+    finalState(d.answer, !!d.ok);
+  }
+});
+render();
+</script>
+</body>
+</html>

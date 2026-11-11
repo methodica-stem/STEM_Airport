@@ -175,6 +175,8 @@ window.addEventListener('message', function (e) {
     onAppletStarted(e.source);
   } else if (d.type === 'APPLET_DONE') {
     onAppletDone(e.source);
+  } else if (d.type === 'APPLET_VALUE') {
+    onAppletValue(e.source, d.value);
   }
 });
 
@@ -724,6 +726,7 @@ function enterUnit(u) {
     return;
   }
   if (cfg.kind === 'dnd') dndReset(u);
+  else if (cfg.kind === 'applet') { st.appletValue = null; appletPost(unitScreen(u), { type: 'APPLET_RESET' }); }
   else {
     u.querySelectorAll('.q-opt').forEach(function (o) {
       o.classList.remove('selected', 'correct', 'wrong');
@@ -805,6 +808,7 @@ function answerSnapshot(u) {
       return c ? c.getAttribute('data-chip') : '';
     }));
   }
+  if (cfg.kind === 'applet') return JSON.stringify(qEnsure(u).appletValue || null);
   if (cfg.kind === 'input') {
     return JSON.stringify(Array.prototype.map.call(u.querySelectorAll('.q-in'), function (i) { return i.value; }));
   }
@@ -817,6 +821,7 @@ function hasAnswer(u) {
   if (kind === 'dnd') {
     return Array.prototype.every.call(u.querySelectorAll('.dnd-slot'), function (sl) { return !!sl.querySelector('.dnd-chip'); });
   }
+  if (kind === 'applet') return !!qEnsure(u).appletValue;
   if (kind === 'input') {
     return Array.prototype.every.call(u.querySelectorAll('.q-in'), function (i) { return i.value.trim() !== ''; });
   }
@@ -868,6 +873,11 @@ function grade(u) {
     let right = 0;
     slots.forEach(function (sl) { if (dndSlotRight(sl)) right++; });
     return right === slots.length ? 'correct' : (right > 0 ? 'partialMixed' : 'wrong');
+  }
+  if (cfg.kind === 'applet') {
+    const sc = unitScreen(u), ans = parseFloat(sc.getAttribute('data-answer')), tol = parseFloat(sc.getAttribute('data-tolerance') || '0');
+    const v = qEnsure(u).appletValue;
+    return v && Math.abs(v - ans) <= tol ? 'correct' : 'wrong';
   }
   if (cfg.kind === 'input') {
     const s = unitScreen(u);
@@ -932,6 +942,11 @@ function checkAnswer(u) {
 function renderFinal(u, cfg, st, justChecked) {
   u.querySelectorAll('textarea[data-min-chars]').forEach(function (t) { t.disabled = true; });   // the explanation is final with the answer
   resetFreeHint(u);
+  if (cfg.kind === 'applet') {
+    const sc = unitScreen(u);
+    appletPost(sc, { type: 'APPLET_FINAL', answer: parseFloat(sc.getAttribute('data-answer')), ok: st.outcome === 'correct', value: st.appletValue });
+    return;
+  }
   if (cfg.kind === 'dnd') {
     const finalMode = unitScreen(u).getAttribute('data-dnd-final');
     if (finalMode === 'compare') { dndCompare(u); dndLock(u); return; }   // keep the learner's cards, show the right ones beside the wrong rows
@@ -1396,6 +1411,24 @@ function onAppletDone(source) {
     window.lomdaState.DONE[n] = true;
     if (currentScreen === n) revealForwardNav(n);
   });
+}
+/* A scored applet question (data-kind="applet", data-answer, data-tolerance on the section): the applet posts the value
+   the learner drew, the lomda grades it with the same check button and feedback as every question, and tells the applet
+   the answer to show (APPLET_FINAL) once the question is final. */
+function appletFrameOf(s) { return s.querySelector('iframe'); }
+function onAppletValue(source, value) {
+  document.querySelectorAll('.screen[data-kind="applet"]').forEach(function (s) {
+    const f = appletFrameOf(s);
+    if (!f || f.contentWindow !== source) return;
+    const st = qEnsure(s);
+    if (st.done) return;
+    st.appletValue = (typeof value === 'number' && value > 0) ? value : null;
+    updateCheckable(s);
+  });
+}
+function appletPost(s, msg) {
+  const f = appletFrameOf(s);
+  try { if (f && f.contentWindow) f.contentWindow.postMessage(msg, '*'); } catch (e) {}
 }
 function onAppletStarted(source) {
   document.querySelectorAll('.screen[data-type="applet"] iframe').forEach(function (f) {
