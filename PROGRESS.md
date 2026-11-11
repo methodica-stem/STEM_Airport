@@ -3,7 +3,7 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 1 done (skeleton of 19 screens, `qa_check.py` contract OK) · waiting for the developer to confirm the screen map; Phase 2 (design reference) is next
+**Now:** Phase 2 done (design reference) · next: Phase 3, write ASSET_CHECKLIST.md and export the first batch of pictures from the PSD. The screen map is still waiting for the developer's OK
 **Waiting on you:** read `PROJECT_BRIEF.md` (the screen table) and say "the map is fine" or what to change; send `open-questions.md` to the content team (Claude can draft the message)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
@@ -19,7 +19,7 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - [x] 0 · Setup — inputs found, tools installed, project folder created (2026-11-11)
 - [x] 1 · Storyboard read — screen map (screens.json, PROJECT_BRIEF.md), production-notes.md, open-questions.md; index.html is a 19-screen skeleton (2026-11-11)
 - [ ] 1 · ✋ Developer reviewed the screen map; open questions sent (date: )
-- [ ] 2 · Design reference — PSD inventory (done), frames mapped to screens (guessed in screens.json, to verify), mockups for the overlay
+- [x] 2 · Design reference — PSD inventory, frames mapped to screens (checked against the text layers), mockups for the overlay (12 files in `_design-reference/mockups/`), colour tokens set (2026-11-11)
 - [ ] 3 · ASSET_CHECKLIST.md written
 - [ ] 3 · ✋ Assets exported and checked (check_assets.py clean)
 - [ ] 4 · Screens built (tick per batch below)
@@ -60,13 +60,16 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - 2026-11-11 · Engine change: typed answers accept `data-maxlen` (default 4 digits). Q8's answer 100000 has 6 digits, so its box has `data-maxlen="6"`. · Claude
 - 2026-11-11 · q3, q4a, q4b are left without `data-dnd-final="compare"` (qa_check warns): the storyboard says to show the correct answer on those screens (slide 19 note, slides 21 and 23 show the solved line), and they are one line of slots, not labelled rows. q2 and q5 have `compare`. To re-decide in Phase 4 if the walk-through looks wrong.
 
+- 2026-11-11 · Design reference: PSD frames #2–#11 = Q1, Q2, Q3, Q4א, Q4ב, Q5, Q6א, Q6ב, Q7, Q8 (screens 3, 5, 7, 8, 9, 11, 14, 15, 17, 18). The comps deck has the same 10 plus two popup states (Q2 help bubble → mockup `screen-05-b`, Q4א info bubble → `screen-08-b`). Text in the PSD matches the storyboard except the known Q1 wording; the design adds a colon to "שאלה מס' N:" (the storyboard's text is used, no colon). Colours sampled from the comps into the tokens (panel white, black outline, pill blue #004CC4 / #B0CFFB, chip #B4BDCE, slot #E4EEFA, buttons #2B2B2B). · Claude
+- 2026-11-11 · The design's white panel is almost the whole stage (1896×1056 at x 12, y 12, with the help button, arrows and "צדקתי?" inside it). The lomda uses the house panel (1800×798 at x 60, y 120), as the skill says, so the background picture stays visible and longer Arabic text has room. If the developer prefers the design's panel it is one CSS block. · Claude, to be told to the developer
+
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).
 - Storyboard slide 40 says "שקף 50-51" and slide 28 "שקפים 35-37" (stale; built as slides 40–41 and 28–30).
 - The PSD has frames for the 10 question screens only (the video scenes were cut from 7 to 4). The 4 video screens, the finish and the 5 picture screens use the storyboard's pictures; screens 6 and 16 (and maybe 12) need a generated variant (`SCENE_IMAGES_BRIEF.md`) — waiting on the developer.
 - Q6א/Q6ב are **scored applet questions**: the engine has no `kind="applet"` yet. They need a custom piece: the applet posts the drawn height, a `HOOKS` entry grades it, the screen's check button and feedback do the rest. Plan in Phase 5, after looking inside the two applet files.
 - Caption times in the 4 videos are even placeholders until the videos and their SRTs arrive. No videos, audio, narration or animations exist yet (question 10 decides the narration button; the small animations are replaced by stills).
-- Slide-to-PSD-frame mapping in screens.json (`psd`) is by question number, to be checked in Phase 2.
+- The 5 picture-and-narration screens wait for the generated variants (SCENE_IMAGES_BRIEF.md); the developer said "not now" on 2026-11-11, so screens 6 and 16 keep a placeholder until then.
 
 ## Delivery log
 <!-- date · git commit · repo link · SharePoint link · what changed since the last one -->

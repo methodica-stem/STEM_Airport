@@ -15,15 +15,17 @@
 
 /* ---------- 1. Design tokens ---------- */
 :root {
-  /* Science palette from the approved lomdot; replace with the PSD's colours. */
-  --subject-500: #17165B;        /* titles */
-  --subject-600: #0690D0;
-  --accent: #299FD4;             /* stepper pills, focus, highlights */
-  --text: #222222;
-  --panel-bg: #FFFDF7;           /* question card */
-  --panel-border: #082836;
-  --btn-bg: #404040;             /* "האם צדקתי?" and other primary buttons */
-  --btn-text: #FFF8E6;
+  /* Colours sampled from the airport design (comps frame 02, PSD frames 2-11). */
+  --subject-500: #000000;        /* titles (black in the design) */
+  --subject-600: #004CC4;
+  --accent: #004CC4;             /* stepper pill of the current question, focus, highlights */
+  --pill-off: #B0CFFB;           /* the other stepper pills */
+  --text: #000000;
+  --panel-bg: #FFFFFF;           /* question card */
+  --panel-border: #000000;
+  --slot-bg: #E4EEFA;            /* empty drop slots and answer boxes */
+  --btn-bg: #2B2B2B;             /* "צדקתי?", help and arrow buttons (dark chalkboard) */
+  --btn-text: #FFFFFF;
   --fb-bg: #1a1a1a;              /* feedback popup */
   --fb-text: #fcfafa;
   --fb-correct: #44A84B;         /* "צדקת!" */
@@ -37,8 +39,8 @@
   --table-head: #D9DCC7;
   --opt-correct: #4d6f11;
   --opt-wrong: #ca433d;          /* only on the final reveal */
-  --chip-bg: #156082;
-  --chip-text: #ffffff;
+  --chip-bg: #B4BDCE;            /* drag chips: blue-grey metal in the design */
+  --chip-text: #000000;
   --term-color: #4D90D8;
   --font-main: 'Assistant';      /* one family name for the whole lomda (the Arabic build swaps it in one place) */
   /* HOUSE TEXT SIZES — one set for every question screen (the SMEs found the PSD's
