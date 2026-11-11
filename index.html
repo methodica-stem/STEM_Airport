@@ -55,7 +55,7 @@
 </section>
 
 <!-- ================= SCREEN 3 — שאלה 1 — קריאת מספרים גדולים (שקפים 10-11) ================= -->
-<section class="screen" data-screen="3" data-sid="q1" data-type="question" data-kind="single" data-feedback-close data-weight="12.5" data-step="1" tabindex="-1">
+<section class="screen" data-screen="3" data-sid="q1" data-type="question" data-kind="single" data-opt-handle=".q-mark" data-feedback-close data-weight="12.5" data-step="1" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <div class="q-card">
@@ -64,10 +64,10 @@
     <p class="q-instruction">הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון את מספר הנוסעים.</p>
     <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
       <!-- Each card is one of the four skyline cards of the script (the sound bar is painted in the picture; the reading itself, audio, goes on .reader-media — open question 12). The city and number are live text in the white band. -->
-      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-paris.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span><span class="reader-media" data-pending-asset="reading, paris (slide 10): audio"></span></div>
-      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-tokyo.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span><span class="reader-media" data-pending-asset="reading, tokyo (slide 10): audio"></span></div>
-      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-frankfurt.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span><span class="reader-media" data-pending-asset="reading, frankfurt (slide 10): audio"></span></div>
-      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-dubai.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span><span class="reader-media" data-pending-asset="reading, dubai (slide 10): audio"></span></div>
+      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-paris.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"></button><audio class="reader-audio" preload="none" data-pending-asset="reading, paris (slide 10): audio"></audio></div>
+      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-tokyo.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"></button><audio class="reader-audio" preload="none" data-pending-asset="reading, tokyo (slide 10): audio"></audio></div>
+      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-frankfurt.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"></button><audio class="reader-audio" preload="none" data-pending-asset="reading, frankfurt (slide 10): audio"></audio></div>
+      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-dubai.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"></button><audio class="reader-audio" preload="none" data-pending-asset="reading, dubai (slide 10): audio"></audio></div>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -120,17 +120,17 @@
     <p class="q-body">אחת הדרכים לקבל אומדן שקרוב למספר המקורי הוא עיגול מספרים. במקרה שלנו, נעגל את המספרים לעשרות אלפים. לפניכם מוצגים מספרי הנוסעים שעברו בשדות התעופה.</p>
     <p class="q-instruction">גררו את המספרים המתאימים כדי לעגל אותם לעשרות אלפים.</p>
     <div class="dnd-bank" aria-label="מחסן מספרים">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">68,780,000</button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">68,770,000</button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">62,570,000</button>
-      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">62,560,000</button>
-      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">32,640,000</button>
-      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">32,630,000</button>
+      <span class="chip-cell" data-for="c1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1">68,780,000</button></span>
+      <span class="chip-cell" data-for="c2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2">68,770,000</button></span>
+      <span class="chip-cell" data-for="c3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3">62,570,000</button></span>
+      <span class="chip-cell" data-for="c4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4">62,560,000</button></span>
+      <span class="chip-cell" data-for="c5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5">32,640,000</button></span>
+      <span class="chip-cell" data-for="c6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6">32,630,000</button></span>
     </div>
     <div class="dnd-rows">
-      <div class="dnd-row"><span class="dnd-label">אמסטרדם:</span><span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span><span class="dnd-val">68,776,052 ≈</span></div>
-      <div class="dnd-row"><span class="dnd-label">ניו יורק:</span><span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span><span class="dnd-val">62,568,432 ≈</span></div>
-      <div class="dnd-row"><span class="dnd-label">וינה:</span><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 3"></span><span class="dnd-val">32,634,803 ≈</span></div>
+      <div class="dnd-row"><span class="dnd-label">אמסטרדם:</span><span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום ריק 1"></span><span class="dnd-val"><span class="ltr">68,776,052 ≈</span></span></div>
+      <div class="dnd-row"><span class="dnd-label">ניו יורק:</span><span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 2"></span><span class="dnd-val"><span class="ltr">62,568,432 ≈</span></span></div>
+      <div class="dnd-row"><span class="dnd-label">וינה:</span><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 3"></span><span class="dnd-val"><span class="ltr">32,634,803 ≈</span></span></div>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -159,7 +159,7 @@
 </section>
 
 <!-- ================= SCREEN 7 — שאלה 3 — סידור שדות תעופה מהקטן לגדול (שקפים 18-19) ================= -->
-<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-dnd-mode="swap" data-weight="12.5" data-step="3" tabindex="-1">
+<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-dnd-mode="swap" data-dnd-final="compare" data-dnd-badges data-weight="12.5" data-step="3" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q3">עזרה</button>
@@ -178,12 +178,12 @@
     <!-- The cards start in the row in the storyboard's order (slide 18); the learner swaps them into order.
          The first slot (right) is the largest number of passengers, the last (left) the smallest. -->
     <div class="order-line" aria-label="שדות תעופה">
-      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום 1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1"><span class="chip-name">הית'רו</span><span class="chip-place">בלונדון</span><span class="chip-num">15,000,000</span><img class="flag" src="assets/images/q3-flag-uk.png" alt=""></button></span>
-      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום 2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2"><span class="chip-name">פרנקפורט</span><span class="chip-place">בגרמניה</span><span class="chip-num">11,890,000</span><img class="flag" src="assets/images/q3-flag-de.png" alt=""></button></span>
-      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום 3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3"><span class="chip-name">אל פראט</span><span class="chip-place">בברצלונה</span><span class="chip-num">11,490,000</span><img class="flag" src="assets/images/q3-flag-es.png" alt=""></button></span>
-      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום 4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4"><span class="chip-name">סכיפהול</span><span class="chip-place">אמסטרדם</span><span class="chip-num">11,350,000</span><img class="flag" src="assets/images/q3-flag-nl.png" alt=""></button></span>
-      <span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום 5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5"><span class="chip-name">שארל דה גול</span><span class="chip-place">בצרפת</span><span class="chip-num">12,310,000</span><img class="flag" src="assets/images/q3-flag-fr.png" alt=""></button></span>
-      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום 6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6"><span class="chip-name">פיומיצ'ינו</span><span class="chip-place">ברומא</span><span class="chip-num">11,150,000</span><img class="flag" src="assets/images/q3-flag-it.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c1" role="button" tabindex="0" aria-label="מקום 1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1" data-fix="הית'רו"><span class="chip-name">הית'רו</span><span class="chip-place">בלונדון</span><span class="chip-num">15,000,000</span><img class="flag" src="assets/images/q3-flag-uk.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום 2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2" data-fix="פרנקפורט"><span class="chip-name">פרנקפורט</span><span class="chip-place">בגרמניה</span><span class="chip-num">11,890,000</span><img class="flag" src="assets/images/q3-flag-de.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום 3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3" data-fix="אל פראט"><span class="chip-name">אל פראט</span><span class="chip-place">בברצלונה</span><span class="chip-num">11,490,000</span><img class="flag" src="assets/images/q3-flag-es.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום 4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4" data-fix="סכיפהול"><span class="chip-name">סכיפהול</span><span class="chip-place">אמסטרדם</span><span class="chip-num">11,350,000</span><img class="flag" src="assets/images/q3-flag-nl.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום 5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5" data-fix="שארל דה גול"><span class="chip-name">שארל דה גול</span><span class="chip-place">בצרפת</span><span class="chip-num">12,310,000</span><img class="flag" src="assets/images/q3-flag-fr.png" alt=""></button></span>
+      <span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום 6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6" data-fix="פיומיצ'ינו"><span class="chip-name">פיומיצ'ינו</span><span class="chip-place">ברומא</span><span class="chip-num">11,150,000</span><img class="flag" src="assets/images/q3-flag-it.png" alt=""></button></span>
     </div>
     <div class="order-axis">
       <span class="end-tag">מספר הנוסעים הגדול ביותר</span>
@@ -203,7 +203,7 @@
 </section>
 
 <!-- ================= SCREEN 8 — שאלה 4 סעיף א — תרגיל חיבור (שקפים 20-21) ================= -->
-<section class="screen" data-screen="8" data-sid="q4a" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
+<section class="screen" data-screen="8" data-sid="q4a" data-type="question" data-kind="dnd" data-dnd-final="compare" data-dnd-badges data-weight="6.25" data-step="4" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q4a">עזרה</button>
@@ -226,16 +226,16 @@
       <span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 4"></span>
     </div>
     <div class="dnd-bank" aria-label="מחסן מספרים ופעולות">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">1,600,000</button>
-      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">200,000</button>
-      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">-</button>
-      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">3,040,000</button>
-      <button class="dnd-chip" type="button" data-chip="c7" data-order="7">3,004,000</button>
-      <button class="dnd-chip" type="button" data-chip="c8" data-order="8">20,000</button>
-      <button class="dnd-chip" type="button" data-chip="c9" data-order="9">2,000</button>
-      <button class="dnd-chip" type="button" data-chip="c10" data-order="10">+</button>
+      <span class="chip-cell" data-for="c1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button></span>
+      <span class="chip-cell" data-for="c2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button></span>
+      <span class="chip-cell" data-for="c3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3">1,600,000</button></span>
+      <span class="chip-cell" data-for="c4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4">200,000</button></span>
+      <span class="chip-cell" data-for="c5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5">-</button></span>
+      <span class="chip-cell" data-for="c6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6">3,040,000</button></span>
+      <span class="chip-cell" data-for="c7"><button class="dnd-chip" type="button" data-chip="c7" data-order="7">3,004,000</button></span>
+      <span class="chip-cell" data-for="c8"><button class="dnd-chip" type="button" data-chip="c8" data-order="8">20,000</button></span>
+      <span class="chip-cell" data-for="c9"><button class="dnd-chip" type="button" data-chip="c9" data-order="9">2,000</button></span>
+      <span class="chip-cell" data-for="c10"><button class="dnd-chip" type="button" data-chip="c10" data-order="10">+</button></span>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -250,7 +250,7 @@
 </section>
 
 <!-- ================= SCREEN 9 — שאלה 4 סעיף ב — תרגיל חיסור (שקפים 22-23) ================= -->
-<section class="screen" data-screen="9" data-sid="q4b" data-type="question" data-kind="dnd" data-weight="6.25" data-step="4" tabindex="-1">
+<section class="screen" data-screen="9" data-sid="q4b" data-type="question" data-kind="dnd" data-dnd-final="compare" data-dnd-badges data-weight="6.25" data-step="4" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q4b">עזרה</button>
@@ -270,13 +270,13 @@
       <span class="dnd-slot" data-accept="c3" role="button" tabindex="0" aria-label="מקום ריק 4"></span>
     </div>
     <div class="dnd-bank" aria-label="מחסן מספרים ופעולות">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">200,000</button>
-      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">20,000</button>
-      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">1,600,000</button>
-      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">-</button>
-      <button class="dnd-chip" type="button" data-chip="c7" data-order="7">+</button>
+      <span class="chip-cell" data-for="c1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1">1,800,000</button></span>
+      <span class="chip-cell" data-for="c2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2">3,400,000</button></span>
+      <span class="chip-cell" data-for="c3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3">200,000</button></span>
+      <span class="chip-cell" data-for="c4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4">20,000</button></span>
+      <span class="chip-cell" data-for="c5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5">1,600,000</button></span>
+      <span class="chip-cell" data-for="c6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6">-</button></span>
+      <span class="chip-cell" data-for="c7"><button class="dnd-chip" type="button" data-chip="c7" data-order="7">+</button></span>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
@@ -305,7 +305,7 @@
 </section>
 
 <!-- ================= SCREEN 11 — שאלה 5 — התאמת תרגיל לתיאור מילולי (שקפים 25-26) ================= -->
-<section class="screen" data-screen="11" data-sid="q5" data-type="question" data-kind="dnd" data-dnd-final="compare" data-weight="12.5" data-step="5" tabindex="-1">
+<section class="screen" data-screen="11" data-sid="q5" data-type="question" data-kind="dnd" data-dnd-final="compare" data-dnd-badges data-weight="12.5" data-step="5" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q5">עזרה</button>
@@ -316,20 +316,21 @@
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 5</h2>
     <p class="q-body">ב-62 הימים של חודשי יולי-אוגוסט עברו <strong>בכל יום כ-70,000 נוסעים</strong>, מתוכם <strong>כ-10,000 ילדים</strong> (הנתונים מעוגלים לעשרות אלפים).</p>
-    <p class="q-instruction">גררו לכל תיאור מילולי את התרגיל המתאים לחישוב האומדן. שימו לב: יש שני תרגילים שאין להם תיאור מתאים.</p>
-    <div class="dnd-rows">
-      <div class="dnd-row"><span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span><span class="dnd-label">מספר הילדים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
-      <div class="dnd-row"><span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 2"></span><span class="dnd-label">מספר המבוגרים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
-      <div class="dnd-row"><span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום ריק 3"></span><span class="dnd-label">מספר הנוסעים שעברו בשדה התעופה בחודשים יולי-אוגוסט</span></div>
-      <div class="dnd-row"><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 4"></span><span class="dnd-label">מספר המבוגרים שעברו בשדה התעופה בחודש אחד.</span></div>
+    <p class="q-instruction">גררו לכל תיאור מילולי את התרגיל המתאים לחישוב האומדן.</p>
+    <p class="q-body"><strong>שימו לב:</strong> יש שני תרגילים שאין להם תיאור מתאים.</p>
+    <div class="dnd-cols">
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span><p class="dnd-caption">מספר הילדים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 2"></span><p class="dnd-caption">מספר המבוגרים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום ריק 3"></span><p class="dnd-caption">מספר הנוסעים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 4"></span><p class="dnd-caption">מספר המבוגרים שעברו בשדה התעופה בחודש אחד.</p></div>
     </div>
     <div class="dnd-bank" aria-label="מחסן תרגילים">
-      <button class="dnd-chip" type="button" data-chip="c1" data-order="1">2 : 62 × 10,000 - 70,000</button>
-      <button class="dnd-chip" type="button" data-chip="c2" data-order="2">62 × 10,000</button>
-      <button class="dnd-chip" type="button" data-chip="c3" data-order="3">62 × 10,000 - 70,000</button>
-      <button class="dnd-chip" type="button" data-chip="c4" data-order="4">62 × 70,000</button>
-      <button class="dnd-chip" type="button" data-chip="c5" data-order="5">62 × (10,000 - 70,000)</button>
-      <button class="dnd-chip" type="button" data-chip="c6" data-order="6">2 : 62 × (10,000 - 70,000)</button>
+      <span class="chip-cell" data-for="c1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1">2 : 62 × 10,000 - 70,000</button></span>
+      <span class="chip-cell" data-for="c2"><button class="dnd-chip" type="button" data-chip="c2" data-order="2">62 × 10,000</button></span>
+      <span class="chip-cell" data-for="c3"><button class="dnd-chip" type="button" data-chip="c3" data-order="3">62 × 10,000 - 70,000</button></span>
+      <span class="chip-cell" data-for="c4"><button class="dnd-chip" type="button" data-chip="c4" data-order="4">62 × 70,000</button></span>
+      <span class="chip-cell" data-for="c5"><button class="dnd-chip" type="button" data-chip="c5" data-order="5">62 × (10,000 - 70,000)</button></span>
+      <span class="chip-cell" data-for="c6"><button class="dnd-chip" type="button" data-chip="c6" data-order="6">2 : 62 × (10,000 - 70,000)</button></span>
     </div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>

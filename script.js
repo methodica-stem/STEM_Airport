@@ -41,6 +41,7 @@ window.lomdaState = {
    HOOKS['q7'] = { resolved: function (screen) { screen.querySelector('.teacher').hidden = false; } };
 */
 const HOOKS = {};
+HOOKS['q1'] = { leave: function () { readerStop(); } };      // a reading never keeps playing after the learner leaves
 
 /* ---------------- Small helpers ---------------- */
 function screenEl(n) { return document.querySelector('.screen[data-screen="' + n + '"]'); }
@@ -373,7 +374,15 @@ document.addEventListener('click', function (e) {
   if ((el = t.closest('.popup-close'))) { closePopup(el.closest('.popup-src'), 'x'); return; }
   if (t.classList && t.classList.contains('popup-src')) { closePopup(t, 'esc'); return; }   // the dark backdrop
   if ((el = t.closest('[data-popup]'))) { openPopup(el); return; }
-  if ((el = t.closest('.q-opt'))) { qSelect(el); return; }
+  if ((el = t.closest('.q-opt'))) {
+    // data-opt-handle=".q-mark" on the section: only the handle picks the option (a mouse click elsewhere on the card does
+    // nothing); a click made by the keyboard (Enter/Space on the focused option, detail 0) always counts.
+    const sec = el.closest('.screen'), handle = sec && sec.getAttribute('data-opt-handle');
+    const inner = t.closest('button');
+    if (inner && inner !== el) return;                     // a control inside the option (a play button) is not a choice
+    if (handle && e.detail !== 0 && !t.closest(handle)) return;
+    qSelect(el); return;
+  }
   if ((el = t.closest('.btn-check'))) { checkAnswer(unitOf(el)); return; }
   if ((el = t.closest('.tile'))) { revealTile(el); return; }
   if ((el = t.closest('.reopen-btn'))) { toggleReopen(el); return; }
@@ -977,6 +986,12 @@ function dndSlotRight(slot) {
   const ok = (slot.getAttribute('data-accept') || '').split(/\s+/);
   return !!chip && ok.indexOf(chip.getAttribute('data-chip')) !== -1;
 }
+/* A chip that started in a .chip-cell goes back to that cell, so the bank never reflows. */
+function dndHome(chip) {
+  const h = chip._home;
+  if (h && h.classList.contains('chip-cell')) return h;
+  return dndBank(screenOf(chip)) || chip.parentElement;
+}
 function dndRemember(s) {
   s.querySelectorAll('.dnd-chip').forEach(function (c, i) {
     if (!c._home) { c._home = c.parentElement; c._homeIndex = i; }
@@ -1006,7 +1021,7 @@ function dndPlace(chip, slot) {
   if (prev === chip) return;
   if (prev) {
     if (from.classList.contains('dnd-slot')) from.appendChild(prev);
-    else (dndBank(s) || from).appendChild(prev);
+    else dndHome(prev).appendChild(prev);
   }
   slot.appendChild(chip);
   qEnsure(s).touched = true;
@@ -1017,7 +1032,7 @@ function dndReturn(chip) {
   const s = screenOf(chip);
   const bank = dndBank(s);
   if (!bank) return;                       // swap mode: a chip always stays in a slot
-  bank.appendChild(chip);
+  dndHome(chip).appendChild(chip);
   qEnsure(s).touched = true;
   dndRefresh(s);
 }
@@ -1128,6 +1143,7 @@ function dndMark(s, allRight) {
    Row order in the DOM: label, mark, slot (the learner's card), correct card; give the row a grid so the columns line up
    (screen-patterns.md, "Drag to rows: the final state"). */
 function dndCompare(s) {
+  const badges = s.hasAttribute('data-dnd-badges');
   s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
   s.querySelectorAll('.dnd-slot').forEach(function (sl) {
     const right = dndSlotRight(sl);
@@ -1137,15 +1153,18 @@ function dndCompare(s) {
     mark.className = 'dnd-mark ' + (right ? 'ok' : 'no');
     mark.setAttribute('role', 'img');
     mark.setAttribute('aria-label', uiText(right ? 'dnd-right' : 'dnd-wrong'));
-    sl.insertAdjacentElement('beforebegin', mark);   // next to the learner's card, on the label's side
+    const host = badges ? (sl.closest('[data-fixhost]') || sl) : null;
+    if (badges) { mark.classList.add('badge'); host.appendChild(mark); }
+    else sl.insertAdjacentElement('beforebegin', mark);   // next to the learner's card, on the label's side
     if (right) return;
     const id = (sl.getAttribute('data-accept') || '').split(/\s+/)[0];
     const chip = s.querySelector('.dnd-chip[data-chip="' + id + '"]');
     const fix = document.createElement('span');
     fix.className = 'dnd-fix';
-    fix.textContent = chip ? chip.textContent : '';
+    fix.textContent = chip ? (chip.getAttribute('data-fix') || chip.textContent) : '';
     fix.setAttribute('aria-label', uiText('dnd-correct-is') + ' ' + fix.textContent);
-    sl.insertAdjacentElement('afterend', fix);
+    if (badges) { fix.classList.add('badge'); host.appendChild(fix); }
+    else sl.insertAdjacentElement('afterend', fix);
   });
 }
 function dndLock(s) {
@@ -1166,7 +1185,7 @@ function dndRevealCorrect(s) {
     sl.classList.add('filled');
   });
   const bank = dndBank(s);
-  Array.prototype.slice.call(pool.children).forEach(function (c) { (bank || c._home).appendChild(c); });   // spare chips
+  Array.prototype.slice.call(pool.children).forEach(function (c) { (c._home && c._home.classList.contains('chip-cell') ? c._home : (bank || c._home)).appendChild(c); });   // spare chips
 }
 
 /* ---------------- Scoring + completion ---------------- */
@@ -1477,3 +1496,42 @@ document.addEventListener('DOMContentLoaded', function () {
   announceReady();
   schedulePreload(first + 1);
 });
+
+
+/* ===================================================================
+   Question 1: the reading cards. The button over each sound wave plays only that card's narration and
+   lights its wave while it plays; choosing a card is a separate act (its radio button). Until the audio
+   files exist (the <audio> has no src) the button shows the lit wave for 4 s, so the behaviour can be seen.
+   =================================================================== */
+let readerPlaying = null, readerTimer = null;
+function readerStop() {
+  clearTimeout(readerTimer);
+  document.querySelectorAll('.reader-card.playing').forEach(function (c) {
+    c.classList.remove('playing');
+    const b = c.querySelector('.reader-play'); if (b) b.setAttribute('aria-pressed', 'false');
+    const a = c.querySelector('audio');
+    if (a && a.getAttribute('src')) { try { a.pause(); a.currentTime = 0; } catch (e) {} }
+  });
+  readerPlaying = null;
+}
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest && e.target.closest('.reader-play');
+  if (!btn) return;
+  const card = btn.closest('.reader-card');
+  const wasPlaying = card === readerPlaying;
+  readerStop();
+  if (wasPlaying) return;
+  readerPlaying = card;
+  card.classList.add('playing');
+  btn.setAttribute('aria-pressed', 'true');
+  const a = card.querySelector('audio');
+  if (a && a.getAttribute('src')) {
+    a.onended = function () { if (readerPlaying === card) readerStop(); };
+    a.onloadedmetadata = function () { if (isFinite(a.duration)) card.style.setProperty('--play-dur', a.duration + 's'); };
+    a.play().catch(function () { readerStop(); });
+  } else {
+    card.style.setProperty('--play-dur', '4s');
+    readerTimer = setTimeout(function () { if (readerPlaying === card) readerStop(); }, 4000);
+  }
+});
+document.addEventListener('lomda:end', readerStop);

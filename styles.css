@@ -48,8 +48,8 @@
      Change these three tokens, never a screen. Text that is part of the artwork
      (tables, labels on a map, a banner the designer sized) keeps the PSD size. */
   --text-size: 40px;             /* question text and instructions */
-  --fb-size: 34px;               /* feedback text (retry boxes too) */
-  --fb-title-size: 46px;         /* feedback headers: צדקת! / זו טעות */
+  --fb-size: 40px;               /* feedback text (retry boxes too): as close to the question text as it fits */
+  --fb-title-size: 48px;         /* feedback headers: צדקת! / זו טעות */
   --focus: 3px solid #299FD4;
 }
 
@@ -858,3 +858,120 @@ button, input, select, textarea { font-family: inherit; }
 [data-sid="q4a"] .q-card, [data-sid="q4b"] .q-card { padding-top: 136px; }
 [data-sid="q4a"] .dnd-chip, [data-sid="q4b"] .dnd-chip { min-height: 70px; }
 [data-sid="q4a"] .eq-row .dnd-slot, [data-sid="q4b"] .eq-row .dnd-slot { min-height: 70px; height: 70px; }
+
+/* ---------- 3c. Review round 3 (developer, 2026-11-11) ---------- */
+.q-instruction { font-weight: 800; }
+.help-btn { font-size: 40px; }
+.video-credit { font-size: 34px; }
+.video-caption p { font-size: 40px; }
+
+/* chips: drawn in CSS (no picture), rounded, so a green or red frame follows exactly their shape */
+.dnd-chip {
+  min-height: 76px; padding: 0 12px; box-sizing: border-box; color: #000; font-size: 40px; font-weight: 800; line-height: 1.1;
+  border: 2px solid #6F84A8; border-image: none; border-radius: 22px;
+  background: linear-gradient(#d6deee, #a9b8d3 55%, #97a9c9);
+  box-shadow: inset 0 3px 3px rgba(255,255,255,.75), 0 3px 6px rgba(0,0,0,.28);
+}
+.dnd-chip * { pointer-events: none; }                 /* a press on a picture or text inside a chip is a press on the chip */
+.dnd-chip img { -webkit-user-drag: none; user-select: none; }
+.dnd-slot { position: relative; border: 3px solid #BDD1EC; border-radius: 22px; background: var(--slot-bg); min-width: 270px; min-height: 76px; }
+.dnd-slot.filled { border-color: transparent; }
+.dnd-slot.correct { border: 3px solid var(--opt-correct); }
+.dnd-slot.wrong { border: 3px solid var(--opt-wrong); }
+.chip-cell { display: block; }
+.chip-cell .dnd-chip { width: 100%; }
+[data-dnd-final="compare"] .dnd-slot.correct, [data-dnd-final="compare"] .dnd-slot.wrong { border-color: transparent; }
+[data-dnd-final="compare"] .dnd-slot.correct .dnd-chip { outline: none; box-shadow: inset 0 0 0 8px var(--opt-correct); }
+[data-dnd-final="compare"] .dnd-slot.wrong .dnd-chip { outline: none; box-shadow: inset 0 0 0 8px var(--opt-wrong); }
+.dnd-fix { border: 8px solid var(--opt-correct); border-radius: 22px; background: linear-gradient(#d6deee, #a9b8d3); font-size: 40px; font-weight: 800; color: #000; }
+.dnd-mark.badge, .dnd-fix.badge { position: absolute; z-index: 4; }
+.dnd-mark { width: 56px; height: 56px; }
+
+/* popups and feedback boxes: the X sits in the upper right corner */
+.popup-panel { padding-top: 76px; }
+.popup-close { left: auto; right: 22px; top: 18px; width: 56px; height: 56px; }
+.popup-close::before, .popup-close::after { width: 44px; height: 7px; }
+.popup-by-btn .popup-close { display: block; }
+.popup-by-btn > .popup-panel { padding: 76px 54px 30px; }
+.fb-close { left: auto; right: 16px; top: 14px; width: 56px; height: 56px; }
+.fb-close::before, .fb-close::after { width: 32px; height: 5px; }
+#feedback-popup.has-close .fb-title-row { padding-left: 0; padding-right: 70px; }
+
+/* narration bubble of the holiday screen: the full width, two rows, so the mother's face stays free */
+[data-sid="story-holiday"] .narration-banner { width: 1920px; padding: 30px 36px 30px 40px; border-radius: 0 0 0 64px; }
+
+/* ---- 3 · q1 ---- */
+[data-sid="q1"] .reader-card { width: 390px; height: 337px; cursor: default; }
+[data-sid="q1"] .reader-pic { width: 390px; height: 337px; }
+[data-sid="q1"] .reader-card:focus, [data-sid="q1"] .reader-card:focus-visible { outline: none; }
+[data-sid="q1"] .reader-card:focus-visible .q-mark { outline: var(--focus); outline-offset: 5px; }
+[data-sid="q1"] .reader-card.selected .reader-pic { outline: none; }
+[data-sid="q1"] .reader-card .q-mark { top: 23px; right: 35px; width: 50px; height: 50px; border: 5px solid #0E1B4D; cursor: pointer; --mark-size: 44px; }
+[data-sid="q1"] .reader-card .q-mark::before { content: ''; position: absolute; inset: -14px; }    /* the radio and a little around it */
+[data-sid="q1"] .reader-card.selected:not(.correct):not(.wrong) .q-mark::after { inset: 8px; }
+[data-sid="q1"] .reader-label { top: 173px; left: 12px; right: 12px; font-size: 36px; white-space: nowrap; }
+[data-sid="q1"] .reader-play {
+  position: absolute; left: 16px; right: 16px; top: 228px; height: 76px; padding: 0; border: 0; border-radius: 38px;
+  background: transparent; cursor: pointer; z-index: 2; overflow: hidden;
+}
+[data-sid="q1"] .reader-play:focus-visible { outline: var(--focus); outline-offset: 2px; }
+[data-sid="q1"] .reader-play::before {          /* the lit part of the wave while the reading plays */
+  content: ''; position: absolute; inset: 0; border-radius: 38px; transform: scaleX(0); transform-origin: left center;
+  background: linear-gradient(90deg, rgba(20,110,255,.10), rgba(20,110,255,.38));
+}
+[data-sid="q1"] .reader-card.playing .reader-play { box-shadow: 0 0 0 4px rgba(20,110,255,.55); }
+[data-sid="q1"] .reader-card.playing .reader-play::before { animation: readerSweep var(--play-dur, 4s) linear forwards; }
+@keyframes readerSweep { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@media (prefers-reduced-motion: reduce) { [data-sid="q1"] .reader-card.playing .reader-play::before { animation: none; transform: scaleX(1); } }
+#feedback-popup.fb-q1.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q1.correct, #feedback-popup.fb-q1.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; padding-top: 14px; padding-bottom: 14px; }
+#feedback-popup.fb-q1.correct .fb-body p, #feedback-popup.fb-q1.wrong2 .fb-body p { font-size: 36px; margin-bottom: 2px; }
+#feedback-popup.fb-q1.correct .fb-title, #feedback-popup.fb-q1.wrong2 .fb-title { font-size: 46px; }
+
+/* ---- 5 · q2 ---- */
+[data-sid="q2"] .dnd-bank { grid-auto-rows: 76px; }
+[data-sid="q2"] .chip-cell { width: 270px; height: 76px; }
+[data-sid="q2"] .dnd-val .ltr { display: inline-block; }
+#feedback-popup.fb-q2.correct, #feedback-popup.fb-q2.partial, #feedback-popup.fb-q2.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
+
+/* ---- 7 · q3 ---- */
+[data-sid="q3"] .dnd-chip { font-size: 36px; }
+[data-sid="q3"] .end-tag { font-size: 36px; }
+[data-sid="q3"] .dnd-mark.badge { top: -24px; right: -24px; }
+[data-sid="q3"] .dnd-fix.badge { left: 8px; right: 8px; bottom: -22px; height: 48px; border-width: 5px; border-radius: 18px; font-size: 32px; display: flex; align-items: center; justify-content: center; }
+
+/* ---- 8 and 9 · q4a, q4b ---- */
+.eq-row { gap: 64px; }
+.eq-row .dnd-slot { min-width: 0; width: 240px; }
+.eq-row .dnd-slot:nth-child(2) { width: 110px; }
+.eq-sign { width: 52px; margin: 0 -26px; }
+[data-sid="q4a"] .dnd-bank, [data-sid="q4b"] .dnd-bank { display: grid; justify-content: center; gap: 12px 14px; grid-auto-rows: 70px; }
+[data-sid="q4a"] .dnd-bank { grid-template-columns: repeat(4, 240px) 110px; }
+[data-sid="q4b"] .dnd-bank { grid-template-columns: 240px 240px 240px 110px 110px; }
+[data-sid="q4a"] .chip-cell, [data-sid="q4b"] .chip-cell { height: 70px; }
+[data-sid="q4b"] .chip-cell[data-for="c6"] { order: 4; }
+[data-sid="q4b"] .chip-cell[data-for="c7"] { order: 5; }
+[data-sid="q4b"] .chip-cell[data-for="c5"] { order: 6; }
+[data-sid="q4b"] .chip-cell[data-for="c4"] { order: 7; }
+[data-sid="q4a"] .dnd-mark.badge, [data-sid="q4b"] .dnd-mark.badge { right: -62px; top: 7px; }
+[data-sid="q4a"] .dnd-fix.badge, [data-sid="q4b"] .dnd-fix.badge { left: 0; right: 0; top: calc(100% + 8px); height: 70px; border-width: 6px; display: flex; align-items: center; justify-content: center; }
+
+/* ---- 11 · q5: four boxes, each with its caption under it (the PSD) ---- */
+[data-sid="q5"] .q-card { padding-top: 136px; }
+[data-sid="q5"] .q-body, [data-sid="q5"] .q-instruction { margin-bottom: 4px; }
+.dnd-cols { display: flex; gap: 22px; margin-top: 12px; direction: rtl; }
+.dnd-col { position: relative; flex: none; width: 410px; }
+.dnd-col .dnd-slot { display: flex; width: 100%; min-width: 0; margin: 0; }
+.nowrap { white-space: nowrap; }
+.dnd-caption { margin: 10px 0 0; font-size: 36px; font-weight: 600; line-height: 1.25; text-align: center; }
+[data-sid="q5"] .dnd-bank { display: grid; grid-template-columns: repeat(3, 410px); grid-auto-rows: 76px; gap: 14px 22px; margin: 14px 0 0; }
+[data-sid="q5"] .chip-cell { width: 410px; height: 76px; }
+[data-sid="q5"] .dnd-chip { font-size: 36px; white-space: nowrap; padding: 0 4px; }
+[data-sid="q5"] .dnd-mark.badge { top: -24px; right: -14px; }
+[data-sid="q5"] .dnd-fix.badge { left: 0; right: 0; bottom: -88px; height: 76px; display: flex; align-items: center; justify-content: center; font-size: 36px; }
+#feedback-popup.fb-q5.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q5.correct, #feedback-popup.fb-q5.partial, #feedback-popup.fb-q5.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
+
+[data-sid="q5"] .dnd-fix.badge { white-space: nowrap; font-size: 34px; padding: 0 4px; }
+#feedback-popup.fb-q4a.correct, #feedback-popup.fb-q4a.partial, #feedback-popup.fb-q4a.wrong2,
+#feedback-popup.fb-q4b.correct, #feedback-popup.fb-q4b.partial, #feedback-popup.fb-q4b.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
