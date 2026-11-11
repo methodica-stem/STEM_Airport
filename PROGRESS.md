@@ -3,7 +3,7 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 2 done (design reference) · next: Phase 3, write ASSET_CHECKLIST.md and export the first batch of pictures from the PSD. The screen map is still waiting for the developer's OK
+**Now:** Phase 3 · batch 1 of the picture export is done and checked (shared pictures + question 1); waiting for the developer to look at the contact sheet. Next: export batch 2 (q3 flags, q7 airplane, q8 suitcase) and start Phase 4 (build the screens)
 **Waiting on you:** read `PROJECT_BRIEF.md` (the screen table) and say "the map is fine" or what to change; send `open-questions.md` to the content team (Claude can draft the message)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
@@ -20,8 +20,8 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - [x] 1 · Storyboard read — screen map (screens.json, PROJECT_BRIEF.md), production-notes.md, open-questions.md; index.html is a 19-screen skeleton (2026-11-11)
 - [ ] 1 · ✋ Developer reviewed the screen map; open questions sent (date: )
 - [x] 2 · Design reference — PSD inventory, frames mapped to screens (checked against the text layers), mockups for the overlay (12 files in `_design-reference/mockups/`), colour tokens set (2026-11-11)
-- [ ] 3 · ASSET_CHECKLIST.md written
-- [ ] 3 · ✋ Assets exported and checked (check_assets.py clean)
+- [x] 3 · ASSET_CHECKLIST.md written (2026-11-11; all 19 rows resolve in a dry run)
+- [ ] 3 · ✋ Assets exported and checked (check_assets.py clean) — batch 1 of 2 done: shared + q1 (11 files, 0 errors); batch 2: q3 flags, q7 airplane, q8 suitcase (8 files, exported later)
 - [ ] 4 · Screens built (tick per batch below)
 - [ ] 5 · Applets built and signed off; videos and audio in
 - [ ] 6 · Self-QA passed (qa_check.py 0 errors, walk-through done)
@@ -62,6 +62,9 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 
 - 2026-11-11 · Design reference: PSD frames #2–#11 = Q1, Q2, Q3, Q4א, Q4ב, Q5, Q6א, Q6ב, Q7, Q8 (screens 3, 5, 7, 8, 9, 11, 14, 15, 17, 18). The comps deck has the same 10 plus two popup states (Q2 help bubble → mockup `screen-05-b`, Q4א info bubble → `screen-08-b`). Text in the PSD matches the storyboard except the known Q1 wording; the design adds a colon to "שאלה מס' N:" (the storyboard's text is used, no colon). Colours sampled from the comps into the tokens (panel white, black outline, pill blue #004CC4 / #B0CFFB, chip #B4BDCE, slot #E4EEFA, buttons #2B2B2B). · Claude
 - 2026-11-11 · The design's white panel is almost the whole stage (1896×1056 at x 12, y 12, with the help button, arrows and "צדקתי?" inside it). The lomda uses the house panel (1800×798 at x 60, y 120), as the skill says, so the background picture stays visible and longer Arabic text has room. If the developer prefers the design's panel it is one CSS block. · Claude, to be told to the developer
+
+- 2026-11-11 · The background of the 10 question screens is ONE picture, `bg-airport.jpg` (the same scene, already darkened by the designer, in every frame): exported once without the panel and buttons. So the starter's `.q-overlay` darkening must not be added on top of it. The 4 reading cards of Q1 are 4 near-identical pictures of Matan (small differences of expression). · Claude
+- 2026-11-11 · Export fix: `[hide: …]` markers in the checklist take one layer name each (a `|` inside a markdown table breaks the list). Boxes of buttons in the checklist are the visible size; the inventory's larger box includes the shadow, which CSS draws (`filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.38))`; bulb 0 5 4 .41). · Claude
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).
