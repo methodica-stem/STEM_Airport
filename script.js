@@ -571,6 +571,18 @@ function playVideo(s) {
   if (!video) return;
   if (video.hasAttribute('data-pending-asset')) {
     setTimeout(function () { onVideoEnded(n); }, 1500);
+    // No file yet: run the captions on a stand-in clock, so their look and wording can be reviewed
+    const wrap = video.closest('.video-wrap'), cues = readCues(wrap);
+    const capEl = wrap.querySelector('.video-caption'), capText = capEl && capEl.querySelector('p');
+    if (capEl && capText && cues.length) {
+      const t0 = Date.now();
+      const iv = setInterval(function () {
+        const t = (Date.now() - t0) / 1000;
+        const cue = captionsOn[n] && cues.find(function (c) { return t >= c.start && t < c.end; });
+        if (!s.classList.contains('active') || (!cue && t > cues[cues.length - 1].end)) { clearInterval(iv); capEl.classList.add('hidden'); return; }
+        if (cue) { capText.textContent = cue.el.textContent; capEl.classList.remove('hidden'); } else capEl.classList.add('hidden');
+      }, 200);
+    }
     return;
   }
   if (video.hasAttribute('data-preview-at')) video.currentTime = 0;   // the still was a later frame; play from the start

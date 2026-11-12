@@ -3,7 +3,7 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 4 · screens 1–10 built (batches A and B) and waiting for the developer's approval by screenshot; next batch C (screens 11–15: q5, story, video, the two graph applets)
+**Now:** Phase 4 · screens 1–15 built (12–13 done 2026-11-12); remaining: 16 (story-daily), 17 and 18 (typed-answer questions q7, q8) and 19 (finish). Waiting for the developer's approval of what is built and the screen-map OK
 **Waiting on you:** look at the screenshots of screens 1–10 and say "fine" or what to change; confirm the screen map (open since Phase 1)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
@@ -42,10 +42,10 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 | 9 | q4b | ✔ | ✔ | ☐ |
 | 10 | story-holiday | ✔ | ✔ | ☐ |
 | 11 | q5 | skeleton | ☐ | ☐ |
-| 12 | story-team | skeleton | ☐ | ☐ |
-| 13 | video-chart | skeleton | ☐ | ☐ |
-| 14 | q6a | skeleton | ☐ | ☐ |
-| 15 | q6b | skeleton | ☐ | ☐ |
+| 12 | story-team | ✔ | ✔ | ☐ |
+| 13 | video-chart | ✔ | ✔ | ☐ |
+| 14 | q6a | ✔ | ✔ | ☐ |
+| 15 | q6b | ✔ | ✔ | ☐ |
 | 16 | story-daily | skeleton | ☐ | ☐ |
 | 17 | q7 | skeleton | ☐ | ☐ |
 | 18 | q8 | skeleton | ☐ | ☐ |
@@ -83,6 +83,8 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - 2026-11-11 · Applets (screens 14, 15): the content team's two bundled pages (React runtime, in `STEM/שדה תעופה/applets/`, untouched) were rebuilt as ONE small vanilla page, `assets/app/graph.html?part=a|b`: the same chart, numbers, snap to 100,000 and drag-to-draw, with the changes the developer asked for: a **drag handle** (a small double-ended pill with ↑↓ arrows) that blinks at the foot of the drawing area until it is touched, then rides on the top of the column; **text much bigger** (axis numbers, months, values 28–34 px instead of about 20 px, months on two lines) and a larger graph (1052×700 in the frame); the graph on the right, the question text on the left (as in the PSD/slide); the **feedback box beside the graph**, in the left column under the question text (retry and final), 36–40 px text. The applet's own "בדקתי" button and its own feedback sentences are not used: the lomda's "צדקתי?" button, the two tries, the retry text and the storyboard's feedback (צדקת!/זו טעות + explanation) apply, as on every question. The applet posts `APPLET_VALUE`; the screen (`data-kind="applet"`, `data-answer`, `data-tolerance="100000"`, the content team's ±1 division) grades it; on the final result the applet shows the solution (green column, dashed line, the learner's column as a red outline if wrong). Keyboard: the drawing area is a slider (arrows ±100,000, Page keys ±400,000). Engine: new `kind="applet"` support in script.js. · developer's request, applied by Claude
 
 - 2026-11-11 · Applet fixes after the developer's review: the number shown while drawing sits above the drag handle and, for a tall column, moves above the top of the graph (inside the frame); the dashed drawing frame is wider and reaches above the graph, so the number is never cut off, and the number is a little smaller (29 px); in the solution the right number (green) and the learner's number (red) are on white plates with a coloured frame, so they read on any background, and they never touch each other. · developer's request, applied by Claude
+
+- 2026-11-12 · Screens 12–13: 12 is the animated still of the team round the table (the script's own picture; optional variant B of SCENE_IMAGES_BRIEF.md still not made) with the one-row park-drones bubble; 13 is the chart video with its poster (the missing poster was wired), the three captions as written, and the arrow after play. While a video file is missing, PLAY now also runs the captions on a stand-in clock (times are placeholders) so their look and wording can be reviewed. · Claude
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).
