@@ -41,6 +41,7 @@ window.lomdaState = {
    HOOKS['q7'] = { resolved: function (screen) { screen.querySelector('.teacher').hidden = false; } };
 */
 const HOOKS = {};
+HOOKS['q8'] = { resolved: function (s) { s.classList.add('q-final'); } };       // the picture gives way to the long feedback
 HOOKS['q1'] = { leave: function () { readerStop(); } };      // a reading never keeps playing after the learner leaves
 
 /* ---------------- Small helpers ---------------- */
@@ -596,6 +597,7 @@ function onVideoEnded(n) {
   if (vs && vs.getAttribute('data-type') === 'question' && !screenResolved(vs)) return;   // the video belongs to the feedback: only after the answer
   window.lomdaState.DONE[n] = true;
   revealForwardNav(n);
+  if (vs) vs.querySelectorAll('[data-after-video]').forEach(function (b) { b.classList.remove('hidden'); });   // the "סיימתי" button
 }
 
 /* ===================================================================

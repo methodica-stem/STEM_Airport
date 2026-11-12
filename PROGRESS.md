@@ -3,7 +3,7 @@
 Claude keeps this file up to date. Every session starts by reading it and ends
 by updating it, so work can stop and resume at any point.
 
-**Now:** Phase 4 · screens 1–15 built (12–13 done 2026-11-12); remaining: 16 (story-daily), 17 and 18 (typed-answer questions q7, q8) and 19 (finish). Waiting for the developer's approval of what is built and the screen-map OK
+**Now:** Phase 4 · all 19 screens are built (screens 16–19 done 2026-11-12). Waiting for the developer's approval of the last batch and the screen map; then Phase 5 (videos, audio, narration) and Phase 6 (self-QA, translation prep)
 **Waiting on you:** look at the screenshots of screens 1–10 and say "fine" or what to change; confirm the screen map (open since Phase 1)
 **Waiting on others:** content team — the 24 questions in `open-questions.md` (not sent yet)
 
@@ -22,7 +22,7 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - [x] 2 · Design reference — PSD inventory, frames mapped to screens (checked against the text layers), mockups for the overlay (12 files in `_design-reference/mockups/`), colour tokens set (2026-11-11)
 - [x] 3 · ASSET_CHECKLIST.md written (2026-11-11; all 19 rows resolve in a dry run)
 - [x] 3 · ✋ Assets exported and checked (check_assets.py: 23 files, 0 errors, 0 warnings); developer approved the contact sheet of batch 1 (2026-11-11); batch 2 (flags, airplane, suitcase) looked right on the sheet
-- [ ] 4 · Screens built (tick per batch below) — batch A, screens 1–5, and batch B, screens 6–10, built 2026-11-11
+- [x] 4 · Screens built (all 19, batches A–D) — batch A, screens 1–5, and batch B, screens 6–10, built 2026-11-11
 - [ ] 5 · Applets built and signed off; videos and audio in
 - [ ] 6 · Self-QA passed (qa_check.py 0 errors, walk-through done)
 - [ ] 7 · Translation export done (both sweeps pass), ASSET_LOCALIZATION.md written
@@ -46,10 +46,10 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 | 13 | video-chart | ✔ | ✔ | ☐ |
 | 14 | q6a | ✔ | ✔ | ☐ |
 | 15 | q6b | ✔ | ✔ | ☐ |
-| 16 | story-daily | skeleton | ☐ | ☐ |
-| 17 | q7 | skeleton | ☐ | ☐ |
-| 18 | q8 | skeleton | ☐ | ☐ |
-| 19 | finish | skeleton | ☐ | ☐ |
+| 16 | story-daily | ✔ | ✔ | ☐ |
+| 17 | q7 | ✔ | ✔ | ☐ |
+| 18 | q8 | ✔ | ✔ | ☐ |
+| 19 | finish | ✔ | ✔ | ☐ |
 
 ## Decisions
 - 2026-11-11 · Version check storyboard ↔ design: same 8 questions, same numbering (1, 2, 3, 4א/ב, 5, 6א/ב, 7, 8 = the 10 PSD frames). Stems differ only in small wording (e.g. Q1: design "הקשיבו להקראה ובחרו את הסרטון שבו הוא הקריא נכון", storyboard "הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון"). The storyboard is the language-edited one, so learner text comes from it and looks from the PSD. Build goes ahead. · Claude
@@ -85,6 +85,8 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 - 2026-11-11 · Applet fixes after the developer's review: the number shown while drawing sits above the drag handle and, for a tall column, moves above the top of the graph (inside the frame); the dashed drawing frame is wider and reaches above the graph, so the number is never cut off, and the number is a little smaller (29 px); in the solution the right number (green) and the learner's number (red) are on white plates with a coloured frame, so they read on any background, and they never touch each other. · developer's request, applied by Claude
 
 - 2026-11-12 · Screens 12–13: 12 is the animated still of the team round the table (the script's own picture; optional variant B of SCENE_IMAGES_BRIEF.md still not made) with the one-row park-drones bubble; 13 is the chart video with its poster (the missing poster was wired), the three captions as written, and the arrow after play. While a video file is missing, PLAY now also runs the captions on a stand-in clock (times are placeholders) so their look and wording can be reviewed. · Claude
+
+- 2026-11-12 · Batch D (screens 16–19): 16 has the full-width two-row bubble (like 10, so the mother's face stays free). q7: the airplane at the foot of the panel on the left, a large answer box with its unit ("טיסות."), feedback in the band. q8: as in the design's answer slide, the suitcase picture is in a left column that the long feedback takes over once the answer is final (the picture hides, `HOOKS['q8']`); the feedback has four steps kept together; the retry box is in the band. Typed answers: digits only (commas are ignored), q8 takes 6 digits. 19: the closing video (poster, the two captions as written, stage direction included until the content team answers open question 8), the "סיימתי" button (the chalkboard button, bottom left) appears when the video ends, then the score pop-up as in slide 42 (white card, black X at the upper right, 54/80/40 px text) and the house dark return screen. All scoring is all-or-nothing per question (12.5 each; 6.25 per part). · Claude
 
 ## Open items
 - 24 questions to the content team (`open-questions.md`), not sent yet. The ones that change the build: Q1 audio or video and the missing help hint (12, 13); the partial result and its wording (3); the narration button (10); the scoring/"בוצע בהצלחה" report (1).

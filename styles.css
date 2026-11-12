@@ -1044,3 +1044,37 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 #feedback-popup.fb-q6a.correct, #feedback-popup.fb-q6a.wrong2, #feedback-popup.fb-q6b.correct, #feedback-popup.fb-q6b.wrong2 { left: 109px; bottom: 148px; width: 640px; max-width: none; padding-top: 12px; padding-bottom: 12px; }
 #feedback-popup.fb-q6a.correct .fb-body p, #feedback-popup.fb-q6a.wrong2 .fb-body p, #feedback-popup.fb-q6b.correct .fb-body p, #feedback-popup.fb-q6b.wrong2 .fb-body p { font-size: 36px; margin-bottom: 2px; }
 
+/* ---------- 3e. Screens 16-19 ---------- */
+.q-answer-line { display: flex; align-items: center; gap: 18px; margin: 10px 0 0; font-size: var(--text-size); font-weight: 800; }
+.q-in { width: 260px; height: 96px; font-size: 52px; }
+.q-pic { position: absolute; display: block; pointer-events: none; user-select: none; }
+
+/* ---- 17 · q7: the answer under the text, the airplane at the foot of the panel, on the left ---- */
+[data-sid="q7"] .q-pic { left: 60px; bottom: 175px; width: 700px; height: auto; }
+#feedback-popup.fb-q7.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q7.correct, #feedback-popup.fb-q7.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
+
+/* ---- 18 · q8: the suitcase in a left column that the long feedback takes over once the answer is final ---- */
+[data-sid="q8"] .q-title, [data-sid="q8"] .q-body, [data-sid="q8"] .q-instruction, [data-sid="q8"] .q-answer-line { margin-left: 540px; }
+[data-sid="q8"] .q-body { margin-bottom: 8px; }
+[data-sid="q8"] .q-pic { left: 60px; bottom: 175px; width: 480px; height: auto; }
+[data-sid="q8"].q-final .q-pic { visibility: hidden; }
+#feedback-popup.fb-q8.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
+#feedback-popup.fb-q8.correct, #feedback-popup.fb-q8.wrong2 { left: 109px; bottom: 150px; width: 520px; max-width: none; padding: 14px 24px; }
+#feedback-popup.fb-q8.correct .fb-body p, #feedback-popup.fb-q8.wrong2 .fb-body p { font-size: 34px; margin-bottom: 2px; line-height: 1.25; }
+#feedback-popup.fb-q8.correct .fb-title, #feedback-popup.fb-q8.wrong2 .fb-title { font-size: 44px; }
+.fb-step { margin-bottom: 10px; }
+
+/* ---- 19 · finish: the closing video; "סיימתי" appears at its end, then the score pop-up (slide 42) ---- */
+[data-sid="finish"] .finish-btn {
+  left: 71px; right: auto; bottom: 62px; width: 230px; height: 140px; min-width: 0; padding: 0; border: none; border-radius: 0;
+  background: url('assets/images/ui-check.png') center / 100% 100% no-repeat; color: #fff; font-size: 44px; font-weight: 800; filter: var(--btn-shadow);
+}
+.final-score-card { width: 880px; padding: 64px 60px 56px; background: #fff; border: 5px solid #000; border-radius: 64px; color: #000; }
+.final-score-card h1 { font-size: 54px; }
+.final-score-value { font-size: 80px; }
+.final-score-hint { font-size: 40px; }
+.final-score-close { left: auto; right: 34px; top: 30px; width: 60px; height: 60px; border: none; background: none; box-shadow: none; }
+.final-score-close::before, .final-score-close::after { background: #000; width: 46px; height: 7px; }
+
+[data-sid="story-daily"] .narration-banner { width: 1920px; padding: 30px 36px 30px 40px; border-radius: 0 0 0 64px; }
