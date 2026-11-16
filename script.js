@@ -247,6 +247,16 @@ function showFeedback(type, cfg, unit) {
   popup.className = 'show ' + type + (s ? ' fb-' + sidOf(s) : '') +
     (isPart(unit) ? ' fb-' + sidOf(s) + '-p' + unit.getAttribute('data-part') : '') +
     ((isPart(unit) || (s && s.hasAttribute('data-feedback-close'))) && type !== 'retry' && type !== 'retryPartial' ? ' has-close' : '');
+  // "התשובה שלי" / "התשובה הנכונה": after a final wrong or partly right answer whose right answer REPLACES the learner's (typed
+  // answers, an ordering question), the right answer shows first and this button swaps to the learner's own answer and back.
+  const mineBtn = document.getElementById('fb-mine');
+  const withMine = !!unit && (type === 'wrong2' || type === 'partial') && myAnswerOn(unit);
+  mineBtn.hidden = !withMine;
+  if (withMine) {
+    if (qEnsure(unit).view === 'mine') answerView(unit, 'right');
+    mineBtn.textContent = uiText('answer-mine');
+    mineBtn.setAttribute('aria-pressed', 'false');
+  }
   const titleEl = document.getElementById('fb-title');
   titleEl.textContent = (cfg && cfg.title) || '';
   if (cfg && cfg.titleEl) {                       // keep inline parts of the title (a red outcome, a white rest)
@@ -271,6 +281,58 @@ function hideFeedback() {
   const popup = document.getElementById('feedback-popup');
   if (popup.classList.contains('show')) { popup.classList.remove('show'); returnOverlayFocus(); }
 }
+
+/* "התשובה שלי" / "התשובה הנכונה". Kept at the final check (st.mine, st.marks): typed answers (the boxes show the right number
+   afterwards) and an ordering question with data-dnd-final="reveal" (the right order replaces the learner's). A question whose
+   final state already shows the learner's answer next to the right one (compare, whole, single choice, the applets) has no button. */
+function myAnswerOn(u) {
+  const st = qEnsure(u), cfg = qConfig(u);
+  if (!st.done || st.outcome === 'correct' || !st.mine) return false;
+  const s = unitScreen(u);
+  if (cfg.kind === 'input') return s.getAttribute('data-grade') !== 'hook';
+  return cfg.kind === 'dnd' && s.getAttribute('data-dnd-final') === 'reveal';
+}
+function answerTake(u) {
+  const st = qEnsure(u), cfg = qConfig(u);
+  if (cfg.kind === 'input') {
+    const boxes = Array.prototype.slice.call(u.querySelectorAll('.q-input'));
+    st.mine = boxes.map(function (qi) { return Array.prototype.map.call(qi.querySelectorAll('.q-in'), function (i) { return i.value; }); });
+    st.marks = boxes.map(inputRight);
+  } else if (cfg.kind === 'dnd') {
+    st.mine = Array.prototype.map.call(u.querySelectorAll('.dnd-slot'), function (sl) {
+      const c = sl.querySelector('.dnd-chip'); return c ? c.getAttribute('data-chip') : '';
+    });
+  }
+}
+function answerView(u, which) {
+  const st = qEnsure(u), cfg = qConfig(u), mine = which === 'mine';
+  st.view = which;
+  if (cfg.kind === 'input') {
+    u.querySelectorAll('.q-input').forEach(function (qi, k) {
+      const ins = qi.querySelectorAll('.q-in');
+      if (mine) ins.forEach(function (i, j) { i.value = st.mine[k][j]; });
+      else {
+        const ans = parseValue(qi.getAttribute('data-answer'));
+        const num = qi.querySelector('[data-frac="num"]'), den = qi.querySelector('[data-frac="den"]');
+        if (ans && num && den) { num.value = ans[0]; den.value = ans[1]; }
+        else if (ans && ins[0]) ins[0].value = ans[0];
+      }
+      qi.classList.toggle('revealed', !mine);
+      qi.classList.toggle('correct', mine && st.marks[k]);
+      qi.classList.toggle('wrong', mine && !st.marks[k]);
+    });
+  } else if (cfg.kind === 'dnd') {
+    const s = unitScreen(u);
+    dndFlip(s, function () { dndArrange(s, mine ? st.mine : null); });
+  }
+  const btn = document.getElementById('fb-mine');
+  btn.textContent = uiText(mine ? 'answer-right' : 'answer-mine');
+  btn.setAttribute('aria-pressed', String(mine));
+}
+document.getElementById('fb-mine').addEventListener('click', function () {
+  const s = screenEl(currentScreen), u = s && qUnits(s)[0];
+  if (u && myAnswerOn(u)) answerView(u, qEnsure(u).view === 'mine' ? 'right' : 'mine');
+});
 
 /* Feedback text is written in the screen itself:
      <div class="fb-src" hidden>
@@ -937,6 +999,7 @@ function checkAnswer(u) {
   // (a question without one falls back to wrong2, as before).
   const partialKind = cfg.kind === 'multi' || cfg.kind === 'dnd';
   if (g !== 'correct') outcome = (partialKind && fb.partial && g !== 'wrong') ? 'partial' : 'wrong2';
+  if (outcome !== 'correct') answerTake(u);          // the learner's own answer, for "התשובה שלי"
   st.done = true;
   st.outcome = outcome;
   recordScore(cfg.key, outcome === 'correct' ? cfg.weight : 0);
@@ -954,6 +1017,7 @@ function checkAnswer(u) {
    typed answer that was wrong twice shows the right one (green); one graded
    by a hook has many right answers, so it is only marked wrong. */
 function renderFinal(u, cfg, st, justChecked) {
+  st.view = 'right';
   u.querySelectorAll('textarea[data-min-chars]').forEach(function (t) { t.disabled = true; });   // the explanation is final with the answer
   resetFreeHint(u);
   if (cfg.kind === 'applet') {
@@ -1267,6 +1331,19 @@ function dndLock(s) {
   s.classList.add('dnd-locked');
   s.querySelectorAll('.dnd-chip').forEach(function (c) { c.classList.add('locked'); c.classList.remove('picked'); });
 }
+/* Put the given chips (ids, one per slot) back in the slots: the learner's own order, for "התשובה שלי". With no ids, the right ones. */
+function dndArrange(s, ids) {
+  if (!ids) { dndRevealCorrect(s); return; }
+  const pool = document.createDocumentFragment();
+  s.querySelectorAll('.dnd-chip').forEach(function (c) { pool.appendChild(c); });
+  s.querySelectorAll('.dnd-slot').forEach(function (sl, i) {
+    const c = ids[i] && pool.querySelector('.dnd-chip[data-chip="' + ids[i] + '"]');
+    if (c) sl.appendChild(c);
+    sl.classList.toggle('filled', !!c);
+  });
+  const bank = dndBank(s);
+  Array.prototype.slice.call(pool.children).forEach(function (c) { (c._home && c._home.classList.contains('chip-cell') ? c._home : (bank || c._home)).appendChild(c); });
+}
 /* Put the right chip in every slot. A slot may accept several chips; each
    chip is used once. */
 function dndRevealCorrect(s) {
@@ -1493,7 +1570,29 @@ function openPopup(btn) {
   p._opener = btn;
   p.hidden = false;
   p.classList.add('show');
+  tightenPopup(p);
   openOverlayFocus(p.querySelector('.popup-close') || p);
+}
+/* A help or information panel wraps around its text: the text is balanced (even lines, no orphan word, CSS text-wrap: balance),
+   which can leave the panel wider than the lines are, so the panel is set to the widest line plus its padding. */
+function tightenPopup(p) {
+  const panel = p.querySelector(':scope > .popup-panel');
+  if (!panel || !p.classList.contains('popup-by-btn')) return;
+  panel.style.width = '';
+  const k = appScale();
+  let left = Infinity, right = -Infinity;
+  panel.querySelectorAll('p').forEach(function (para) {
+    const r = document.createRange();
+    r.selectNodeContents(para);
+    Array.prototype.forEach.call(r.getClientRects(), function (b) {
+      if (b.width < 1) return;
+      left = Math.min(left, b.left); right = Math.max(right, b.right);
+    });
+  });
+  if (!isFinite(left)) return;
+  const cs = getComputedStyle(panel);
+  const extra = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight) + parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+  panel.style.width = Math.ceil((right - left) / k + (cs.boxSizing === 'border-box' ? extra : 0) + 4) + 'px';
 }
 /* how: 'x' (its close button), 'esc' (Escape / backdrop), 'nav' (leaving the screen) */
 function closePopup(p, how) {
