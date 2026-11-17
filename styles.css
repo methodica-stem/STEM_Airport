@@ -1145,7 +1145,7 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 /* ---- 18 · q8: the suitcase in a left column that the long feedback takes over once the answer is final ---- */
 [data-sid="q8"] .q-title, [data-sid="q8"] .q-body, [data-sid="q8"] .q-instruction, [data-sid="q8"] .q-answer-line { margin-left: 540px; }
 [data-sid="q8"] .q-body { margin-bottom: 8px; }
-[data-sid="q8"] .q-pic { left: 60px; bottom: 175px; width: 480px; height: auto; }
+[data-sid="q8"] .q-pic { left: 60px; top: 300px; width: 480px; height: auto; }   /* level with the middle of the text (167-744), not down by the answer box; it was bottom 175 (y 568-888) */
 [data-sid="q8"].q-final .q-pic { visibility: hidden; }
 #feedback-popup.fb-q8.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
 #feedback-popup.fb-q8.correct, #feedback-popup.fb-q8.wrong2 { left: 109px; bottom: 150px; width: 520px; max-width: none; padding: 14px 24px; }
