@@ -1140,7 +1140,7 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 /* ---- 17 · q7: the answer under the text, the airplane at the foot of the panel, on the left ---- */
 [data-sid="q7"] .q-pic { left: 60px; bottom: 175px; width: 700px; height: auto; }
 #feedback-popup.fb-q7.retry { left: 480px; bottom: 40px; width: 1200px; max-width: none; }
-#feedback-popup.fb-q7.correct, #feedback-popup.fb-q7.wrong2 { left: 200px; bottom: 28px; width: 1500px; max-width: none; }
+#feedback-popup.fb-q7.correct, #feedback-popup.fb-q7.wrong2 { left: auto; right: 220px; bottom: 28px; width: fit-content; max-width: 1500px; }   /* as wide as its longest line (914 px + padding), same right edge as before, so "התשובה שלי" sits close to the text */
 
 /* ---- 18 · q8: the suitcase in a left column that the long feedback takes over once the answer is final ---- */
 [data-sid="q8"] .q-title, [data-sid="q8"] .q-body, [data-sid="q8"] .q-instruction, [data-sid="q8"] .q-answer-line { margin-left: 540px; }
