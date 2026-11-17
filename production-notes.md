@@ -28,7 +28,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Back arrow returns to the previous slide (note on the slide).
 
 ## Screen 3 — q1 (slides 10–11)
-- **Built 2026-11-17:** the four reading cards play `q1_matan_narration_<city>.mp3`. The feedback lines' own sound symbols have no recordings yet.
+- **Built 2026-11-18:** the cards play Tokyo (right), Paris and Dubai (wrong) as in the script; Frankfurt's wrong reading is still missing (`q1_matan_frankfurt_wrong.mp3`, silent for now); the feedback lines have sound buttons that play the four right readings (`q1_matan_narration_<city>.mp3`); a reading on a card is captioned while it plays, the feedback is not.
 - Four cards, one per city, each with a play symbol (audio): דובאי 95,200,060 · פרנקפורט 63,277,005 · טוקיו 91,679,814 · פריז 72,014,271. The learner chooses the card whose reading is right.
 - Every reading needs large, clear captions (the video on screen may be enlarged if needed). What is said in each reading:
   - דובאי — תשעים וחמישה מיליון, אלפיים ושישים נוסעים

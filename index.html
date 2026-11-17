@@ -62,10 +62,9 @@
 
 <!-- ================= SCREEN 2 — למחרת במשרד של אמא (שקף 9) ================= -->
 <section class="screen" data-screen="2" data-sid="story-office" data-type="explain" tabindex="-1">
-  <div class="scene" aria-hidden="true">
+  <div class="scene scene-clip" aria-hidden="true">
     <img class="screen-bg" src="assets/images/story-office-bg.jpg" alt="">
-    <div class="fx fx-day"></div>
-    <div class="fx fx-glow fx-wall"></div>
+    <video class="scene-vid" muted playsinline preload="auto" disablepictureinpicture src="assets/videos/screen2_animated.mp4"></video>
   </div>
   <div class="narration-banner">
     <div class="nb-text"><p>למחרת הגיע מתן למשרד של אימו.</p><p>על השולחן חיכו לה נתוני הנוסעים לקראת הישיבה הקרובה.</p><p>מתן הסתקרן והציץ במספרים.</p></div>
@@ -86,27 +85,29 @@
     <p class="q-instruction">הקשיבו להקראות ובחרו את ההקראה שבה מתן קרא נכון את מספר הנוסעים.</p>
     <div class="q-answers" role="radiogroup" aria-label="אפשרויות תשובה">
       <!-- Each card is one of the four skyline cards of the script (the sound bar is painted in the picture; the reading is the card's <audio>, q1_matan_narration_<city>.mp3 — open question 12 still asks whether it should be video). The city and number are live text in the white band. -->
-      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-paris.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_narration_paris.mp3"></audio></div>
-      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-tokyo.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_narration_tokyo.mp3"></audio></div>
-      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-frankfurt.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_narration_frankfurt.mp3"></audio></div>
-      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-dubai.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_narration_dubai.mp3"></audio></div>
+      <div class="q-opt reader-card" data-id="1" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-paris.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פריז:</span> <span class="card-num">72,014,271</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_paris_wrong.mp3"></audio><span class="reader-cap" hidden>פריז: שבעים ושניים מיליון, מאה וארבעים אלף ומאתיים שבעים ואחד.</span></div>
+      <div class="q-opt reader-card" data-id="2" data-correct role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-tokyo.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">טוקיו:</span> <span class="card-num">91,679,814</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_narration_tokyo.mp3"></audio><span class="reader-cap" hidden>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</span></div>
+      <div class="q-opt reader-card" data-id="3" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-frankfurt.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">פרנקפורט:</span> <span class="card-num">63,277,005</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" data-pending-asset="q1_matan_frankfurt_wrong.mp3"></audio><span class="reader-cap" hidden>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמש מאות נוסעים.</span></div>
+      <div class="q-opt reader-card" data-id="4" role="radio" tabindex="0" aria-checked="false"><img class="reader-pic" src="assets/images/q1-card-dubai.png" alt=""><span class="q-mark"></span><span class="reader-label"><span class="card-city">דובאי:</span> <span class="card-num">95,200,060</span></span><button class="reader-play" type="button" aria-label="השמעה" aria-pressed="false"><span class="rp-ico" aria-hidden="true"></span><span class="rp-wave" aria-hidden="true"><i style="--h:0.22"></i><i style="--h:0.3"></i><i style="--h:0.42"></i><i style="--h:0.28"></i><i style="--h:0.55"></i><i style="--h:0.4"></i><i style="--h:0.7"></i><i style="--h:0.5"></i><i style="--h:0.9"></i><i style="--h:0.62"></i><i style="--h:1"></i><i style="--h:0.74"></i><i style="--h:0.46"></i><i style="--h:0.82"></i><i style="--h:0.58"></i><i style="--h:0.36"></i><i style="--h:0.66"></i><i style="--h:0.94"></i><i style="--h:0.7"></i><i style="--h:0.44"></i><i style="--h:0.6"></i><i style="--h:0.32"></i><i style="--h:0.5"></i><i style="--h:0.26"></i><i style="--h:0.38"></i><i style="--h:0.2"></i></span></button><audio class="reader-audio" preload="none" src="assets/audio/q1_matan_dubai_wrong.mp3"></audio><span class="reader-cap" hidden>דובאי: תשעים וחמישה מיליון, אלפיים ושישים נוסעים.</span></div>
     </div>
   </div>
+  <!-- Captions of the readings (accessibility): the text of the reading that is playing, under the cards; script.js (reader click). The feedback needs none: its lines are written out. -->
+  <div class="q-caption" hidden><p></p></div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
     <div data-fb="retry"><p class="fb-t">זו אינה התשובה, נסו שוב.</p><p>תוכלו ללחוץ על כפתור העזרה כדי לקבל רמז.</p></div>
     <div data-fb="correct"><p class="fb-t">צדקת!</p>
       <p>לחצו על סמל השמע לצד כל מספר כדי לשמוע איך קוראים נכון את המספרים:</p>
-      <p>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</p>
-      <p>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</p>
-      <p>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</p>
-      <p>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</p></div>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_paris.mp3" aria-label="השמעת ההקראה הנכונה: פריז"></button><span>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_tokyo.mp3" aria-label="השמעת ההקראה הנכונה: טוקיו"></button><span>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_frankfurt.mp3" aria-label="השמעת ההקראה הנכונה: פרנקפורט"></button><span>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_dubai.mp3" aria-label="השמעת ההקראה הנכונה: דובאי"></button><span>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</span></p></div>
     <div data-fb="wrong2"><p class="fb-t">זו טעות</p>
       <p>לחצו על סמל השמע לצד כל מספר כדי לשמוע איך קוראים נכון את המספרים:</p>
-      <p>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</p>
-      <p>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</p>
-      <p>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</p>
-      <p>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</p></div>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_paris.mp3" aria-label="השמעת ההקראה הנכונה: פריז"></button><span>פריז: שבעים ושניים מיליון, ארבעה עשר אלף, מאתיים שבעים ואחד נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_tokyo.mp3" aria-label="השמעת ההקראה הנכונה: טוקיו"></button><span>טוקיו: תשעים ואחד מיליון, שש מאות שבעים ותשעה אלף, שמונה מאות וארבעה עשר נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_frankfurt.mp3" aria-label="השמעת ההקראה הנכונה: פרנקפורט"></button><span>פרנקפורט: שישים ושלושה מיליון, מאתיים שבעים ושבעה אלף וחמישה נוסעים.</span></p>
+      <p class="fb-read"><button class="fb-speak" type="button" aria-pressed="false" data-say="assets/audio/q1_matan_narration_dubai.mp3" aria-label="השמעת ההקראה הנכונה: דובאי"></button><span>דובאי: תשעים וחמישה מיליון, מאתיים אלף ושישים נוסעים.</span></p></div>
   </div>
   <button class="nav-btn nav-prev" type="button" aria-label="חזרה"></button>
   <button class="nav-btn nav-next hidden" type="button" aria-label="המשך"></button>
@@ -120,7 +121,7 @@
     </video>
     <!-- Captions: AIRPORT_PART2_V2.srt (cue start and end, as in the file). -->
     <div class="vcap-src" data-clear-after="27.72" hidden>
-      <span data-t="0.18" data-end="3.32">היום אני מכינה דוח שמשווה בין השדה שלנו</span>
+      <span data-t="0.18" data-end="3.32">היום אני מכינה דו"ח שמשווה בין השדה שלנו</span>
       <span data-t="3.32" data-end="5.29">לשדות תעופה אחרים בעולם.</span>
       <span data-t="5.29" data-end="7.82">בשביל ההשוואה, אנחנו משתמשים באומדן</span>
       <span data-t="7.82" data-end="11.48">של מספר הנוסעים בשדות תעופה שונים בעולם.</span>
@@ -180,7 +181,7 @@
 <section class="screen" data-screen="6" data-sid="story-data" data-type="explain" tabindex="-1">
   <div class="scene scene-clip" aria-hidden="true">
     <img class="screen-bg" src="assets/images/story-data-bg.jpg" alt="">
-    <video class="scene-vid" muted loop playsinline preload="auto" disablepictureinpicture src="assets/videos/screen6_animated.mp4"></video>
+    <video class="scene-vid" muted playsinline preload="auto" disablepictureinpicture src="assets/videos/screen6_animated.mp4"></video>
   </div>
   <div class="narration-banner">
     <div class="nb-text"><p>אמו של מתן סיפרה לו שיש בעיה קטנה עם הנתונים שהגיעו...</p><p>הם מבולגנים לגמרי!</p><p>אולי מתן יוכל לעזור לה לעשות בהם סדר?</p></div>
@@ -192,7 +193,7 @@
 </section>
 
 <!-- ================= SCREEN 7 — שאלה 3 — סידור שדות תעופה מהקטן לגדול (שקפים 18-19) ================= -->
-<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-dnd-mode="swap" data-dnd-final="reveal" data-weight="12.5" data-step="3" tabindex="-1">
+<section class="screen" data-screen="7" data-sid="q3" data-type="question" data-kind="dnd" data-dnd-mode="swap" data-dnd-final="compare" data-dnd-badges data-dnd-toggle data-weight="12.5" data-step="3" tabindex="-1">
   <img class="screen-bg" src="assets/images/bg-airport.jpg" alt="">
   <div class="q-overlay"></div>
   <button class="help-btn" type="button" data-popup="help-q3">עזרה</button>
@@ -244,7 +245,7 @@
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 4, סעיף א'</h2>
-    <p class="q-body">אחד הנתונים בדוח הוא המספר הכולל של הנוסעים שעברו בשדה התעופה בישראל בחודשים מרץ-אפריל. באותם חודשים, עברו בשדה התעופה כ-1,600,000 נוסעים שנכנסו לישראל וכ-1,800,000 נוסעים שיצאו ממנה. שימו לב, הנתונים מעוגלים למאות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q4a" aria-label="מידע"></button></p>
+    <p class="q-body"><span class="sent">אחד הנתונים בדו"ח הוא המספר הכולל של הנוסעים שעברו בשדה התעופה בישראל בחודשים מרץ-אפריל.</span><span class="sent">באותם חודשים, עברו בשדה התעופה כ-1,600,000 נוסעים שנכנסו לישראל וכ-1,800,000 נוסעים שיצאו ממנה.</span><span class="sent">שימו לב, הנתונים מעוגלים למאות אלפים. <button class="help-btn info-btn" type="button" data-popup="info-q4a" aria-label="מידע"></button></span></p>
     <div class="popup-src popup-by-btn" id="info-q4a" hidden>
       <p>ניתן לעגל מספרים לעשרות אלפים, מאות אלפים, מיליונים וכדומה, לפי הצורך.</p>
     </div>
@@ -290,7 +291,7 @@
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 4, סעיף ב'</h2>
-    <p class="q-body">הדוח מציג גם את ההפרש בין מספר הנוסעים היוצאים (1,800,000) למספר הנוסעים הנכנסים (1,600,000) משדה התעופה.</p>
+    <p class="q-body">הדו"ח מציג גם את ההפרש בין מספר הנוסעים היוצאים (1,800,000) למספר הנוסעים הנכנסים (1,600,000) משדה התעופה.</p>
     <p class="q-instruction">גררו את המספרים והפעולה המתאימים כדי ליצור תרגיל לחישוב ההפרש בין מספר הנוסעים היוצאים משדה התעופה למספר הנוסעים הנכנסים אליו.</p>
     <!-- Left to right: 1,800,000 - 1,600,000 = 200,000 (the order of the numbers matters here). -->
     <div class="eq-row" dir="ltr">
@@ -324,7 +325,7 @@
 <section class="screen" data-screen="10" data-sid="story-holiday" data-type="explain" tabindex="-1">
   <div class="scene scene-clip" aria-hidden="true">
     <img class="screen-bg" src="assets/images/story-holiday-bg.jpg" alt="">
-    <video class="scene-vid" muted loop playsinline preload="auto" disablepictureinpicture src="assets/videos/screen10_animated.mp4"></video>
+    <video class="scene-vid" muted playsinline preload="auto" disablepictureinpicture src="assets/videos/screen10_animated.mp4"></video>
   </div>
   <div class="narration-banner">
     <div class="nb-text"><p>בזמן שעברו על הנתונים, מתן נזכר שגם המשפחה שלהם טסה לחופשה בקיץ שעבר!</p><p>הוא רצה לדעת כמה מהנוסעים היו ילדים וכמה מבוגרים.</p><p>אמו הציעה לו לבדוק את הנתונים ולגלות בעצמו...</p></div>
@@ -350,10 +351,10 @@
     <p class="q-instruction">גררו לכל תיאור מילולי את התרגיל המתאים לחישוב האומדן.</p>
     <p class="q-body"><strong>שימו לב:</strong> יש שני תרגילים שאין להם תיאור מתאים.</p>
     <div class="dnd-cols">
-      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span><p class="dnd-caption">מספר הילדים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
-      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 2"></span><p class="dnd-caption">מספר המבוגרים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
-      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום ריק 3"></span><p class="dnd-caption">מספר הנוסעים שעברו בשדה התעופה <span class="nowrap">בחודשים יולי-אוגוסט</span></p></div>
-      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 4"></span><p class="dnd-caption">מספר המבוגרים שעברו בשדה התעופה בחודש אחד.</p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c2" role="button" tabindex="0" aria-label="מקום ריק 1"></span><p class="dnd-caption"><span class="cl">מספר הילדים</span><span class="cl">שעברו בשדה התעופה</span><span class="cl">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c5" role="button" tabindex="0" aria-label="מקום ריק 2"></span><p class="dnd-caption"><span class="cl">מספר המבוגרים</span><span class="cl">שעברו בשדה התעופה</span><span class="cl">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c4" role="button" tabindex="0" aria-label="מקום ריק 3"></span><p class="dnd-caption"><span class="cl">מספר הנוסעים</span><span class="cl">שעברו בשדה התעופה</span><span class="cl">בחודשים יולי-אוגוסט</span></p></div>
+      <div class="dnd-col" data-fixhost><span class="dnd-slot" data-accept="c6" role="button" tabindex="0" aria-label="מקום ריק 4"></span><p class="dnd-caption"><span class="cl">מספר המבוגרים</span><span class="cl">שעברו בשדה התעופה</span><span class="cl">בחודש אחד</span></p></div>
     </div>
     <div class="dnd-bank" aria-label="מחסן תרגילים">
       <span class="chip-cell" data-for="c1"><button class="dnd-chip" type="button" data-chip="c1" data-order="1">2 : 62 × 10,000 - 70,000</button></span>
@@ -383,7 +384,7 @@
     <div class="fx fx-glow fx-tablet-team"></div>
   </div>
   <div class="narration-banner">
-    <div class="nb-text"><p>אמא של מתן הציגה את הדו"ח לצוות שלה.</p></div>
+    <div class="nb-text"><p>אמא של מתן הציגה את הנתונים לצוות שלה.</p></div>
     <button class="narr-play" type="button" aria-label="הקראת הטקסט" aria-pressed="false"></button>
     <audio class="narr-audio" preload="none" src="assets/audio/screen12_narration.mp3"></audio>
   </div>
@@ -426,9 +427,9 @@
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 6, סעיף א'</h2>
-    <p class="q-body">הדוח הציג את הנתונים השנתיים (הנתונים מעוגלים למאות אלפים). בחודשים <strong>נובמבר-דצמבר</strong> עברו בשדה התעופה פי 2 יותר נוסעים מאשר בחודשים מאי-יוני.</p>
+    <p class="q-body">הדו"ח הציג את הנתונים השנתיים (הנתונים מעוגלים למאות אלפים). בחודשים <strong>נובמבר-דצמבר</strong> עברו בשדה התעופה פי 2 יותר נוסעים מאשר בחודשים מאי-יוני.</p>
     <p class="q-instruction">באמצעות העכבר גררו את עמודה מתאימה למספר הנוסעים בחודשים נובמבר-דצמבר.</p>
-    <div class="applet-frame"><iframe src="assets/app/graph.html?part=a&amp;v=6" title="דיאגרמת עמודות לסרטוט" scrolling="no"></iframe></div>
+    <div class="applet-frame"><iframe src="assets/app/graph.html?part=a&amp;v=7" title="דיאגרמת עמודות לסרטוט" scrolling="no"></iframe></div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
@@ -452,7 +453,7 @@
     <h2 class="q-title">שאלה מס' 6, סעיף ב'</h2>
     <p class="q-body">בחודשים ספטמבר-אוקטובר, עברו 1,400,000 נוסעים פחות מאשר בחודשים יולי-אוגוסט.</p>
     <p class="q-instruction">באמצעות גרירת העכבר, סרטטו עמודה מתאימה למספר הנוסעים בחודשים ספטמבר-אוקטובר.</p>
-    <div class="applet-frame"><iframe src="assets/app/graph.html?part=b&amp;v=6" title="דיאגרמת עמודות לסרטוט" scrolling="no"></iframe></div>
+    <div class="applet-frame"><iframe src="assets/app/graph.html?part=b&amp;v=7" title="דיאגרמת עמודות לסרטוט" scrolling="no"></iframe></div>
   </div>
   <button class="btn-check" type="button" disabled>צדקתי?</button>
   <div class="fb-src" hidden>
@@ -468,7 +469,7 @@
 <section class="screen" data-screen="16" data-sid="story-daily" data-type="explain" tabindex="-1">
   <div class="scene scene-clip" aria-hidden="true">
     <img class="screen-bg" src="assets/images/story-daily-bg.jpg" alt="">
-    <video class="scene-vid" muted loop playsinline preload="auto" disablepictureinpicture src="assets/videos/screen16_animated.mp4"></video>
+    <video class="scene-vid" muted playsinline preload="auto" disablepictureinpicture src="assets/videos/screen16_animated.mp4"></video>
   </div>
   <div class="narration-banner">
     <div class="nb-text"><p>אחרי שבדקו את הנתונים החודשיים, הצוות עבר לבדוק מה קורה בשדה התעופה ביום רגיל.</p><p>המטרה הייתה להבין איך כדאי לחלק את צוותי העבודה בין האזורים השונים בכל יום.</p></div>
@@ -489,7 +490,7 @@
   </div>
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 7</h2>
-    <p class="q-body">ביום מסוים מצאו שכמות הנוסעים הנכנסים לארץ היא כ-<strong>60,000</strong>, וכל מטוס מכיל בערך <strong>300</strong> נוסעים. כמה טיסות נחתו ביום אחד בשדה התעופה?</p>
+    <p class="q-body"><span class="sent">ביום מסוים מצאו שכמות הנוסעים הנכנסים לארץ היא כ-<strong>60,000</strong>, וכל מטוס מכיל בערך <strong>300</strong> נוסעים.</span><span class="sent">כמה טיסות נחתו ביום אחד בשדה התעופה?</span></p>
     <p class="q-instruction">חשבו את מספר הטיסות שנחתו והקלידו את התשובה:</p>
     <p class="q-answer-line"><span class="q-input" data-answer="200" data-match="value"><input class="q-in" inputmode="numeric" aria-label="מספר הטיסות"></span> טיסות.</p>
     <img class="q-pic" src="assets/images/q7-airplane.png" alt="">
@@ -515,7 +516,7 @@
   <div class="q-card">
     <h2 class="q-title">שאלה מס' 8</h2>
     <p class="q-body">ביום מסוים מצאו שכמות היוצאים מהארץ היא כ-<strong>75,000</strong> נוסעים.</p>
-    <p class="q-body"><span class="frac"><span>1</span><span>3</span></span> מהטיסות באותו יום הן ליעדים רחוקים, וכל נוסע בהן מגיע עם <strong>2 מזוודות</strong> נוסף על תיק היד. יתר הטיסות הן ליעדים קרובים, וכל נוסע בהן מגיע עם <strong>מזוודה אחת</strong> ותיק יד. את כל המזוודות שולחים לתא המטען, ואת תיקי היד כל הנוסעים נושאים עימם למטוס. כמה מזוודות מגיעות להטענה בתא המטען?</p>
+    <p class="q-body"><span class="sent"><span class="frac"><span>1</span><span>3</span></span> מהטיסות באותו יום הן ליעדים רחוקים, וכל נוסע בהן מגיע עם <strong>2 מזוודות</strong> נוסף על תיק היד.</span><span class="sent">יתר הטיסות הן ליעדים קרובים, וכל נוסע בהן מגיע עם <strong>מזוודה אחת</strong> ותיק יד.</span><span class="sent">את כל המזוודות שולחים לתא המטען, ואת תיקי היד כל הנוסעים נושאים עימם למטוס.</span><span class="sent">כמה מזוודות מגיעות להטענה בתא המטען?</span></p>
     <p class="q-instruction">חשבו את מספר המזוודות להטענה בתא המטען והקלידו את התשובה:</p>
     <p class="q-answer-line"><span class="q-input" data-answer="100000" data-match="value"><input class="q-in" inputmode="numeric" data-maxlen="6" aria-label="מספר המזוודות"></span> מזוודות.</p>
     <img class="q-pic" src="assets/images/q8-suitcase.png" alt="">

@@ -42,10 +42,11 @@ window.lomdaState = {
 */
 const HOOKS = {};
 HOOKS['q8'] = { resolved: function (s) { s.classList.add('q-final'); } };       // the picture gives way to the long feedback
-HOOKS['q1'] = { leave: function () { readerStop(); } };      // a reading never keeps playing after the learner leaves
+HOOKS['q1'] = { leave: function () { readerStop(); }, resolved: function (s) { s.classList.add('q-final'); } };   // after the final answer the cards' play buttons give way to the feedback's; a reading never keeps playing after the learner leaves
 
-// The three scenes that now have a generated loop (screens 6, 10, 16): the clip plays while the screen is shown.
-['story-data', 'story-holiday', 'story-daily'].forEach(function (sid) {
+// The four scenes with a generated clip (screens 2, 6, 10, 16): the clip plays ONCE when the screen opens and then stays on its
+// last frame (no loop, as the content team asked); it pauses when the learner leaves.
+['story-office', 'story-data', 'story-holiday', 'story-daily'].forEach(function (sid) {
   HOOKS[sid] = {
     enter: function (s) {
       const v = s.querySelector('.scene-vid');
@@ -317,6 +318,7 @@ document.addEventListener('click', function (e) {
   if (e.target.closest && e.target.closest('#feedback-popup .fb-close')) hideFeedback();
 });
 function hideFeedback() {
+  fbSayStop();
   const popup = document.getElementById('feedback-popup');
   if (popup.classList.contains('show')) { popup.classList.remove('show'); returnOverlayFocus(); }
 }
@@ -1350,7 +1352,7 @@ function dndCompareView(s, which, st) {
   const mine = which === 'mine', badges = s.hasAttribute('data-dnd-badges');
   s.classList.add('dnd-final');
   s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
-  dndArrange(s, mine && st.mine ? st.mine : null);
+  dndFlip(s, function () { dndArrange(s, mine && st.mine ? st.mine : null); });   // an ordering question (swap mode): the cards slide to their places
   s.querySelectorAll('.dnd-slot').forEach(function (sl) {
     const right = mine ? dndSlotRight(sl) : true;
     sl.classList.remove('correct', 'wrong');
@@ -1817,6 +1819,8 @@ document.addEventListener('DOMContentLoaded', function () {
 let readerPlaying = null, readerTimer = null;
 function readerStop() {
   clearTimeout(readerTimer);
+  fbSayStop();
+  const cap = document.querySelector('[data-sid="q1"] .q-caption'); if (cap) cap.hidden = true;     // the caption goes with the sound
   document.querySelectorAll('.reader-card.playing').forEach(function (c) {
     c.classList.remove('playing');
     const b = c.querySelector('.reader-play'); if (b) b.setAttribute('aria-pressed', 'false');
@@ -1835,6 +1839,8 @@ document.addEventListener('click', function (e) {
   readerPlaying = card;
   card.classList.add('playing');
   btn.setAttribute('aria-pressed', 'true');
+  const capSrc = card.querySelector('.reader-cap'), capBox = screenOf(card).querySelector('.q-caption');   // caption of the reading (accessibility)
+  if (capSrc && capBox) { capBox.querySelector('p').textContent = capSrc.textContent; capBox.hidden = false; }
   const a = card.querySelector('audio');
   if (a && a.getAttribute('src')) {
     a.onended = function () { if (readerPlaying === card) readerStop(); };
@@ -1846,6 +1852,27 @@ document.addEventListener('click', function (e) {
   }
 });
 document.addEventListener('lomda:end', readerStop);
+
+/* The feedback of question 1 lists the four RIGHT readings, each with a sound button (data-say = the recording). One sound at a time:
+   a reading of a card, or one of these. The feedback needs no captions: the line beside the button is the text. */
+let fbSayAudio = null, fbSayBtn = null;
+function fbSayStop() {
+  if (fbSayAudio) { try { fbSayAudio.pause(); } catch (e) {} }
+  if (fbSayBtn) { fbSayBtn.classList.remove('playing'); fbSayBtn.setAttribute('aria-pressed', 'false'); }
+  fbSayAudio = fbSayBtn = null;
+}
+document.addEventListener('click', function (e) {
+  const b = e.target.closest && e.target.closest('.fb-speak');
+  if (!b) return;
+  const was = b === fbSayBtn;
+  readerStop();                                   // also stops the one that is playing here
+  if (was) return;
+  const a = new Audio(b.getAttribute('data-say'));
+  fbSayAudio = a; fbSayBtn = b;
+  b.classList.add('playing'); b.setAttribute('aria-pressed', 'true');
+  a.onended = function () { if (fbSayBtn === b) fbSayStop(); };
+  a.play().catch(function () { if (fbSayBtn === b) fbSayStop(); });
+});
 
 
 /* ===================================================================
