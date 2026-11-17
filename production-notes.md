@@ -23,7 +23,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - At the end of the video the arrow blinks (slide 8 note).
 
 ## Screen 2 — story-office (slide 9)
-- **Built 2026-11-17:** the listen button in the bubble plays `screen2_narration.mp3` (no sound starts by itself).
+- **Built 2026-11-17:** the listen button in the bubble plays `screen2_narration.mp3` (since the later 2026-11-17 decision the voice starts by itself and the arrow waits for its end).
 - Narration of the text ("קריינות לטקסט").
 - Back arrow returns to the previous slide (note on the slide).
 

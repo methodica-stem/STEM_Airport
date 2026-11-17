@@ -241,11 +241,35 @@ function resetScreenState(n) {
 const arrowTimers = {};
 function enterExplain(s, n) {
   if (!s.querySelector('.nav-next')) return;
+  const voice = s.querySelector('audio.narr-audio');
+  if (voice && voice.getAttribute('src')) { narrationEnter(s, n, voice); return; }   // a narrated screen: the voice gates the arrow
   const delay = parseFloat(s.getAttribute('data-arrow-delay') || '0');
   if (!delay || window.lomdaState.DONE[n]) { revealForwardNav(n); return; }
   hideForwardNav(n);
   clearTimeout(arrowTimers[n]);
   arrowTimers[n] = setTimeout(function () { window.lomdaState.DONE[n] = true; revealForwardNav(n); }, delay * 1000);
+}
+
+/* A narrated picture screen (2, 6, 10, 12, 16), as in the Recycle lomda: the voice starts by itself when the screen opens, and the
+   forward arrow appears only when the recording has ended. Coming back to a screen that was heard to the end: the arrow is already
+   there and nothing plays by itself (the round button replays). If the browser blocks the sound, the arrow opens after the length of
+   the recording, so nobody is stuck; a recording that cannot be loaded opens it at once. */
+function narrationEnter(s, n, a) {
+  const open = function () { window.lomdaState.DONE[n] = true; clearTimeout(arrowTimers[n]); revealForwardNav(n); };
+  if (!a._wired) {
+    a._wired = true;
+    a.addEventListener('ended', open);
+    a.addEventListener('error', open);
+  }
+  clearTimeout(arrowTimers[n]);
+  if (window.lomdaState.DONE[n]) { revealForwardNav(n); return; }
+  hideForwardNav(n);
+  try { a.pause(); a.currentTime = 0; } catch (e) {}
+  const started = a.play();
+  if (started && started.catch) started.catch(function () {
+    clearTimeout(arrowTimers[n]);
+    arrowTimers[n] = setTimeout(open, (isFinite(a.duration) && a.duration > 0 ? a.duration : 12) * 1000);
+  });
 }
 
 /* ===================================================================
@@ -1787,7 +1811,8 @@ document.addEventListener('lomda:end', readerStop);
 
 /* ===================================================================
    Narration of the picture screens (2, 6, 10, 12, 16): the button at the end of the bubble plays that screen's
-   recording and lights while it plays; pressed again it stops. No sound starts by itself. A screen whose recording
+   recording and lights while it plays; pressed again it stops. The voice starts by itself on the first visit and the arrow waits for
+   its end (narrationEnter, with the explain screens above). A screen whose recording
    is still missing (<audio data-pending-asset>, no src) lights the button for 4 s, so the look can be reviewed.
    Leaving the screen pauses the audio (pauseAllMedia), and the media events below put the button back.
    =================================================================== */

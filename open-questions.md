@@ -39,7 +39,7 @@ Slide 6: "(צוחקת)". Slide 41: "(אמא ומתן צוחקים ביניהם, 
 The note quotes what the presenter says: "עונת הטיסות בשיאה!…". I put it as the first caption of the video. Is that right, or is the presenter silent on screen?
 
 **10 · Narration of the story screens (slides 9, 17, 24, 27, 35)**
-The notes say "קריינות לטקסט" / "הקראה של הטקסט". House rule: no sound plays on its own. *Suggestion:* a small "listen" button beside the text. Does the lomda need an auto-play instead? Who records the narration?
+The notes say "קריינות לטקסט" / "הקראה של הטקסט". *Answered by the developer 2026-11-17:* the narration plays by itself when the screen opens, the forward arrow appears when it ends, and the round button replays (as in the Recycle lomda). Built.
 
 **11 · The small animations are replaced by still pictures (slides 17, 24, 35)**
 The notes ask for "אנימציה קטנה (כמו תמונת לייב באייפון)". The script had 7 videos and now has 4, so these scenes are pictures with narration. We will use the lomda's repeating pictures and make slightly altered versions where a scene needs one (see `SCENE_IMAGES_BRIEF.md`). Please confirm that the animation notes are dropped.
