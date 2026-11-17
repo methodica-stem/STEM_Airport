@@ -566,6 +566,26 @@ function initVideo(wrap) {
   const fallbackPoster = video.getAttribute('data-poster');
   if (fallbackPoster) video.addEventListener('error', function () { video.setAttribute('poster', fallbackPoster); }, true);
 
+  // A note over a window of the video's time (data-show-from .. data-show-until, seconds), e.g. "the numbers are from 2025" on screen 1.
+  const credit = wrap.querySelector('.video-credit[data-show-until]');
+  if (credit) {
+    const from = parseFloat(credit.getAttribute('data-show-from')) || 0;
+    const until = parseFloat(credit.getAttribute('data-show-until')) || 0;
+    let shown = false;
+    const reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const syncCredit = function () {
+      const on = video.currentTime >= from && video.currentTime < until;
+      if (on === shown) return;
+      shown = on;
+      credit.classList.toggle('is-off', !on);                  // the state never depends on an animation finishing
+      credit.setAttribute('aria-hidden', String(!on));
+      if (credit.animate && !reduced) credit.animate(on ? [{ opacity: 0 }, { opacity: 1 }] : [{ opacity: 1 }, { opacity: 0 }], { duration: 800, easing: 'ease' });
+    };
+    video.addEventListener('timeupdate', syncCredit);
+    video.addEventListener('seeked', syncCredit);
+    syncCredit();
+  }
+
   video.addEventListener('timeupdate', function () {
     if (capEl && capText) {
       const t = video.currentTime;

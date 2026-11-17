@@ -757,11 +757,22 @@ button, input, select, textarea { font-family: inherit; }
 .narration-banner p { text-wrap: balance; }
 /* the video control bar stays clear of the two arrows */
 .vctrls { left: 200px; right: 200px; }
-/* the line under a video: "numbers are from 2025" */
+/* The note on screen 1, "numbers are from 2025": not a caption, so it does not look like one. It sits above the caption
+   zone (a caption is at most two rows, about 240 px from the bottom), in the accent blue with an information mark, and is
+   shown only inside a window of the video's time (data-show-from .. data-show-until: it fades in once the video has
+   played a second and fades out after 5 s on screen; script.js toggles .is-off and plays the fades). */
 .video-credit {
-  position: absolute; right: 24px; bottom: 80px; z-index: 4; margin: 0; padding: 6px 18px;
-  background: rgba(0,0,0,.6); color: #fff; border-radius: 8px; font-size: 28px; font-weight: 600;
+  position: absolute; right: 64px; bottom: 240px; z-index: 4; margin: 0; padding: 12px 26px 12px 22px;
+  display: flex; align-items: center; gap: 14px;
+  background: var(--accent); color: #fff; border: 3px solid #fff; border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.45);
+  font-size: 34px; font-weight: 600; line-height: 1.3;
 }
+.video-credit::before {
+  content: "i"; flex: none; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--accent);
+  font: italic 800 30px/40px Georgia, serif; text-align: center;
+}
+.video-credit.is-off { opacity: 0; pointer-events: none; }   /* the state is the class; the fade is a Web Animation from script.js on top of it */
 
 /* ---- Animated stills (the picture-and-narration screens): the whole scene breathes ----
    Like park-drones, only opacity and transform change (light on a school laptop), nothing flashes, each loop runs
@@ -899,7 +910,6 @@ button, input, select, textarea { font-family: inherit; }
 /* ---------- 3c. Review round 3 (developer, 2026-11-11) ---------- */
 .q-instruction { font-weight: 800; }
 .help-btn { font-size: 40px; }
-.video-credit { font-size: 34px; }
 .video-caption p { font-size: 40px; }
 
 /* chips: drawn in CSS (no picture), rounded, so a green or red frame follows exactly their shape */
