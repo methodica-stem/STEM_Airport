@@ -1347,7 +1347,7 @@ function dndCompare(s) {
      'mine'  - every row holds the learner's own card (st.mine, taken at the final check), green or red with a check or cross.
    The "התשובה שלי" / "התשובה הנכונה" button in the feedback swaps them (answerView). */
 function dndCompareView(s, which, st) {
-  const mine = which === 'mine';
+  const mine = which === 'mine', badges = s.hasAttribute('data-dnd-badges');
   s.classList.add('dnd-final');
   s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
   dndArrange(s, mine && st.mine ? st.mine : null);
@@ -1359,7 +1359,8 @@ function dndCompareView(s, which, st) {
     mark.className = 'dnd-mark ' + (right ? 'ok' : 'no');
     mark.setAttribute('role', 'img');
     mark.setAttribute('aria-label', uiText(right ? 'dnd-right' : 'dnd-wrong'));
-    sl.insertAdjacentElement('beforebegin', mark);
+    if (badges) { mark.classList.add('badge'); (sl.closest('[data-fixhost]') || sl).appendChild(mark); }   // a badge on the box's corner
+    else sl.insertAdjacentElement('beforebegin', mark);
   });
 }
 /* Final state "whole": one frame (green or red) around the whole equation and one mark at its right end. */

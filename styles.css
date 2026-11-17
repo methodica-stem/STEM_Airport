@@ -1050,7 +1050,7 @@ button, input, select, textarea { font-family: inherit; }
 .dnd-col .dnd-slot { display: flex; width: 100%; min-width: 0; margin: 0; }
 .nowrap { white-space: nowrap; }
 .dnd-caption { margin: 10px 0 0; font-size: 36px; font-weight: 600; line-height: 1.25; text-align: center; }
-[data-sid="q5"] .dnd-bank { display: grid; grid-template-columns: repeat(3, 410px); grid-auto-rows: 76px; gap: 14px 22px; margin: 14px 0 0; }
+[data-sid="q5"] .dnd-bank { display: grid; grid-template-columns: repeat(3, 410px); grid-auto-rows: 76px; gap: 20px 70px; margin: 22px 0 0; justify-content: center; }   /* centred under the four boxes (not under the first three), more air between the cards */
 [data-sid="q5"] .chip-cell { width: 410px; height: 76px; }
 [data-sid="q5"] .dnd-chip { font-size: 36px; white-space: nowrap; padding: 0 4px; }
 [data-sid="q5"] .dnd-mark.badge { top: -24px; right: -14px; }
@@ -1103,9 +1103,7 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 [data-sid="q4a"].dnd-final .dnd-bank, [data-sid="q4b"].dnd-final .dnd-bank, [data-sid="q5"].dnd-final .dnd-bank { display: none; }
 [data-sid="q4a"] .dnd-slot > .dnd-chip, [data-sid="q4b"] .dnd-slot > .dnd-chip { padding: 0 4px; }
 
-/* q5: in the feedback the bank goes away and the right cards appear above the wrong boxes */
-[data-sid="q5"] .dnd-cols { transition: margin-top .3s ease; }
-[data-sid="q5"].dnd-final .dnd-cols { margin-top: 100px; }
+/* q5: in the feedback the bank goes away; the boxes show the right cards first ("התשובה שלי" swaps in the learner's), so nothing needs room above them */
 [data-sid="q5"] .dnd-fix.badge { top: -90px; bottom: auto; }
 
 [data-sid="q2"] .dnd-row > * { grid-row: 1; }
