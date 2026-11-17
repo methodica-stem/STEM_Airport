@@ -330,7 +330,7 @@ function myAnswerOn(u) {
   const s = unitScreen(u);
   if (cfg.kind === 'input') return s.getAttribute('data-grade') !== 'hook';
   const fin = s.getAttribute('data-dnd-final');
-  return cfg.kind === 'dnd' && (fin === 'reveal' || (fin === 'compare' && s.hasAttribute('data-dnd-toggle')));
+  return cfg.kind === 'dnd' && (fin === 'reveal' || ((fin === 'compare' || fin === 'whole') && s.hasAttribute('data-dnd-toggle')));
 }
 function answerTake(u) {
   const st = qEnsure(u), cfg = qConfig(u);
@@ -363,7 +363,7 @@ function answerView(u, which) {
     });
   } else if (cfg.kind === 'dnd') {
     const s = unitScreen(u);
-    if (s.hasAttribute('data-dnd-toggle')) dndCompareView(s, which, st);
+    if (s.hasAttribute('data-dnd-toggle')) (s.getAttribute('data-dnd-final') === 'whole' ? dndWholeView : dndCompareView)(s, which, st);
     else dndFlip(s, function () { dndArrange(s, mine ? st.mine : null); });
   }
   const btn = document.getElementById('fb-mine');
@@ -1095,6 +1095,9 @@ function renderFinal(u, cfg, st, justChecked) {
     // "reveal": no frames and no marks, the right order simply appears (an ordering question without a partial result)
     if (finalMode === 'reveal') { unitScreen(u).classList.add('dnd-final'); dndFlip(unitScreen(u), function () { dndRevealCorrect(u); }); dndLock(u); return; }
     // "whole": the learner's equation stays, one frame and one mark for all of it, the bank goes away
+    if (finalMode === 'whole' && unitScreen(u).hasAttribute('data-dnd-toggle')) {   // the right equation first; "התשובה שלי" swaps in the learner's own
+      dndWholeView(unitScreen(u), st.outcome === 'correct' ? 'right' : (st.view || 'right'), st); dndLock(u); return;
+    }
     if (finalMode === 'whole') { dndWhole(unitScreen(u), st.outcome === 'correct'); dndLock(u); return; }
     if (st.outcome === 'correct') { dndMark(u, true); dndLock(u); return; }
     dndMark(u, false);
@@ -1369,6 +1372,16 @@ function dndWhole(s, right) {
   mark.setAttribute('role', 'img');
   mark.setAttribute('aria-label', uiText(right ? 'dnd-right' : 'dnd-wrong'));
   row.appendChild(mark);
+}
+/* "whole" with data-dnd-toggle: 'right' = the right equation in the boxes, framed green with a check; 'mine' = the learner's own equation
+   (st.mine), framed red with a cross. The button in the feedback swaps them (answerView). */
+function dndWholeView(s, which, st) {
+  const mine = which === 'mine';
+  const row = s.querySelector('.eq-row') || s;
+  row.classList.remove('eq-correct', 'eq-wrong');
+  row.querySelectorAll('.dnd-mark').forEach(function (e) { e.remove(); });
+  dndArrange(s, mine && st.mine ? st.mine : null);
+  dndWhole(s, !mine);
 }
 /* A chip in a slot shrinks its text until it fits the slot (a number in the small box of the signs). */
 function dndFit(chip) {
