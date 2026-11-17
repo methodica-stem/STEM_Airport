@@ -106,4 +106,5 @@ All in `STEM/שדה תעופה/` (inputs stay there; never copied into the proje
 
 ## Delivery log
 <!-- date · git commit · repo link · SharePoint link · what changed since the last one -->
+- 2026-11-17 (later) · `a5414bb` · screen 1 data note moved, restyled and timed · SharePoint `.url` repointed to `a5414bb` and `STEM_Airport_HE_a5414bb.zip` (85 MB) replaces the 9a25759 zip
 - 2026-11-17 · `fe036fc` · repo created and first push: https://github.com/methodicelElearnig/STEM_Airport (private, org `methodicelElearnig`, branch `main`) · SharePoint pair made for `9a25759` (the docs-only log commit after `fe036fc`): `STEM מתמטיקה/_יסודי_/לומדה 2 - כתה ה' - שדה תעופה/הפקה/repo/` holds `GitHub - שדה תעופה - עברית.url` (→ tree/9a25759…) and `STEM_Airport_HE_9a25759.zip` (git archive, 85 MB, 113 files) · Phase 5 content in: videos (re-encoded) + captions, narration of screens 2/6/10/12/16, q1 readings, clips 6/10/16
