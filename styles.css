@@ -1028,12 +1028,17 @@ button, input, select, textarea { font-family: inherit; }
 .eq-sign { width: 52px; margin: 0 -26px; }
 [data-sid="q4a"] .dnd-bank, [data-sid="q4b"] .dnd-bank { display: grid; justify-content: center; gap: 12px 14px; grid-auto-rows: 70px; }
 [data-sid="q4a"] .dnd-bank { grid-template-columns: repeat(4, 240px) 110px; }
-[data-sid="q4b"] .dnd-bank { grid-template-columns: 240px 240px 240px 110px 110px; }
+/* Seven cards spread evenly like screen 8's ten: the signs in their own column at the end (left), the five numbers in two even rows, three
+   over two (the second row is centred under the first). Every number spans two of six 113 px columns (= 240 px with the gaps). */
+[data-sid="q4b"] .dnd-bank { grid-template-columns: repeat(6, 113px) 110px; }
 [data-sid="q4a"] .chip-cell, [data-sid="q4b"] .chip-cell { height: 70px; }
-[data-sid="q4b"] .chip-cell[data-for="c6"] { order: 4; }
-[data-sid="q4b"] .chip-cell[data-for="c7"] { order: 5; }
-[data-sid="q4b"] .chip-cell[data-for="c5"] { order: 6; }
-[data-sid="q4b"] .chip-cell[data-for="c4"] { order: 7; }
+[data-sid="q4b"] .chip-cell[data-for="c1"] { grid-area: 1 / 1 / 2 / span 2; }
+[data-sid="q4b"] .chip-cell[data-for="c2"] { grid-area: 1 / 3 / 2 / span 2; }
+[data-sid="q4b"] .chip-cell[data-for="c3"] { grid-area: 1 / 5 / 2 / span 2; }
+[data-sid="q4b"] .chip-cell[data-for="c5"] { grid-area: 2 / 2 / 3 / span 2; }
+[data-sid="q4b"] .chip-cell[data-for="c4"] { grid-area: 2 / 4 / 3 / span 2; }
+[data-sid="q4b"] .chip-cell[data-for="c6"] { grid-area: 1 / 7; }
+[data-sid="q4b"] .chip-cell[data-for="c7"] { grid-area: 2 / 7; }
 [data-sid="q4a"] .dnd-mark.badge, [data-sid="q4b"] .dnd-mark.badge { right: -62px; top: 7px; }
 [data-sid="q4a"] .dnd-fix.badge, [data-sid="q4b"] .dnd-fix.badge { left: 0; right: 0; top: calc(100% + 8px); height: 70px; border-width: 6px; display: flex; align-items: center; justify-content: center; }
 
