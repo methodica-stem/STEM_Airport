@@ -789,6 +789,31 @@ button, input, select, textarea { font-family: inherit; }
 [data-sid="story-team"] .scene, [data-sid="story-daily"] .scene { transform-origin: 50% 45%; }
 @media (prefers-reduced-motion: reduce) { .screen.active .scene, .screen.active .fx { animation: none !important; } .fx { opacity: 0; } }
 
+/* ---- Generated clips on the picture screens 6, 10 and 16 ----
+   The designer's stills of these three scenes are now short generated loops (assets/videos/screenN_animated.mp4: the
+   same picture, the mother or Matan moving a little, silent, the end close to the first frame). The clip lies over the
+   still, so the still shows until the first frame; the code drift and light pulses of the other picture screens are
+   not used here. script.js plays it on entry (HOOKS), prefers-reduced-motion leaves the still. */
+.screen.active .scene.scene-clip { animation: none; }
+.scene-vid { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+
+/* ---- Narration of the picture screens: the "listen" button at the left end of the bubble ----
+   No sound starts by itself (house rule): the learner presses the button, and presses it again to stop. */
+.narration-banner { display: flex; align-items: center; gap: 36px; }
+.nb-text { min-width: 0; }
+.narr-play {
+  flex: none; position: relative; width: 76px; height: 76px; padding: 0; border-radius: 50%;
+  border: 5px solid #000; background: #fff; box-shadow: 3px 5px 0 #000; cursor: pointer;
+}
+.narr-play::before {
+  content: ""; position: absolute; inset: 14px; background: #000;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 4V5L7 9z'/%3E%3Cpath d='M15 8.5a5 5 0 010 7M17.7 5.8a9 9 0 010 12.4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 9v6h4l5 4V5L7 9z'/%3E%3Cpath d='M15 8.5a5 5 0 010 7M17.7 5.8a9 9 0 010 12.4' fill='none' stroke='black' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+.narr-play:hover { filter: brightness(.94); }
+.narr-play.playing { background: var(--accent); }
+.narr-play.playing::before { background: #fff; }
+
 /* ---------- 5. Per-screen positions ----------
    One block per screen, by data-sid, in screen order. Example:
    [data-sid="q1"] .q-card { top: 140px; right: 80px; width: 1100px; }

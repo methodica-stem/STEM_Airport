@@ -13,3 +13,5 @@ __pycache__/
 *.pyc
 .DS_Store
 Thumbs.db
+# the producer's full-size videos (the lomda uses the re-encoded copies in assets/videos)
+_design-reference/video-originals/*.mp4

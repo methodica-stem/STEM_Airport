@@ -15,6 +15,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - **Learner text inside notes:** quoted below with its role.
 
 ## Screen 1 — video-intro (slides 2–8)
+- **Built 2026-11-17:** `AIRPORT_PART1_V2.mp4`, captions from `AIRPORT_PART1_V2.srt`.
 - Click on play shows the video of slides 2–8 (slide 2 note).
 - Slide 2: a TV news report over footage of a crowded airport; a presenter says (quoted, spoken): "עונת הטיסות בשיאה! שדה התעופה מתמלא בנוסעים, והצוותים נערכים לאחת התקופות העמוסות בשנה." The "camera" moves to the kitchen and the conversation between the son and the mother begins.
 - Captions, in order: the presenter line, then the balloons of slides 3, 4, 5, 6, 7, 8.
@@ -22,10 +23,12 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - At the end of the video the arrow blinks (slide 8 note).
 
 ## Screen 2 — story-office (slide 9)
+- **Built 2026-11-17:** the listen button in the bubble plays `screen2_narration.mp3` (no sound starts by itself).
 - Narration of the text ("קריינות לטקסט").
 - Back arrow returns to the previous slide (note on the slide).
 
 ## Screen 3 — q1 (slides 10–11)
+- **Built 2026-11-17:** the four reading cards play `q1_matan_narration_<city>.mp3`. The feedback lines' own sound symbols have no recordings yet.
 - Four cards, one per city, each with a play symbol (audio): דובאי 95,200,060 · פרנקפורט 63,277,005 · טוקיו 91,679,814 · פריז 72,014,271. The learner chooses the card whose reading is right.
 - Every reading needs large, clear captions (the video on screen may be enlarged if needed). What is said in each reading:
   - דובאי — תשעים וחמישה מיליון, אלפיים ושישים נוסעים
@@ -41,6 +44,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - The PSD has a help button and a hidden help bubble for this question; the storyboard has neither (open-questions).
 
 ## Screen 4 — video-estimate (slides 12–14)
+- **Built 2026-11-17:** `AIRPORT_PART2_V2.mp4`, captions from its `.srt`.
 - Click on play shows the video of slides 12–14. Captions: the balloons of 12, 13, 14. End: arrow.
 
 ## Screen 5 — q2 (slides 15–16)
@@ -53,6 +57,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback: "המספרים המעוגלים הנכונים מוצגים כעת. / כדי לעגל לעשרות אלפים, נבדוק את ספרת האלפים: / אם היא 5 ומעלה, נעגל כלפי מעלה, ואם היא קטנה מ-5, נעגל כלפי מטה."
 
 ## Screen 6 — story-data (slide 17)
+- **Built 2026-11-17:** listen button + `screen6_narration.mp3`; the small animation is `screen6_animated.mp4`, a silent loop over the still (it replaces the "dropped" note below).
 - Narration of the text. The note asked for a small animation (the mother smiles and looks at Matan); the video was cut, so this is now a still: a variant of the repeating picture (SCENE_IMAGES_BRIEF.md, prompt A).
 
 ## Screen 7 — q3 (slides 18–19)
@@ -75,6 +80,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback: "יש להפחית את מספר הנוסעים שנכנסים ממספר הנוסעים שיוצאים. / החישוב: 200,000 = 1,600,000 – 1,800,000" (the line is typed in the RTL order of the storyboard; it reads 1,800,000 – 1,600,000 = 200,000 on the slide).
 
 ## Screen 10 — story-holiday (slide 24)
+- **Built 2026-11-17:** the small animation is `screen10_animated.mp4` (silent loop over the still); listen button + `screen10_narration.mp3`.
 - Narration of the text. The note asked for a small animation (Matan remembers the holiday happily); now a still, and the storyboard picture already shows it.
 
 ## Screen 11 — q5 (slides 25–26)
@@ -89,9 +95,11 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback: "כדי לבחור את התרגיל הנכון, חשוב להבין מה מבקשים לחשב. / התשובות הנכונות מוצגות כעת, השוו אותן לתשובתכם."
 
 ## Screen 12 — story-team (slide 27)
+- **Built 2026-11-17:** listen button + `screen12_narration.mp3`; code animation only (no clip).
 - Narration of the text.
 
 ## Screen 13 — video-chart (slides 28–30)
+- **Built 2026-11-17:** `AIRPORT_PART3_V2.mp4`, captions from its `.srt`.
 - Click on play shows the video of slides 28–30 (the note says "35-37": a stale number, see open-questions). End: arrow.
 
 ## Screens 14, 15 — q6a, q6b (slides 31–34): the graph applet
@@ -104,6 +112,7 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - Feedback q6b: "נחסר 1,400,000 ממספר הנוסעים בחודשים יולי-אוגוסט: / 4,300,000 – 1,400,000 = 2,900,000 / בספטמבר-אוקטובר עברו כ-2,900,000 נוסעים."
 
 ## Screen 16 — story-daily (slide 35)
+- **Built 2026-11-17:** listen button + `screen16_narration.mp3`; the small animation is `screen16_animated.mp4`, a silent loop over the still (it replaces the "dropped" note below).
 - Narration of the text. The note asked for a small animation (the mother looks at the data, then at the team, who nod); now a still: a variant of the repeating picture (SCENE_IMAGES_BRIEF.md, prompt C).
 
 ## Screens 17, 18 — q7, q8 (slides 36–39)
@@ -113,5 +122,6 @@ Global ("גורף") rules first. Slide numbers are the storyboard's.
 - q8's stem has a fraction, one third, written 1/3 in the slide's equation.
 
 ## Screen 19 — finish (slides 40–42)
+- **Built 2026-11-17:** `AIRPORT_PART4_V2.mp4`, captions from its `.srt`.
 - Click on play shows the video of slides 40–41 (note says "50-51": stale). At the end of the video the "סיימתי" button appears (slide 41 note).
 - Slide 42 = the score pop-up: "כל הכבוד, המשימה הושלמה!" / "הציון שלך הוא __." / "יש לסגור את המשימה בלחיצה על X." The house ending (score pop-up → dark Moodle screen) applies.

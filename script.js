@@ -44,6 +44,19 @@ const HOOKS = {};
 HOOKS['q8'] = { resolved: function (s) { s.classList.add('q-final'); } };       // the picture gives way to the long feedback
 HOOKS['q1'] = { leave: function () { readerStop(); } };      // a reading never keeps playing after the learner leaves
 
+// The three scenes that now have a generated loop (screens 6, 10, 16): the clip plays while the screen is shown.
+['story-data', 'story-holiday', 'story-daily'].forEach(function (sid) {
+  HOOKS[sid] = {
+    enter: function (s) {
+      const v = s.querySelector('.scene-vid');
+      if (!v || (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) return;   // reduced motion: the still stays
+      try { v.currentTime = 0; } catch (e) {}
+      v.play().catch(function () {});
+    },
+    leave: function (s) { const v = s.querySelector('.scene-vid'); if (v) v.pause(); }
+  };
+});
+
 /* ---------------- Small helpers ---------------- */
 function screenEl(n) { return document.querySelector('.screen[data-screen="' + n + '"]'); }
 function screenOf(el) { return el && el.closest ? el.closest('.screen') : null; }
@@ -121,6 +134,8 @@ function hideForwardNav(n) {
 
 function pauseAllMedia() {
   document.querySelectorAll('video, audio').forEach(function (m) { try { m.pause(); } catch (e) {} });
+  clearTimeout(narrTimer);
+  document.querySelectorAll('.narr-play.playing').forEach(function (btn) { narrSet(btn, false); });
 }
 
 /* Warm the neighbouring screens' images while the learner reads this one.
@@ -1748,6 +1763,41 @@ document.addEventListener('click', function (e) {
   }
 });
 document.addEventListener('lomda:end', readerStop);
+
+
+/* ===================================================================
+   Narration of the picture screens (2, 6, 10, 12, 16): the button at the end of the bubble plays that screen's
+   recording and lights while it plays; pressed again it stops. No sound starts by itself. A screen whose recording
+   is still missing (<audio data-pending-asset>, no src) lights the button for 4 s, so the look can be reviewed.
+   Leaving the screen pauses the audio (pauseAllMedia), and the media events below put the button back.
+   =================================================================== */
+let narrTimer = null;
+function narrSet(btn, on) {
+  if (!btn) return;
+  btn.classList.toggle('playing', on);
+  btn.setAttribute('aria-pressed', String(on));
+}
+['play', 'pause', 'ended'].forEach(function (ev) {
+  document.addEventListener(ev, function (e) {
+    const a = e.target;
+    if (a && a.classList && a.classList.contains('narr-audio')) narrSet(a.parentElement.querySelector('.narr-play'), ev === 'play');
+  }, true);
+});
+document.addEventListener('click', function (e) {
+  const btn = e.target.closest && e.target.closest('.narr-play');
+  if (!btn) return;
+  const a = btn.parentElement.querySelector('.narr-audio');
+  clearTimeout(narrTimer);
+  if (a && a.getAttribute('src')) {
+    if (!a.paused) { a.pause(); a.currentTime = 0; return; }
+    try { a.currentTime = 0; } catch (err) {}
+    a.play().catch(function () { narrSet(btn, false); });
+    return;
+  }
+  const on = !btn.classList.contains('playing');
+  narrSet(btn, on);
+  if (on) narrTimer = setTimeout(function () { narrSet(btn, false); }, 4000);
+});
 
 
 /* Focus frames belong to the keyboard: <html class="kbd"> appears on a key press and goes at the next pointer press,
