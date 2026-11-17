@@ -1364,6 +1364,7 @@ function dndCompareView(s, which, st) {
     if (badges) { mark.classList.add('badge'); (sl.closest('[data-fixhost]') || sl).appendChild(mark); }   // a badge on the box's corner
     else sl.insertAdjacentElement('beforebegin', mark);
   });
+  s.querySelectorAll('.dnd-chip').forEach(dndFit);   // the text of a card shrinks to stay inside its frame
 }
 /* Final state "whole": one frame (green or red) around the whole equation and one mark at its right end. */
 function dndWhole(s, right) {

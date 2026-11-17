@@ -1253,3 +1253,9 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 #feedback-popup.fb-q8.correct .fb-title, #feedback-popup.fb-q8.wrong2 .fb-title { font-size: 40px; }
 #feedback-popup.fb-q8 .fb-title-row { margin-bottom: 2px; }
 #feedback-popup.fb-q8 .fb-step { margin-bottom: 4px; }
+
+/* ---- 11 · q5 feedback: the row of boxes and their captions sit lower (the bank is gone, the panel is far below), the check/cross marks a little higher,
+   and the text of a card keeps clear of its green/red frame ---- */
+[data-sid="q5"].dnd-final .dnd-cols { margin-top: 56px; }
+[data-sid="q5"] .dnd-mark.badge { top: -36px; right: -14px; }
+[data-sid="q5"] .dnd-slot > .dnd-chip { padding: 0 14px; }
