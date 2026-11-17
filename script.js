@@ -329,7 +329,8 @@ function myAnswerOn(u) {
   if (!st.done || st.outcome === 'correct' || !st.mine) return false;
   const s = unitScreen(u);
   if (cfg.kind === 'input') return s.getAttribute('data-grade') !== 'hook';
-  return cfg.kind === 'dnd' && s.getAttribute('data-dnd-final') === 'reveal';
+  const fin = s.getAttribute('data-dnd-final');
+  return cfg.kind === 'dnd' && (fin === 'reveal' || (fin === 'compare' && s.hasAttribute('data-dnd-toggle')));
 }
 function answerTake(u) {
   const st = qEnsure(u), cfg = qConfig(u);
@@ -362,7 +363,8 @@ function answerView(u, which) {
     });
   } else if (cfg.kind === 'dnd') {
     const s = unitScreen(u);
-    dndFlip(s, function () { dndArrange(s, mine ? st.mine : null); });
+    if (s.hasAttribute('data-dnd-toggle')) dndCompareView(s, which, st);
+    else dndFlip(s, function () { dndArrange(s, mine ? st.mine : null); });
   }
   const btn = document.getElementById('fb-mine');
   btn.textContent = uiText(mine ? 'answer-right' : 'answer-mine');
@@ -1086,6 +1088,9 @@ function renderFinal(u, cfg, st, justChecked) {
   }
   if (cfg.kind === 'dnd') {
     const finalMode = unitScreen(u).getAttribute('data-dnd-final');
+    if (finalMode === 'compare' && unitScreen(u).hasAttribute('data-dnd-toggle')) {   // the right cards first; "התשובה שלי" in the feedback swaps in the learner's own
+      dndCompareView(unitScreen(u), st.outcome === 'correct' ? 'right' : (st.view || 'right'), st); dndLock(u); return;
+    }
     if (finalMode === 'compare') { dndCompare(u); dndLock(u); return; }   // keep the learner's cards, show the right ones beside the wrong rows
     // "reveal": no frames and no marks, the right order simply appears (an ordering question without a partial result)
     if (finalMode === 'reveal') { unitScreen(u).classList.add('dnd-final'); dndFlip(unitScreen(u), function () { dndRevealCorrect(u); }); dndLock(u); return; }
@@ -1332,6 +1337,26 @@ function dndCompare(s) {
     fix.setAttribute('aria-label', uiText('dnd-correct-is') + ' ' + fix.textContent);
     if (badges) { fix.classList.add('badge'); host.appendChild(fix); }
     else sl.insertAdjacentElement('afterend', fix);
+  });
+}
+/* Final state "compare" with data-dnd-toggle: two views of the rows, never both at once.
+     'right' - every row holds its right card, outlined green with a check (what the feedback opens on);
+     'mine'  - every row holds the learner's own card (st.mine, taken at the final check), green or red with a check or cross.
+   The "התשובה שלי" / "התשובה הנכונה" button in the feedback swaps them (answerView). */
+function dndCompareView(s, which, st) {
+  const mine = which === 'mine';
+  s.classList.add('dnd-final');
+  s.querySelectorAll('.dnd-mark, .dnd-fix').forEach(function (e) { e.remove(); });
+  dndArrange(s, mine && st.mine ? st.mine : null);
+  s.querySelectorAll('.dnd-slot').forEach(function (sl) {
+    const right = mine ? dndSlotRight(sl) : true;
+    sl.classList.remove('correct', 'wrong');
+    sl.classList.add(right ? 'correct' : 'wrong');
+    const mark = document.createElement('span');
+    mark.className = 'dnd-mark ' + (right ? 'ok' : 'no');
+    mark.setAttribute('role', 'img');
+    mark.setAttribute('aria-label', uiText(right ? 'dnd-right' : 'dnd-wrong'));
+    sl.insertAdjacentElement('beforebegin', mark);
   });
 }
 /* Final state "whole": one frame (green or red) around the whole equation and one mark at its right end. */

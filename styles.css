@@ -1104,6 +1104,10 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 [data-sid="q5"] .dnd-fix.badge { top: -90px; bottom: auto; }
 
 [data-sid="q2"] .dnd-row > * { grid-row: 1; }
+/* No second column of right cards any more (the feedback shows the right cards first, "התשובה שלי" the learner's own): the rows end at the
+   number, and the card bank sits close beside them. */
+[data-sid="q2"] .q-card { grid-template-columns: 760px 560px; column-gap: 40px; justify-content: start; }
+[data-sid="q2"] .dnd-row { grid-template-columns: 170px 56px 270px auto; }
 .eq-row { width: fit-content; margin-left: auto; margin-right: auto; }
 [data-sid="q5"] .dnd-fix.badge { width: auto; }
 
