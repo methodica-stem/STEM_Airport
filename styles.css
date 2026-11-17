@@ -1259,3 +1259,8 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 [data-sid="q5"].dnd-final .dnd-cols { margin-top: 56px; }
 [data-sid="q5"] .dnd-mark.badge { top: -36px; right: -14px; }
 [data-sid="q5"] .dnd-slot > .dnd-chip { padding: 0 14px; }
+
+/* ---- 14 and 15 · q6a, q6b final feedback: raised above the arrow and as wide as the left column allows (to the graph), so the equation stays on one line ---- */
+#feedback-popup.fb-q6a.correct, #feedback-popup.fb-q6a.wrong2, #feedback-popup.fb-q6b.correct, #feedback-popup.fb-q6b.wrong2 { left: 30px; bottom: 150px; width: 724px; }
+#feedback-popup.fb-q6a .fb-body .ltr, #feedback-popup.fb-q6b .fb-body .ltr { white-space: nowrap; }
+#feedback-popup.fb-q6a .fb-body p, #feedback-popup.fb-q6b .fb-body p { text-wrap: balance; }
