@@ -1264,3 +1264,6 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 #feedback-popup.fb-q6a.correct, #feedback-popup.fb-q6a.wrong2, #feedback-popup.fb-q6b.correct, #feedback-popup.fb-q6b.wrong2 { left: 30px; bottom: 150px; width: 724px; }
 #feedback-popup.fb-q6a .fb-body .ltr, #feedback-popup.fb-q6b .fb-body .ltr { white-space: nowrap; }
 #feedback-popup.fb-q6a .fb-body p, #feedback-popup.fb-q6b .fb-body p { text-wrap: balance; }
+
+/* screen 11: a card keeps its size and text size when dropped in a box (the longest one needs the same 4px padding it has in the bank) */
+[data-sid="q5"] .dnd-slot > .dnd-chip { padding: 0 4px; }
