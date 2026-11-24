@@ -284,7 +284,7 @@ function narrationEnter(s, n, a) {
 function showFeedback(type, cfg, unit) {
   const popup = document.getElementById('feedback-popup');
   const s = screenEl(currentScreen);
-  popup.className = 'show ' + type + (s ? ' fb-' + sidOf(s) : '') +
+  popup.className = 'show ' + type + (type === 'retryPartial' ? ' retry' : '') + (s ? ' fb-' + sidOf(s) : '') +
     (isPart(unit) ? ' fb-' + sidOf(s) + '-p' + unit.getAttribute('data-part') : '') +
     ((isPart(unit) || (s && s.hasAttribute('data-feedback-close'))) && type !== 'retry' && type !== 'retryPartial' ? ' has-close' : '');
   // "התשובה שלי" / "התשובה הנכונה": after a final wrong or partly right answer whose right answer REPLACES the learner's (typed
@@ -1054,6 +1054,7 @@ function checkAnswer(u) {
     const anyHint = s.getAttribute('data-partial-hint') === 'any';
     const type = ((g === 'partialClean' || (anyHint && g === 'partialMixed')) && fb.retryPartial) ? 'retryPartial' : 'retry';
     showFeedback(type, fb[type], u);
+    if (type === 'retryPartial' && cfg.kind === 'dnd') dndHint(u);   // the right parts get a check until the learner changes the answer
     return;
   }
 
@@ -1164,7 +1165,27 @@ function dndRemember(s) {
     if (!c._home) { c._home = c.parentElement; c._homeIndex = i; }
   });
 }
+/* First wrong try with some parts right (data-partial-hint="any" + a retryPartial block): a green frame and a check on each right
+   slot, nothing on the wrong ones. Any change of the answer takes them away (dndRefresh). */
+function dndHint(s) {
+  dndHintClear(s);
+  s.querySelectorAll('.dnd-slot').forEach(function (sl) {
+    if (!dndSlotRight(sl)) return;
+    sl.classList.add('correct');
+    sl.setAttribute('data-hint', '1');
+    const mark = document.createElement('span');
+    mark.className = 'dnd-mark ok hint';
+    mark.setAttribute('role', 'img');
+    mark.setAttribute('aria-label', uiText('dnd-right'));
+    sl.appendChild(mark);
+  });
+}
+function dndHintClear(s) {
+  s.querySelectorAll('.dnd-mark.hint').forEach(function (e) { e.remove(); });
+  s.querySelectorAll('.dnd-slot[data-hint]').forEach(function (sl) { sl.classList.remove('correct'); sl.removeAttribute('data-hint'); });
+}
 function dndRefresh(s) {
+  if (!s.classList.contains('dnd-final')) dndHintClear(s);
   s.querySelectorAll('.dnd-slot').forEach(function (sl) { sl.classList.toggle('filled', !!sl.querySelector('.dnd-chip')); });
   s.querySelectorAll('.dnd-chip').forEach(dndFit);
   updateCheckable(s);

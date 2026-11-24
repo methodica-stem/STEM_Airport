@@ -1267,3 +1267,13 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 
 /* screen 11: a card keeps its size and text size when dropped in a box (the longest one needs the same 4px padding it has in the bank) */
 [data-sid="q5"] .dnd-slot > .dnd-chip { padding: 0 4px; }
+
+/* 14 and 15 · the question text 22 px higher: its last row ran 17 px under the final feedback box */
+[data-sid="q6a"] .q-title, [data-sid="q6b"] .q-title { margin-top: -22px; }
+
+/* first wrong try, some parts right: a small check on the right slot (dndHint in script.js) */
+.dnd-mark.hint { position: absolute; z-index: 4; width: 44px; height: 44px; top: -22px; right: -14px; margin: 0; }
+.dnd-mark.hint::after { inset: 11px; }
+[data-sid="q3"] .dnd-mark.hint { top: -22px; right: -18px; }
+/* screen 11: more air between the three-row captions and the cards below them (SME #10, #11) */
+[data-sid="q5"] .dnd-bank { margin-top: 40px; }
