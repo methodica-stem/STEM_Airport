@@ -614,6 +614,42 @@ function initVideo(wrap) {
     syncCredit();
   }
 
+  // An example chart over the video (screen 13), drawn from the video's own clock: the card fades in at data-show-from, each bar grows from its
+  // data-at (0.55 s), the dashed comparison line is drawn from its data-at, the card fades out at data-show-until. Rendered from currentTime on every
+  // frame while playing and on seek / pause, so scrubbing, pausing and replaying always show the right picture (no CSS animation to flatten or stall).
+  const chart = wrap.querySelector('.video-chart[data-show-until]');
+  if (chart) {
+    const cFrom = parseFloat(chart.getAttribute('data-show-from')) || 0;
+    const cUntil = parseFloat(chart.getAttribute('data-show-until')) || 0;
+    const bars = Array.from(chart.querySelectorAll('.vc-bar'));
+    const cmp = chart.querySelector('.vc-cmp');
+    const reducedC = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const base = 274, FADE = 0.6, GROW = 0.55;
+    const ease = function (x) { return 1 - Math.pow(1 - Math.min(1, Math.max(0, x)), 3); };
+    let raf = 0;
+    const drawChart = function () {
+      const t = video.currentTime;
+      const on = t >= cFrom && t < cUntil;
+      chart.classList.toggle('is-off', !on);
+      chart.setAttribute('aria-hidden', String(!on));
+      if (!on) return;
+      chart.style.opacity = reducedC ? 1 : Math.min(1, ease((t - cFrom) / FADE), ease((cUntil - t) / FADE));
+      bars.forEach(function (b) {
+        const h = parseFloat(b.getAttribute('data-h')) * (reducedC ? 1 : ease((t - parseFloat(b.getAttribute('data-at'))) / GROW));
+        b.setAttribute('height', h.toFixed(1)); b.setAttribute('y', (base - h).toFixed(1));
+      });
+      if (cmp) {
+        const len = 278, k = reducedC ? 1 : ease((t - parseFloat(cmp.getAttribute('data-at'))) / 0.7);
+        cmp.style.opacity = k > 0 ? 1 : 0;
+        cmp.setAttribute('x2', (34 + len * k).toFixed(1));
+      }
+    };
+    const loop = function () { drawChart(); raf = video.paused || video.ended ? 0 : requestAnimationFrame(loop); };
+    video.addEventListener('play', function () { if (!raf) raf = requestAnimationFrame(loop); });
+    ['pause', 'ended', 'seeked', 'timeupdate', 'loadeddata'].forEach(function (ev) { video.addEventListener(ev, drawChart); });
+    drawChart();
+  }
+
   video.addEventListener('timeupdate', function () {
     if (capEl && capText) {
       const t = video.currentTime;

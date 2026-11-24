@@ -50,7 +50,7 @@ const NS = 'http://www.w3.org/2000/svg';
 const PART = (new URLSearchParams(location.search).get('part') === 'b') ? 'b' : 'a';
 const W = 1050, H = 700;
 const X0 = 176, COL = 144, N = 6;                    // the axis, the width of a column, the number of columns
-const TOP = 60, BOTTOM = 600;                         // 4,800,000 and 0
+const TOP = 88, BOTTOM = 600;                         // 4,800,000 and 0
 const MAX = 4800000, SNAP = 100000;
 const FIXED = [1900000, 3400000, 1200000, 4300000];   // Jan–Feb … Jul–Aug
 const SLOT_COL = PART === 'a' ? 5 : 4;               // the column the learner draws
@@ -76,7 +76,7 @@ grad('gBlue', '#3d93f5', '#1558c0');
 grad('gGreen', '#49b25a', '#1f7a30');
 grad('gPill', '#3a82ee', '#0f4bb0');
 
-el('text', { x: 4, y: 32, class: 'title', direction: 'ltr', 'text-anchor': 'start' }, svg, STRINGS.axisTitle);
+el('text', { x: 4, y: 30, class: 'title', direction: 'ltr', 'text-anchor': 'start' }, svg, STRINGS.axisTitle);
 for (let v = 0; v <= MAX; v += 400000) {
   const y = yOf(v);
   if (v > 0) el('line', { x1: X0, y1: y, x2: X0 + COL * N, y2: y, stroke: '#dfe5ee', 'stroke-width': 1.5 });

@@ -760,20 +760,19 @@ button, input, select, textarea { font-family: inherit; }
 .narration-banner p { text-wrap: balance; }
 /* the video control bar stays clear of the two arrows */
 .vctrls { left: 200px; right: 200px; }
-/* The note on screen 1, "numbers are from 2025": not a caption, so it does not look like one. It sits above the caption
-   zone (a caption is at most two rows, about 240 px from the bottom), in the accent blue with an information mark, and is
-   shown only inside a window of the video's time (data-show-from .. data-show-until: it fades in once the video has
-   played a second and fades out after 5 s on screen; script.js toggles .is-off and plays the fades). */
+/* The note on screen 1, "numbers are from 2025": not a caption, so it does not look like one. A quiet note (28 px, muted translucent navy,
+   thin edge, small information mark) at the right, just above the one-row captions of its window (1-6 s; every cue there is one row).
+   Shown only inside a window of the video's time (data-show-from .. data-show-until: fades in once the video has played a second
+   and out after 5 s on screen; script.js toggles .is-off and plays the fades). */
 .video-credit {
-  position: absolute; right: 64px; bottom: 240px; z-index: 4; margin: 0; padding: 12px 26px 12px 22px;
-  display: flex; align-items: center; gap: 14px;
-  background: var(--accent); color: #fff; border: 3px solid #fff; border-radius: 14px;
-  box-shadow: 0 6px 18px rgba(0,0,0,.45);
-  font-size: 34px; font-weight: 600; line-height: 1.3;
+  position: absolute; right: 150px; bottom: 182px; z-index: 4; margin: 0; padding: 8px 20px 8px 16px;
+  display: flex; align-items: center; gap: 10px;
+  background: rgba(14,38,92,.6); color: rgba(255,255,255,.92); border: 1px solid rgba(255,255,255,.32); border-radius: 10px;
+  font-size: 28px; font-weight: 500; line-height: 1.3;
 }
 .video-credit::before {
-  content: "i"; flex: none; width: 40px; height: 40px; border-radius: 50%; background: #fff; color: var(--accent);
-  font: italic 800 30px/40px Georgia, serif; text-align: center;
+  content: "i"; flex: none; width: 30px; height: 30px; border-radius: 50%; background: rgba(255,255,255,.85); color: rgba(14,38,92,.9);
+  font: italic 700 23px/30px Georgia, serif; text-align: center;
 }
 .video-credit.is-off { opacity: 0; pointer-events: none; }   /* the state is the class; the fade is a Web Animation from script.js on top of it */
 
@@ -1277,3 +1276,18 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 [data-sid="q3"] .dnd-mark.hint { top: -22px; right: -18px; }
 /* screen 11: more air between the three-row captions and the cards below them (SME #10, #11) */
 [data-sid="q5"] .dnd-bank { margin-top: 40px; }
+
+/* Screen 13: an example bar chart beside the man's head (the flat wall left of him is free, x 30-390 at 1920 wide). Drawn from the video's clock in
+   script.js (initVideoChart), like the note on screen 1, so seeking and pausing always show the right picture. The look is the graph applet's: dark
+   axes with a small arrow, blue gradient columns; the card is the white bubble of the narration screens (6 px black edge, hard shadow). */
+.video-chart {
+  position: absolute; left: 30px; top: 190px; z-index: 4; width: 360px; box-sizing: border-box; padding: 14px 16px 12px;
+  background: #fff; border: 6px solid #000; border-radius: 30px; box-shadow: 4px 10px 0 #000; pointer-events: none;
+}
+.video-chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+.video-chart.is-off { opacity: 0; visibility: hidden; }
+.vc-axis, .vc-tick { stroke: #1b2430; stroke-width: 3; stroke-linecap: round; }
+.vc-tick { stroke-width: 2.5; }
+.vc-head { fill: #1b2430; }
+.vc-bar { fill: url(#vcBlue); }
+.vc-cmp { stroke: #e0472b; stroke-width: 3; stroke-dasharray: 9 7; }
