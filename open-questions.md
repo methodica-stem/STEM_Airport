@@ -11,7 +11,7 @@ The note says a score of 70 and above is reported as "בוצע בהצלחה", wi
 *Suggestion:* the lomda sends the score only; the Moodle decides the status. Please confirm with whoever owns the Moodle side.
 
 **2 · The ending's wording (slide 42, house text)**
-The finish uses the approved house ending: score pop-up, then a dark screen: "כעת חזרו אל המודל, לחצו על הכפתור "העמוד הבא" וענו על השאלות." Is "העמוד הבא" the label of the next-page button in this Moodle quiz?
+RESOLVED 2026-11-25: the finish uses the approved ending: score pop-up, then a black screen "עכשיו סוגרים את הלומדה וחוזרים לענות על שאלות ב-[Moodle logo]" with a "סגירת הלומדה" button. There is no next-page button label to confirm any more.
 
 **3 · "זו טעות" and the partial result (every question)**
 The storyboard's title is "צדקת! / זו טעות". The house wording for a final wrong answer is "זו טעות, כל הכבוד על הניסיון." I built the storyboard's "זו טעות". Please say which one you want.
