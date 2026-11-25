@@ -1298,3 +1298,12 @@ html.kbd .dnd-chip.picked { outline: 4px solid var(--accent); outline-offset: 3p
 .vc-head { fill: #1b2430; }
 .vc-bar { fill: url(#vcBlue); }
 .vc-cmp { stroke: #e0472b; stroke-width: 3; stroke-dasharray: 9 7; }
+
+/* The Ministry of Education logo on the opening screen (the skill's .moe-logo; references/logo.md). */
+.moe-logo { position: absolute; top: 28px; right: 32px; z-index: 3; width: 240px; }
+.moe-logo img { display: block; width: 100%; height: auto; }
+.moe-logo--card { box-sizing: content-box; padding: 22px 34px; border-radius: 28px;
+  background: radial-gradient(ellipse at center, rgba(255,255,255,.92) 0%, rgba(255,255,255,.6) 65%, rgba(255,255,255,0) 100%); }
+.moe-logo--left { right: auto; left: 32px; }
+/* On a video opening the logo shows on the poster and goes away when the video starts (the big play button hides then). */
+.play-btn-big.hidden ~ .moe-logo { display: none; }
